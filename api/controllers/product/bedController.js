@@ -4,7 +4,11 @@
 
 module.exports = {
 	list : function(rep,res,next) {
-		res.json([1,2,3]);
+		var Bed = sails.models['product/bed'];
+		Bed.find().populate('images').exec(function(err, list) {
+			if(err) return res.json(err);
+			res.json(list);
+		});
 	}
 };
 

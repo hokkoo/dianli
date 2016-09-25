@@ -41,8 +41,7 @@ module.exports = {
         },
         images:{
             collection: 'product/images',
-            via: 'product_id',
-            through: 'product/bed_images'
+            columnName: 'refer_id'
         }
     },
     tableName: 'bed',

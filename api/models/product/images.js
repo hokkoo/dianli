@@ -25,6 +25,13 @@ module.exports = {
             type: 'string'
         },
         // 关联id，代表图片来源于哪里
+        // 特定于图片之间的复制
+        refer_id: {
+            type: 'int',
+            defaultsTo: null
+        },
+        // 外部引用的id
+        // 所有图片都单独对应于一个外部引用
         related_id: {
             type: 'int',
             defaultsTo: null
