@@ -17,6 +17,9 @@ module.exports = {
         address: {
             type: 'string'
         },
+        location: {
+            type: 'string'
+        },
         tel: {
             type: 'string'
         },
@@ -24,7 +27,13 @@ module.exports = {
             type: 'string'
         },
         image: {
-            type: 'int'
+            type: 'string'
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'customer',

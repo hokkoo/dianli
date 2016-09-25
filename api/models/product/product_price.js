@@ -11,6 +11,12 @@ module.exports = {
         price_id: {
             type: 'bigtint',
             primaryKey: true
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'product_price',

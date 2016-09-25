@@ -29,6 +29,12 @@ module.exports = {
         parent: {
             type: 'int',
             defaultsTo: 3
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'ware',

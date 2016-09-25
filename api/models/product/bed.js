@@ -22,18 +22,27 @@ module.exports = {
         image: {
             type: 'string'
         },
-        category: {
+        category_id: {
+            type: 'int'
+        },
+        price_id: {
             type: 'int'
         },
         // 父类
-        parent: {
+        parent_id: {
             type: 'int',
-            defaultsTo: 2
+            defaultsTo: null
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         },
         images:{
-            collection: 'images',
+            collection: 'product/images',
             via: 'product_id',
-            through: 'product_images'
+            through: 'product/bed_images'
         }
     },
     tableName: 'bed',

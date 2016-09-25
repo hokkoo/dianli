@@ -20,6 +20,12 @@ module.exports = {
         parent: {
             type: 'int',
             defaultsTo: null
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'door_category',

@@ -1,6 +1,8 @@
 /*
     历史价格
     每一次修改的价格都会记录
+
+    格式保持与price同步
 */
 
 module.exports = {
@@ -24,11 +26,14 @@ module.exports = {
         type: {
             type: 'int',
             defaultsTo: 0
-        }
+        },
         createdAt: {
             type: 'datetime'
         },
+        updatedAt: {
+            type: 'datetime'
+        }
     },
     tableName: 'price_history',
-    connection: 'd_base'
+    connection: 'd_history'
 };

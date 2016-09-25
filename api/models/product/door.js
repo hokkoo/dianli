@@ -30,10 +30,11 @@ module.exports = {
             type: 'int',
             defaultsTo: 1
         },
-        images:{
-            collection: 'images',
-            via: 'product_id',
-            through: 'product_images'
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'door',

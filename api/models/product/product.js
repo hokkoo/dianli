@@ -35,6 +35,12 @@ module.exports = {
         // 默认头像
         image: {
             type: 'string'
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
 
     },

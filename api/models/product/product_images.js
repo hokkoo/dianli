@@ -18,6 +18,12 @@ module.exports = {
         type:{
             type: 'int',
             defaultsTo: 0
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'product_images',

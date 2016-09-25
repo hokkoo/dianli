@@ -1,0 +1,9 @@
+<!--
+  <%= filename %>
+  (a client-side HTML template)
+  ========================================
+-->
+
+<div>
+  <em>new HTML template (<%= filename %>)</em>
+</div>

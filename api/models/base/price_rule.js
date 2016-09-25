@@ -25,12 +25,19 @@ module.exports = {
             type: 'string'
         },
         priceinfo: {
-            type: 'int'
+            type: 'int',
+            defaultsTo: 0
         },
         properties: {
             type: 'string'
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
-    tableName: 'product',
-    connection: 'd_product'
+    tableName: 'price_rule',
+    connection: 'd_base'
 };

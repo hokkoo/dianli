@@ -24,10 +24,21 @@ module.exports = {
         extension: {
             type: 'string'
         },
+        // 关联id，代表图片来源于哪里
+        related_id: {
+            type: 'int',
+            defaultsTo: null
+        },
         // 默认类型
         type: {
             type: 'int',
-            defaultsTo: 0
+            defaultsTo: 1
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'images',

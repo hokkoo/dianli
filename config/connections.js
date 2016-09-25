@@ -63,12 +63,26 @@ module.exports.connections = {
     password: curhost.pwd,
     database: 'carowner'
   },
-  d_company: {
+  d_customer: {
     adapter: 'sails-mysql',
     host: curhost.host,
     user: curhost.user,
     password: curhost.pwd,
-    database: 'company'
+    database: 'customer'
+  },
+  d_carowner: {
+    adapter: 'sails-mysql',
+    host: curhost.host,
+    user: curhost.user,
+    password: curhost.pwd,
+    database: 'carowner'
+  },
+  d_history: {
+    adapter: 'sails-mysql',
+    host: curhost.host,
+    user: curhost.user,
+    password: curhost.pwd,
+    database: 'history'
   },
   d_misc: {
     adapter: 'sails-mysql',

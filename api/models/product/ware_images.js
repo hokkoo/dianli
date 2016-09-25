@@ -14,6 +14,12 @@ module.exports = {
         images_id: {
             type: 'bigtint',
             primaryKey: true
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'ware_images',

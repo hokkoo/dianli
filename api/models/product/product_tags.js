@@ -14,6 +14,12 @@ module.exports = {
         tags_id: {
             type: 'bigtint',
             primaryKey: true
+        },
+        createdAt: {
+            type: 'datetime'
+        },
+        updatedAt: {
+            type: 'datetime'
         }
     },
     tableName: 'product_tags',
