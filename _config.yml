@@ -1,0 +1,17 @@
+# =============================================
+# BUILD CONFIG
+# =============================================
+
+dest: .tmp/public
+assets: static
+
+src: src
+templates: src/templates
+data: src/data/*.{json,yml}
+partials: src/templates/partials/**/*.hbs
+helpers: src/helper/**/*.js
+layoutdir: src/templates/layouts
+pages: src/templates/pages
+
+analytics: false
+ads: false

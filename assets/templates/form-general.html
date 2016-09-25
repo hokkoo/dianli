@@ -1,0 +1,15 @@
+<!-- 通用表单模板，用于快速建立表单;数据格式:{names:[],placehoders:[],data:[],keys:[],id:'',action:''} -->
+<form action="<%=actrion%>" method="POST" id="<%=id%>">
+	<%if(!data) data = [];if(!keys) keys = [];%>
+	<%if(data.length){%>
+		<% for(var i in data){%>
+			<div class="form-group">
+				<label for="<%=keys[i]||''%>" class="control-label col-lg-4"><%=labels[i]||''%></label>
+				<div class="col-lg-8">
+                        <input type="text" id="<%=keys[i]||''%>" placeholder="<%=placeholders[i]||''%>" class="form-control" name="<%=names[i]||''%>" value="<%=data[i][keys[i]] ||''%>">
+                    </div>
+                </div>
+		<%}%>
+	<%}else{%>
+	<%}%>
+</form>

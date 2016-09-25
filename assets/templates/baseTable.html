@@ -1,0 +1,35 @@
+<!-- 通用表格模板，用于快速建立表格;数据格式:{thead:[],data:[],keys:[]} -->
+<%if(!thead) thead = [];%>
+<%if(!data) data = [];if(!keys) keys = [];%>
+<%if(data.length){%>
+	<table>
+		<%if(!thead) thead = [];%>
+		<%if(thead.length){%>
+			<thead>
+				<% for(var i in thead){%>
+					<th><%=thead[i]%></th>
+				<%}%>
+			</thead>
+		<%}else{%>
+		<%}%>
+		<%if(!data) data = [];if(!keys) keys = [];%>
+		<%if(data.length){%>
+			<tbody>
+				<% for(var i in data){%>
+					<tr>
+						<% for(var j in keys){%>
+							<td>
+								<%=data[i][keys[j]] || ""%>
+							</td>
+						<%}%>
+					</tr>
+				<%}%>
+			</tbody>
+		<%}else{%>
+		<%}%>
+	</table>
+<%}else{%>
+	<div class="bg-warning">
+		暂无数据
+	</div>
+<%}%>
