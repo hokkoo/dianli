@@ -52,6 +52,20 @@ var user = new Sequelize('user', curhost.user, curhost.pwd, {
         'bigNumberStrings': true
     }
 });
+var base = new Sequelize('base', curhost.user, curhost.pwd, {
+    'host': curhost.host,
+    'dialectOptions': {
+        'supportBigNumbers': true,
+        'bigNumberStrings': true
+    }
+});
+var history = new Sequelize('history', curhost.user, curhost.pwd, {
+    'host': curhost.host,
+    'dialectOptions': {
+        'supportBigNumbers': true,
+        'bigNumberStrings': true
+    }
+});
 /*var mechanic = new Sequelize('mechanic', curhost.user, curhost.pwd, {
     'host': curhost.host
 });*/
@@ -74,5 +88,7 @@ module.exports = {
     misc: misc,
     product: product,
     trade: trade,
+    base: base,
+    history: history,
     user: user
 }

@@ -24,6 +24,10 @@ module.exports = {
         extension: {
             type: 'string'
         },
+        size: {
+            type: 'int',
+            defaultsTo: 0
+        },
         // 关联id，代表图片来源于哪里
         // 特定于图片之间的复制
         refer_id: {
@@ -34,6 +38,7 @@ module.exports = {
         // 所有图片都单独对应于一个外部引用
         related_id: {
             type: 'int',
+            foreignKey: true,
             defaultsTo: null
         },
         // 默认类型

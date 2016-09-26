@@ -3,12 +3,19 @@
  */
 
 module.exports = {
-	list : function(rep,res,next) {
-		var Bed = sails.models['product/bed'];
-		Bed.find().populate('images').exec(function(err, list) {
-			if(err) return res.json(err);
-			res.json(list);
-		});
-	}
+    list : function(rep,res,next) {
+        //console.log(Object.keys(sails.sequelize));
+        var Bed = sails.sequelize['product.bed'];
+        var Images = sails.sequelize['product.images'];
+        Bed.findAll({
+            include: [{
+                model: Images
+            }]
+        }).then(function (rtn) {
+            console.log(JSON.stringify(rtn));
+            res.json(rtn);
+        });
+
+    }
 };
 

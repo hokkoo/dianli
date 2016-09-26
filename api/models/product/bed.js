@@ -38,10 +38,6 @@ module.exports = {
         },
         updatedAt: {
             type: 'datetime'
-        },
-        images:{
-            collection: 'product/images',
-            columnName: 'refer_id'
         }
     },
     tableName: 'bed',
