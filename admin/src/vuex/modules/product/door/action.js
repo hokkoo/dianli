@@ -21,11 +21,9 @@ export const getDoor = function ({ dispatch }, id) {
   }, error => {
     dispatch(types.GET_ARTICLE_FAILURE, error)
   });*/
-  setTimeout(function () {
-    dispatch(_type.GET_PRODUCT_DOOR, {
-      name: '1a',
-      content: 'dxx'
-    });
-    console.log(22244);
-  }, 1000);
+  $.get('/product/door/find?id=' + id).success((rtn) => {
+    if(rtn){
+      dispatch(_type.GET_PRODUCT_DOOR, rtn);
+    }
+  });
 }

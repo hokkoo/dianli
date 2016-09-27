@@ -19,6 +19,9 @@
       actions: {
         getItem: getDoor
       }
+    },
+    created(id){
+      this.getItem(id);
     }
   }
 </script>
