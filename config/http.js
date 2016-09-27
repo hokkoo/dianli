@@ -12,6 +12,9 @@ var _ = require('underscore.string');
 var uaParser = require('ua-parser-js');
 uaParser = new uaParser();
 var moment = require('moment');
+var proxy = require('http-proxy-middleware');
+var express = require('express');
+
 module.exports.http = {
    publicName : '/static',
 
@@ -25,8 +28,17 @@ module.exports.http = {
      *                                                                           *
      ****************************************************************************/
     customMiddleware: function(app) {
-        console.log('###########################')
-        console.log(passport);
+        console.log('########################### express #############');
+        // 后台的开发代理
+        // app.use('/admin', express.static('./admin'));
+        var proxyOption = {
+            target: 'http://localhost:8088/',
+            changeOrigin: true,
+            ws: true
+        };
+        var adminProxy = proxy(proxyOption);
+        app.use('/admin', adminProxy);
+        console.log('### proxy ####');
        /* app.use(function(req, res, next) {
             passport.initialize()(req, res, function() {
                 // Use the built-in sessions

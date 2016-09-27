@@ -14,6 +14,7 @@
         </div>
       </div>
     </div>
+    <router-view></router-view>
   </section>
 </template>
 <script>

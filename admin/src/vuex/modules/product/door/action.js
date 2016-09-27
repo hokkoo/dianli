@@ -10,9 +10,9 @@ export const getDoors = function ({ dispatch }, pager) {
     dispatch(types.GET_ARTICLE_FAILURE, error)
   });*/
   setTimeout(function () {
-    dispatch(types.GET_PRODUCT_DOORS, [
+    dispatch(_type.GET_PRODUCT_DOORS, [
       {
-        name: '1a',
+        name: '1a32',
         content: 'dxx'
       },
       {
@@ -32,7 +32,7 @@ export const getDoor = function ({ dispatch }, id) {
     dispatch(types.GET_ARTICLE_FAILURE, error)
   });*/
   setTimeout(function () {
-    dispatch(types.GET_PRODUCT_DOOR, {
+    dispatch(_type.GET_PRODUCT_DOOR, {
       name: '1a',
       content: 'dxx'
     });

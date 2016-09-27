@@ -5,6 +5,7 @@
 
 <script>
   import store from '../vuex/store.js'
+  var dropdown = require('vue-strap').dropdown;
 
   if (window.localStorage) {
     if (store.state.user !== window.localStorage.getItem('user')) {
@@ -20,6 +21,9 @@
       return {
         caller: this.$http
       }
+    },
+    components:{
+      dropdown
     },
     methods: {
       callAPI: function (method, url, data) {

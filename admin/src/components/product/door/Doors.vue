@@ -1,8 +1,8 @@
 <template>
-  <div class="list-wrapper">
+  <div class="list-wrapper products">
     <ul class="list-container" id="list-ul">
       <li v-for="item in items">
-        <a v-link="{ name: 'product/door/', params: {id: item.id}}">
+        <a v-link="{ name: 'productDoorDetail', params: {id: item.id}}">
           <p class="list-title">{{item.name}}</p>
           <p class="list-content">{{item.content}}</p>
         </a>
@@ -23,6 +23,9 @@
       actions: {
         getList: getDoors
       }
+    },
+    created(){
+      this.getList();
     }
   }
 </script>

@@ -23,10 +23,11 @@
             <!-- 信息-->
             <li class="dropdown messages-menu">
               <dropdown>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn btn-default">
                   <i class="fa fa-envelope-o"></i>
                   <span class="label label-success">{{ state.userInfo.messages | count }}</span>
-                </a>
+                  <span class="caret"></span>
+                </button>
                 <ul slot="dropdown-menu" class="dropdown-menu">
                   <li class="header">有 {{ state.userInfo.messages | count }} 条信息</li>
                   <li>
@@ -36,7 +37,6 @@
                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4>
                       <!-- The message -->
-                      <p>Why not buy a new awesome theme?</p>
                     </a>
                   </li>
                   <li class="footer"><a href="#">查看所有信息</a></li>
@@ -144,9 +144,13 @@
 
 <script>
 require('hideseek')
+ var dropdown = require('vue-strap').dropdown;
 
 module.exports = {
   name: 'Dash',
+  components: {
+    dropdown
+  },
   data: function () {
     return {
       section: 'Dash',

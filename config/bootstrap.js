@@ -25,7 +25,6 @@ module.exports.bootstrap = function(cb) {
   sails.on('hooks:builtIn:ready',function showsequelize (argument) {
     // body...
     console.log('##############6');
-    console.log(JSON.stringify(sails.sequelize));
     console.log('##############6');
   })
   cb();

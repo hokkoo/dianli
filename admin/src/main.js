@@ -47,22 +47,24 @@ router.map({
         description: '首页'
       },
       '/product': {
+         component: ProductHomeView,
+         auth: true,
          subRoutes: {
           '': {
             component: ProductHomeView,
             name: '产品首页',
             description: '产品首页'
           },
-          'doors': {
+          '/doors': {
             component: ProductDoorsView,
-            name: '门',
-            description: '门'
+            name: '门列表',
+            description: '门列表'
           },
-          door: {
+          '/door/:id': {
             component: ProductDoorView,
-            name: '门',
+            name: 'productDoorDetail',
             description: '门'
-          },
+          }
         }
       }
     }
