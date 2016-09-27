@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
+var _type = require('../config/constType');
 
 var Images = product.define('Images', {
     id: {
@@ -35,7 +36,7 @@ var Images = product.define('Images', {
         type : Sequelize.INTEGER
     },
     type: {
-            type : Sequelize.INTEGER
+        type : Sequelize.INTEGER
     }
 }, {
     tableName: 'Images',
@@ -50,7 +51,7 @@ Bed.hasMany(Images, {
   constraints: false,
   as: 'images',
   scope: {
-    type: 1
+    type: _type.bed
   }
 });
 
@@ -60,7 +61,17 @@ Door.hasMany(Images, {
   constraints: false,
   as: 'images',
   scope: {
-    type: 2
+    type: _type.door
+  }
+});
+
+var Ware = require('./ware');
+Ware.hasMany(Images, {
+  foreignKey: 'related_id',
+  constraints: false,
+  as: 'images',
+  scope: {
+    type: _type.ware
   }
 });
 //Image.sync();

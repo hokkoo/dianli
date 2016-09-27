@@ -13,11 +13,13 @@
 */
 var Sequelize = require('sequelize');
 var base = require("../../config/sequelize").base;
+var _type = require('../config/constType');
 
 var Price = base.define('Price', {
     id: {
         type: Sequelize.BIGINT(20),
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     min: {
         type: Sequelize.DECIMAL
@@ -30,6 +32,19 @@ var Price = base.define('Price', {
     },
     unit: {
         type: Sequelize.STRING
+    },
+    // 关联id，代表价格来源于哪里
+    // 特定于价格之间的复制
+    refer_id :{
+        type : Sequelize.INTEGER
+    },
+    // 外部引用的id
+    // 所有价格都单独对应于一个外部引用
+    related_id :{
+        type : Sequelize.INTEGER
+    },
+    type: {
+        type : Sequelize.INTEGER
     }
 }, {
     tableName: 'price',
@@ -37,4 +52,36 @@ var Price = base.define('Price', {
 });
 
 module.exports = Price;
+
+var Bed = require('../product/bed');
+Bed.belongsTo(Price, {
+  foreignKey: 'price_id',
+  constraints: false,
+  as: 'price',
+  scope: {
+    type: _type.bed
+  }
+});
+
+var Door = require('../product/door');
+Door.belongsTo(Price, {
+  foreignKey: 'price_id',
+  constraints: false,
+  as: 'price',
+  scope: {
+    type: _type.door
+  }
+});
+
+var Ware = require('../product/ware');
+Ware.belongsTo(Price, {
+  foreignKey: 'price_id',
+  constraints: false,
+  as: 'price',
+  scope: {
+    type: _type.ware
+  }
+});
+
+
 //Product.sync();

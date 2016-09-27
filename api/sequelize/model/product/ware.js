@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
 
-var Bed = product.define('Bed', {
+var Ware = product.define('Ware', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
@@ -31,9 +31,9 @@ var Bed = product.define('Bed', {
     updatedAt: "updatedAt",
     deletedAt: "deletedAt",
     paranoid: true,
-    tableName: 'bed',
+    tableName: 'ware',
     schema:'product'
 });
 
-module.exports = Bed;
+module.exports = Ware;
 //Product.sync();
