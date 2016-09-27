@@ -58,8 +58,12 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 // serve pure static assets
-app.use('/static', express.static('./static'))
+app.use('/admin/app.js', express.static('./static/app.js'));
+app.use('/dist/static', express.static('./static'))
+app.use('/dist/assets', express.static('./assets'))
 app.use('/admin/assets', express.static('./assets'))
+app.use('/admin/static', express.static('./static'))
+app.use('/static', express.static('./static'))
 app.use('/assets', express.static('./assets'))
 
 

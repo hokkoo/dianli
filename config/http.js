@@ -34,6 +34,9 @@ module.exports.http = {
         var proxyOption = {
             target: 'http://localhost:8088/',
             changeOrigin: true,
+            pathRewrite: {
+                '^/admin': '/'
+            },
             ws: true
         };
         var adminProxy = proxy(proxyOption);

@@ -37,7 +37,7 @@ router.map({
   '/login': {
     component: LoginView
   },
-  '/': {
+  '/admin/': {
     component: DashView,
     auth: true,
     subRoutes: {

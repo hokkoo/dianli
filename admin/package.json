@@ -25,6 +25,7 @@
     "escope": "^3.6.0",
     "faker": "^3.1.0",
     "hideseek": "^0.7.0",
+    "html-webpack-plugin-hokkoo": "^2.25.0",
     "http-server": "^0.9.0",
     "jquery": "^2.2.2",
     "moment": "^2.12.0",

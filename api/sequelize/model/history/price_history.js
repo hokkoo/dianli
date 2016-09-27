@@ -45,4 +45,4 @@ var PriceHistory = history.define('PriceHistory', {
 });
 
 module.exports = PriceHistory;
-PriceHistory.sync();
+// PriceHistory.sync();
