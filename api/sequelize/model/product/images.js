@@ -54,5 +54,13 @@ Bed.hasMany(Images, {
   }
 });
 
-
+var Door = require('./door');
+Door.hasMany(Images, {
+  foreignKey: 'related_id',
+  constraints: false,
+  as: 'images',
+  scope: {
+    type: 2
+  }
+});
 //Image.sync();

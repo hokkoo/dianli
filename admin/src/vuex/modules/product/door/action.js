@@ -9,19 +9,9 @@ export const getDoors = function ({ dispatch }, pager) {
   }, error => {
     dispatch(types.GET_ARTICLE_FAILURE, error)
   });*/
-  setTimeout(function () {
-    dispatch(_type.GET_PRODUCT_DOORS, [
-      {
-        name: '1a32',
-        content: 'dxx'
-      },
-      {
-        name: '2a',
-        content: 'dxxx'
-      }
-    ]);
-    console.log(222);
-  }, 1000);
+  $.get('/product/door/list').success(function (rtn) {
+    dispatch(_type.GET_PRODUCT_DOORS, rtn);
+  });
 }
 
 export const getDoor = function ({ dispatch }, id) {
