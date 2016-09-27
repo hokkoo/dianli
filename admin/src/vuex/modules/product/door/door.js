@@ -1,4 +1,4 @@
-import {GET_PRODUCT_DOOR, GET_PRODUCT_DOORS} from '../../mutation-types.js'
+import {GET_PRODUCT_DOOR, GET_PRODUCT_DOORS} from '../../../mutation-types.js';
 // TODO需要嵌套在products之下
 const state = {
   door: {},

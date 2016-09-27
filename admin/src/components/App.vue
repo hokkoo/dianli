@@ -4,7 +4,7 @@
 </template>
 
 <script>
-  import store from '../vuex/store.js';
+  import store from '../vuex/store.js'
 
   if (window.localStorage) {
     if (store.state.user !== window.localStorage.getItem('user')) {

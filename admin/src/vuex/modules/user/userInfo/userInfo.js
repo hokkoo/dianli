@@ -1,4 +1,4 @@
-import {GET_USER_MESSAGE} from '../../mutation-types.js'
+import {GET_USER_MESSAGE} from '../../../mutation-types.js'
 
 const state = {
   messages: []

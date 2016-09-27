@@ -172,10 +172,10 @@ module.exports = {
     },
     demo: function () {
       return {
-        displayName: faker.name.findName(),
-        avatar: faker.image.avatar(),
-        email: faker.internet.email(),
-        randomCard: faker.helpers.createCard()
+        displayName: '123',
+        avatar: 'http://i3.s1.dpfile.com/pc/476c36e1acb3086c887986f62f9fb7eb%28700x700%29/thumb.jpg',
+        email: 'dxxx',
+        randomCard: 123
       }
     }
   },

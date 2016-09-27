@@ -4,6 +4,7 @@ var baseConfig = require('./webpack.base.conf')
 var cssLoaders = require('./css-loaders')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var path = require('path');
 
 // whether to generate source map for production files.
 // disabling this can speed up the build.
@@ -14,6 +15,7 @@ module.exports = merge(baseConfig, {
   output: {
     // naming output files with hashes for better caching.
     // dist/index.html will be auto-generated with correct URLs.
+    path: path.resolve(__dirname, '../static'),
     filename: '[name].[chunkhash].js',
     chunkFilename: '[id].[chunkhash].js'
   },
@@ -43,7 +45,7 @@ module.exports = merge(baseConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: '../index.html',
-      template: 'index.html',
+      template: './src/index.html',
       inject: true,
       minify: {
         removeComments: true,

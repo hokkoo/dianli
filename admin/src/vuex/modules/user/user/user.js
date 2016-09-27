@@ -1,4 +1,4 @@
-import {GET_USER_USER, GET_USER_TOKEN} from '../../mutation-types.js'
+import {GET_USER_USER, GET_USER_TOKEN} from '../../../mutation-types.js'
 
 const state = {
   user: {},

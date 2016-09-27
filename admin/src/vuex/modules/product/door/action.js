@@ -1,4 +1,4 @@
-import { API_ROOT } = from '../../../../config/config.js';
+import { API_ROOT } from '../../../../config/config.js';
 import * as _type from '../../../mutation-types.js';
 
 // 获取数据列表
