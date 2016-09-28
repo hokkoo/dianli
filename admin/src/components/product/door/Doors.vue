@@ -1,4 +1,5 @@
 <template>
+  <h1>编辑</h1>
   <div class="list-wrapper products">
     <ul class="list-container" id="list-ul">
       <li v-for="item in items">

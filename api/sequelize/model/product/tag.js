@@ -1,6 +1,5 @@
 var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
-var _type = require('../config/constType');
 
 var Tag = product.define('Tag', {
     id: {
@@ -24,7 +23,7 @@ var Tag = product.define('Tag', {
     },
     content: {
         type: Sequelize.STRING
-    }，
+    },
     type: {
         type : Sequelize.INTEGER
     }
@@ -39,36 +38,4 @@ var Tag = product.define('Tag', {
 
 module.exports = Tag;
 
-
-var Bed = require('./bed');
-Bed.hasMany(Tag, {
-  foreignKey: 'related_id',
-  constraints: false,
-  as: 'tags',
-  scope: {
-    type: _type.bed
-  }
-});
-
-
-var Door = require('./door');
-Door.hasMany(Tag, {
-  foreignKey: 'related_id',
-  constraints: false,
-  as: 'tags',
-  scope: {
-    type: _type.door
-  }
-});
-
-var Ware = require('./ware');
-Ware.hasMany(Tag, {
-  foreignKey: 'related_id',
-  constraints: false,
-  as: 'tags',
-  scope: {
-    type: _type.ware
-  }
-});
-
-//Tag.sync();
+// Tag.sync();

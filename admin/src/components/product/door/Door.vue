@@ -1,5 +1,9 @@
 <template>
   <div class="list-wrapper product">
+    <h1>
+      {{item.name}}
+      <a v-link="{ name: 'productDoorEdit', params: {id: item.id}}">编辑</a>
+    </h1>
     <div class="detail">
       <p class="list-title">{{item.name}}</p>
       <p class="list-content">{{item.content}}</p>
@@ -21,7 +25,7 @@
       }
     },
     created(id){
-      this.getItem(id);
+      this.getItem(this.$route.params.id);
     }
   }
 </script>

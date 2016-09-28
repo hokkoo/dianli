@@ -4,7 +4,8 @@ var product = require("../../config/sequelize").product;
 var Product = product.define('Product', {
     product_id: {
         type: Sequelize.BIGINT(20),
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     title: {
         type: Sequelize.STRING

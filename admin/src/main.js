@@ -17,6 +17,8 @@ import HomeView from './components/Home.vue'
 import ProductHomeView from './components/product/Index.vue';
 import ProductDoorsView from './components/product/door/Doors.vue';
 import ProductDoorView from './components/product/door/Door.vue';
+import productDoorEditView from './components/product/door/DoorEdit.vue';
+
 
 
 // Import Install and register helper items
@@ -63,6 +65,11 @@ router.map({
           '/door/:id': {
             component: ProductDoorView,
             name: 'productDoorDetail',
+            description: '门'
+          },
+          '/door/edit/:id': {
+            component: productDoorEditView,
+            name: 'productDoorEdit',
             description: '门'
           }
         }

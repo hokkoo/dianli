@@ -13,7 +13,7 @@
 */
 var Sequelize = require('sequelize');
 var base = require("../../config/sequelize").base;
-var _type = require('../config/constType');
+var _type = require('../../config/constType');
 
 var Price = base.define('Price', {
     id: {

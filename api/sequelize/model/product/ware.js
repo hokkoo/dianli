@@ -36,4 +36,4 @@ var Ware = product.define('Ware', {
 });
 
 module.exports = Ware;
-//Product.sync();
+// Ware.sync();

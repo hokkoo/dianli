@@ -1,5 +1,4 @@
 <template>
-  <h1 class="text-center">产品</h1>
   <section class="content">
     <div class="row" v-if="servers">
       <div class="col-md-4" v-for="product in products">

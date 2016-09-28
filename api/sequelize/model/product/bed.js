@@ -36,4 +36,4 @@ var Bed = product.define('Bed', {
 });
 
 module.exports = Bed;
-//Product.sync();
+// Bed.sync();

@@ -5,7 +5,7 @@
 
 <script>
   import store from '../vuex/store.js'
-  var dropdown = require('vue-strap').dropdown;
+  var {bsInput, dropdown, tab, tabs, vSelect, formGroup} = require('vue-strap');
 
   if (window.localStorage) {
     if (store.state.user !== window.localStorage.getItem('user')) {
@@ -23,7 +23,12 @@
       }
     },
     components:{
-      dropdown
+      bsInput,
+      dropdown,
+      tab,
+      tabs,
+      vSelect,
+      formGroup
     },
     methods: {
       callAPI: function (method, url, data) {
@@ -49,3 +54,8 @@
     }
   }
 </script>
+<style>
+  .content{
+    position: relative;
+  }
+</style>

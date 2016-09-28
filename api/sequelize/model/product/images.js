@@ -1,11 +1,12 @@
 var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
-var _type = require('../config/constType');
+var _type = require('../../config/constType');
 
 var Images = product.define('Images', {
     id: {
         type: Sequelize.BIGINT(20),
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     size:{
         type : Sequelize.INTEGER

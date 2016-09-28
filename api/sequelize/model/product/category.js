@@ -1,6 +1,5 @@
 var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
-var _type = require('../config/constType');
 
 var Category = product.define('Category', {
     id: {
@@ -24,7 +23,7 @@ var Category = product.define('Category', {
     },
     content: {
         type: Sequelize.STRING
-    }，
+    },
     type: {
         type : Sequelize.INTEGER
     }
@@ -40,35 +39,4 @@ var Category = product.define('Category', {
 module.exports = Category;
 
 
-var Bed = require('./bed');
-Bed.belongsTo(Category, {
-  foreignKey: 'category_id',
-  constraints: false,
-  as: 'category',
-  scope: {
-    type: _type.bed
-  }
-});
-
-
-var Door = require('./door');
-Door.belongsTo(Category, {
-  foreignKey: 'category_id',
-  constraints: false,
-  as: 'category',
-  scope: {
-    type: _type.door
-  }
-});
-
-var Ware = require('./ware');
-Ware.belongsTo(Category, {
-  foreignKey: 'category_id',
-  constraints: false,
-  as: 'category',
-  scope: {
-    type: _type.ware
-  }
-});
-
-//Tag.sync();
+// Category.sync();
