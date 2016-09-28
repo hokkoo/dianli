@@ -8,12 +8,17 @@
       <p class="list-title">{{item.name}}</p>
       <p class="list-content">{{item.content}}</p>
     </div>
+    <div class="images">
+      图片：
+      <image-upload></image-upload>
+    </div>
   </div>
 </template>
 
 <script type="text/babel">
   import {door} from '../../../vuex/modules/product/door/getter.js';
   import {getDoor} from '../../../vuex/modules/product/door/action.js';
+  import imageUpload from '../../common/image-upload';
 
   export default {
     vuex: {
@@ -24,8 +29,14 @@
         getItem: getDoor
       }
     },
+    components: {
+      imageUpload
+    },
     created(id){
       this.getItem(this.$route.params.id);
+    },
+    ready(){
+      console.log(this.$el);
     }
   }
 </script>
