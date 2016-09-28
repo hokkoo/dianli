@@ -26,7 +26,8 @@ export const saveDoor = function ({ dispatch }, door) {
   console.log(door);
   var defer = $.Deferred();
   let param = _.extend({}, door);
-  if(param.id){
+  param = {item: param};
+  if(door.id){
     $.post('/product/door/edit', param).success( (rtn) => {
       if(rtn.successed){
         console.log(rtn);
@@ -35,10 +36,9 @@ export const saveDoor = function ({ dispatch }, door) {
       defer.resolve();
     });
   }else{
-    $.post('/product/door/save', param).success( (rtn) => {
+    $.post('/product/door/create', param).success( (rtn) => {
       if(rtn.successed){
-        door.id = rtn.id;
-        console.log(rtn);
+        _.extend(door, rtn.data);
       }
     }).always(() => {
       defer.resolve();

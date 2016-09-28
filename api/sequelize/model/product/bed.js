@@ -30,6 +30,7 @@ var Bed = product.define('Bed', {
     createdAt: "createdAt",
     updatedAt: "updatedAt",
     deletedAt: "deletedAt",
+    timestamps: true,
     paranoid: true,
     tableName: 'bed',
     schema:'product'
