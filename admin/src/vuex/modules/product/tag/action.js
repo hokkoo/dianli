@@ -47,7 +47,7 @@ export const saveTag = function ({ dispatch }, tag) {
 }
 
 export const saveTags = function ({ dispatch }, tags, type) {
-  console.log(tag);
+  console.log(tags);
   var defer = $.Deferred();
    $.post('/product/tag/saves', {tags: tags, type: type}).success( (rtn) => {
       if(rtn.successed){
