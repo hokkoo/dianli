@@ -78,9 +78,11 @@ module.exports = {
             // Door.create({name: 'xx'}, {raw: true});
             var item = Door.build(params, {isNewRecord: false, raw: true});
             var keys = getAvailableFields(params);
+            console.log('##123')
             console.log(keys);
             item.save({fields: keys}).then(function (rtn) {
                 // console.log(arguments);
+                console.log('##122')
                 res.json({
                     successed: true
                 })
