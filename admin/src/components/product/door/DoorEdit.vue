@@ -23,6 +23,7 @@
           </div>
           <div class="col-md-6 col-sm-12 col-xs-12">
             标签：
+            <tags :values.sync="item.tags"></tags>
           </div>
           <div class="col-md-12 col-sm-12 col-xs-12">
             <form-group>
@@ -44,7 +45,8 @@
 <script type="text/babel">
   import {door} from '../../../vuex/modules/product/door/getter.js';
   import {getDoor, saveDoor} from '../../../vuex/modules/product/door/action.js';
-  import {input as bsInput, formGroup, spinner} from 'vue-strap';
+  import {input as bsInput, formGroup, spinner, vSelect} from 'vue-strap';
+  import tags from '../../common/tags.vue';
 
   export default {
     data: function () {
@@ -54,7 +56,8 @@
           name: '',
           content: '',
           title: '',
-          desc: ''
+          desc: '',
+          tags: []
         }
       }
     },
@@ -70,10 +73,12 @@
     components:{
       bsInput,
       formGroup,
+      tags,
       spinner
     },
     methods: {
       saveDoor(){
+        return;
         const _self = this;
         let isEdit = !!this.item.id;
         this.$refs.spinner.show();

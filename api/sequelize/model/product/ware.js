@@ -31,8 +31,7 @@ var Ware = product.define('Ware', {
     updatedAt: "updatedAt",
     deletedAt: "deletedAt",
     paranoid: true,
-    tableName: 'ware',
-    schema:'product'
+    tableName: 'ware'
 });
 
 module.exports = Ware;

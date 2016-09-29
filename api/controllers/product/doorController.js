@@ -76,11 +76,12 @@ module.exports = {
             params.id = parseInt(params.id);
             // var _Door = require('../../sequelize/model/product/door.js');
             // Door.create({name: 'xx'}, {raw: true});
-            var item = Door.build(params, {isNewRecord: false, raw: true});
+            var item = Door.build({id: params.id}, {isNewRecord: false, raw: true});
             var keys = getAvailableFields(params);
-            console.log(keys);
-            item.save({fields: keys}).then(function (rtn) {
-                // console.log(arguments);
+            console.log('######### dor edit')
+            console.log(item.get({plain: true}))
+            item.update(params, {fields: keys}).then(function (rtn) {
+                console.log('@@@@end');
                 res.json({
                     successed: true
                 })
