@@ -61,8 +61,9 @@
         console.log(this._tags);
         this.tags.length = 0;
         var news = [];
+        var _self = this;
         _.each(this._tags, (tag) => {
-          this.tags.push(tag);
+          _self.tags.push(tag);
           if(tag.new){
             news.push(tag);
           }
