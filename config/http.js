@@ -40,6 +40,7 @@ module.exports.http = {
             ws: true
         };
         var adminProxy = proxy(proxyOption);
+        app.use('/upload', express.static('./upload'));
         app.use('/admin', adminProxy);
         console.log('### proxy ####');
        /* app.use(function(req, res, next) {
