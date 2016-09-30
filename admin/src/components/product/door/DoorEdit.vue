@@ -78,7 +78,6 @@
     },
     methods: {
       saveDoor(){
-        return;
         const _self = this;
         let isEdit = !!this.item.id;
         this.$refs.spinner.show();

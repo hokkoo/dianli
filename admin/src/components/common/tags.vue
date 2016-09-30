@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <form-group :valid.sync="valid">
-      <bs-select :value.sync="values" :options="tags" multiple name="tags[]" search justified required clear-button></bs-select>
+      <bs-select :value.sync="values" :options="tags" multiple name="tags[]" search justified clear-button></bs-select>
     </form-group>
   </div>
 </template>
@@ -81,7 +81,17 @@
           }
         });
         if(news.length){
-          this.saveTags(news, this.type);
+          var defer = this.saveTags(news, this.type);
+          defer.then((rtn) => {
+            if(rtn.successed){
+              var matched = rtn.data.matched;
+              _.each(this.tags, (tag) => {
+                if(matched[tag.value]){
+                  tag.value = matched[tag.value];
+                }
+              });
+            }
+          });
         }
       }
     }

@@ -4,6 +4,7 @@
 
 var _ = require('lodash');
 var getAvailableFields = require('../util/util.js').getAvailableFields;
+var _type = require('../../sequelize/config/constType.js');
 
 module.exports = {
     list : function(req,res,next) {
@@ -43,6 +44,7 @@ module.exports = {
     create : function(req,res,next) {
         //console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
+        var Tag = sails.sequelize['product.tag'];
         var params = req.allParams(), where;
         params = params.item || {};
         var keys = getAvailableFields(params);
@@ -51,6 +53,12 @@ module.exports = {
             fields: keys
         }).then(function (item) {
             console.log('####123');
+            // 保存标签信息
+            _.each(params.tags, function (tagId) {
+                Tag.findById(tagId).then(function (tag) {
+                    tag.addProduct(item, {type: _type.door})
+                });
+            });
             res.json({
                 successed: true,
                 data: item
@@ -65,6 +73,7 @@ module.exports = {
     edit : function(req,res,next) {
         //console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
+        var Tag = sails.sequelize['product.tag'];
         var params = req.allParams(), where;
         params = params.item || {};
         if(_.isUndefined(params.id)){
