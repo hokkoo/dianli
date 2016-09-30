@@ -89,7 +89,7 @@ router.redirect({
 })
 
 // Some middleware to help us ensure the user is authenticated.
-router.beforeEach(function (transition) {
+/*router.beforeEach(function (transition) {
   // window.console.log('Transition', transition)
   if (transition.to.auth && (transition.to.router.app.$store.state.token === 'null')) {
     window.console.log('Not authenticated')
@@ -97,7 +97,7 @@ router.beforeEach(function (transition) {
   } else {
     transition.next()
   }
-})
+})*/
 
 // Resource logic
 Vue.use(Resource)

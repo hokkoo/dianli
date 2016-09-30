@@ -32,8 +32,7 @@ var Tag = product.define('Tag', {
     updatedAt: "updatedAt",
     deletedAt: "deletedAt",
     paranoid: true,
-    tableName: 'Tag',
-    schema:'product'
+    tableName: 'Tag'
 });
 
 module.exports = Tag;

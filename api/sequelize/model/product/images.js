@@ -40,8 +40,7 @@ var Images = product.define('Images', {
         type : Sequelize.INTEGER
     }
 }, {
-    tableName: 'Images',
-    schema:'product'
+    tableName: 'Images'
 });
 
 module.exports = Images;

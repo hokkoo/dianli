@@ -3,11 +3,6 @@ var product = require("../../config/sequelize").product;
 var _type = require('../../config/constType');
 
 var Product_tag = product.define('Product_tag', {
-    id: {
-        type: Sequelize.BIGINT(20),
-        primaryKey: true,
-        autoIncrement: true
-    },
     tag_id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true
@@ -24,8 +19,7 @@ var Product_tag = product.define('Product_tag', {
     updatedAt: "updatedAt",
     deletedAt: "deletedAt",
     paranoid: true,
-    tableName: 'product_tag',
-    schema:'product'
+    tableName: 'product_tag'
 });
 
 module.exports = Product_tag;
@@ -59,6 +53,18 @@ Door.belongsToMany(Tag, {
   constraints: false
 });
 
+Tag.belongsToMany(Door, {
+  through: {
+    model: Product_tag,
+    unique: false,
+    scope: {
+      type: _type.door
+    }
+  },
+  foreignKey: 'tag_id',
+  constraints: false
+});
+
 var Ware = require('./ware');
 Ware.belongsToMany(Tag, {
   through: {
@@ -72,4 +78,4 @@ Ware.belongsToMany(Tag, {
   constraints: false
 });
 
-// Product_tag.sync();
+Product_tag.sync();
