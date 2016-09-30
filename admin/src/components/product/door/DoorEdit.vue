@@ -102,7 +102,12 @@
       _item: function () {
         var item = this._item;
         console.log(Object.keys(item));
+        var _tags = item.tags;
         _.extend(this.item, item);
+        var tags = this.item.tags = [];
+        _.each(_tags, (tag) => {
+          tags.push(tag.id);
+        })
       }
     }
   }

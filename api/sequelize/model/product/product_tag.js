@@ -49,6 +49,7 @@ Door.belongsToMany(Tag, {
       type: _type.door
     }
   },
+  as: 'tags',
   foreignKey: 'product_id',
   constraints: false
 });
@@ -61,8 +62,15 @@ Tag.belongsToMany(Door, {
       type: _type.door
     }
   },
+  as:  'doors',
   foreignKey: 'tag_id',
   constraints: false
+});
+
+Door.addScope('tags', {
+  include: [
+    { model: Tag, as: 'tags'}
+  ]
 });
 
 var Ware = require('./ware');
