@@ -25,7 +25,7 @@
               @keyup.esc="show = false"
             />
             <span v-show="isShowPlus" class="close" @click="plus">&plus;</span>
-            <span v-show="searchValue && !isShowPlus()" class="close" @click="clearSearch">&times;</span>
+            <span v-show="searchValue && !isShowPlus" class="close" @click="clearSearch">&times;</span>
           </li>
           <li v-if="required&&!clearButton"><a @mousedown.prevent="clear() && blur()">{{ placeholder || text.notSelected }}</a></li>
           <li v-for="option in options | filterBy searchValue" :id="option.value||option">

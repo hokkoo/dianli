@@ -60,15 +60,27 @@
       _tags: function () {
         console.log(this._tags);
         this.tags.length = 0;
-        var news = [];
-        var _self = this;
-        _.each(this._tags, (tag) => {
-          _self.tags.push(tag);
-          if(tag.new){
-            news.push(tag);
+        var _self = this, tag;
+        _.each(this._tags, (_tag) => {
+          if(_tag.title){
+            tag = _.extend({}, _tag);
+            tag.label = tag.title;
+            tag.value = tag.id;
+            _self.tags.push(tag);
           }
         });
-        if(news){
+      },
+      tags: function () {
+        var news = [];
+        _.each(this.tags, (tag) => {
+          if(tag.new){
+            news.push(_.extend({}, {
+              title: tag.label,
+              id: tag.value
+            }));
+          }
+        });
+        if(news.length){
           this.saveTags(news, this.type);
         }
       }

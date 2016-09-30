@@ -45,6 +45,56 @@ module.exports = {
         res.json(null);
 
     },
+    saves : function(req,res,next) {
+        var Tag = sails.sequelize['product.tag'];
+        var params = req.allParams(), where;
+        var type = params.type = params.type || 0;
+        var matched = {}, notMatched = {};
+        var tags = params.tags || [];
+        var promises = [];
+        _.each(tags, function (tag) {
+            var p = new Promise(function (resolve, reject) {
+                var id = tag.id;
+                delete tag.id;
+                tag.type = type;
+                console.log(tag);
+                var keys = getAvailableFields(params);
+                Tag.create(tag, {
+                    fields: ['title', 'type']
+                }).then(function (item) {
+                    matched[id] = item.id;
+                    console.log('####123 :' + item.id +' : ' + id);;
+                    resolve();
+                }).catch(function (error) {
+                    notMatched[id] = error;
+                    console.log('#ee');
+                    console.log(error);
+                    resolve();
+                });
+            });
+            promises.push(p);
+        });
+
+        Promise.all(promises).then(function () {
+            console.log('@#ssu');
+            console.log(matched);
+            res.json({
+                successed: true,
+                data: {
+                    matched: matched,
+                    notMatched: notMatched
+                }
+            })
+        }).catch(function (error) {
+            res.json({
+                successed: false,
+                data: {
+                    matched: matched,
+                    notMatched: notMatched
+                }
+            })
+        });
+    },
     create : function(req,res,next) {
         //console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
