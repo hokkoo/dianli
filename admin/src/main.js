@@ -1,5 +1,6 @@
 // Import System requirements
-import Vue from 'vue'
+// import Vue from 'vue'
+import '../assets/lib/vue/1.0.24/vue.js'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
 

@@ -33,6 +33,16 @@ module.exports = {
         //console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
         var Tag = sails.sequelize['product.tag'];
+        var Category = sails.sequelize['product.category'];
+        console.log('@@####12')
+        var category = Category.build({id: 1});
+        console.log(category.getDoors);
+        console.log(category.setDoors);
+        console.log(category.addDoor);
+        console.log(category.addDoors);
+        var door = Door.build({id: 2});
+        console.log(door.getCategory)
+        console.log(door.setCategory)
         var params = req.allParams(), where;
         if(params.id){
             Door.findOne({
@@ -40,8 +50,11 @@ module.exports = {
                     id: params.id
                 },
                 include: [
-                    { model: Tag, as: 'tags'}
-                  ]
+                    // {model: Category, as: 'category'},
+                    {model: Tag, as: 'tags'}
+                ]
+            },{
+                logging: true
             }).then(function (rtn) {
                 res.json(rtn);
             });
@@ -69,6 +82,7 @@ module.exports = {
         //console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
         var Tag = sails.sequelize['product.tag'];
+        var Category = sails.sequelize['product.category'];
         var params = req.allParams(), where;
         params = params.item || {};
         var keys = getAvailableFields(params);
@@ -79,7 +93,7 @@ module.exports = {
             console.log('####123');
             // 保存标签信息
             if(params.tags && params.tags.length){
-                item.addTags(params.tags || [])
+                item.addTags(params.tags || []);
             }
           /*  _.each(params.tags, function (tagId) {
                 Tag.findById(tagId).then(function (tag) {
@@ -101,6 +115,7 @@ module.exports = {
         //console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
         var Tag = sails.sequelize['product.tag'];
+        var Category = sails.sequelize['product.category'];
         var params = req.allParams(), where;
         params = params.item || {};
         if(_.isUndefined(params.id)){
@@ -113,7 +128,10 @@ module.exports = {
             // var _Door = require('../../sequelize/model/product/door.js');
             // Door.create({name: 'xx'}, {raw: true});
             var item = Door.build({id: params.id}, {isNewRecord: false, raw: true});
+            delete params.detail_id;
+            delete params.parent_id;
             var keys = getAvailableFields(params);
+            console.log(keys)
             item.update(params, {fields: keys}).then(function (rtn) {
                 console.log('@@@@end');
                 item.setTags([]).then(() => {

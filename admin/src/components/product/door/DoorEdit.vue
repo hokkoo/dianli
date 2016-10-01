@@ -19,11 +19,15 @@
             </form-group>
           </div>
           <div class="col-md-6 col-sm-12 col-xs-12">
-            分类：
+            分类：{{item.category.title}}<br>
+            <category-tree :type="1" :selected-item.sync="item.category"></category-tree>
           </div>
           <div class="col-md-6 col-sm-12 col-xs-12">
             标签：
             <tags :values.sync="item.tags"></tags>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <image-upload></image-upload>
           </div>
           <div class="col-md-12 col-sm-12 col-xs-12">
             <form-group>
@@ -47,6 +51,8 @@
   import {getDoor, saveDoor} from '../../../vuex/modules/product/door/action.js';
   import {input as bsInput, formGroup, spinner, vSelect} from 'vue-strap';
   import tags from '../../common/tags.vue';
+  import categoryTree from '../../common/category-tree';
+  import imageUpload from '../../common/image-upload.vue';
 
   export default {
     data: function () {
@@ -57,7 +63,11 @@
           content: '',
           title: '',
           desc: '',
-          tags: []
+          tags: [],
+          category: {
+            id: null,
+            title: null
+          }
         }
       }
     },
@@ -74,13 +84,16 @@
       bsInput,
       formGroup,
       tags,
-      spinner
+      spinner,
+      categoryTree,
+      imageUpload
     },
     methods: {
       saveDoor(){
         const _self = this;
         let isEdit = !!this.item.id;
         this.$refs.spinner.show();
+        this.item.category_id = this.item.category && this.item.category.id || this.item.category_id || 0;
         var defer = this._saveDoor(this.item);
         defer.always( () => {
           this.$refs.spinner.hide();
@@ -107,7 +120,7 @@
         var tags = this.item.tags = [];
         _.each(_tags, (tag) => {
           tags.push(tag.id);
-        })
+        });
       }
     }
   }

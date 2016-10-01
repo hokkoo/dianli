@@ -17,8 +17,7 @@ var Product_tag = product.define('Product_tag', {
 }, {
     createdAt: "createdAt",
     updatedAt: "updatedAt",
-    deletedAt: "deletedAt",
-    paranoid: true,
+    timestamps: true,
     tableName: 'product_tag'
 });
 
@@ -86,4 +85,4 @@ Ware.belongsToMany(Tag, {
   constraints: false
 });
 
-Product_tag.sync();
+//Product_tag.sync();

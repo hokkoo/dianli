@@ -13,10 +13,22 @@ var Door = product.define('Door', {
     title: {
         type: Sequelize.STRING
     },
-    detail_id: Sequelize.BIGINT(20),
-    parent_id: Sequelize.BIGINT(20),
-    price_id: Sequelize.BIGINT(20),
-    category_id: Sequelize.BIGINT(20),
+    detail_id: {
+        type:Sequelize.BIGINT(20),
+        defaultValue: 0
+    },
+    parent_id: {
+        type:Sequelize.BIGINT(20),
+        defaultValue: 0
+    },
+    price_id: {
+        type:Sequelize.BIGINT(20),
+        defaultValue: 0
+    },
+    category_id: {
+        type:Sequelize.BIGINT(20),
+        defaultValue: 0
+    },
     desc: {
         type: Sequelize.STRING
     },
@@ -37,4 +49,4 @@ var Door = product.define('Door', {
 
 module.exports = Door;
 
-Door.sync();
+//Door.sync();
