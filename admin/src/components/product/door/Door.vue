@@ -26,7 +26,7 @@
     </div>
     <div class="images">
       图片：
-      <image-upload></image-upload>
+      <image-plate></image-plate>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@
 <script type="text/babel">
   import {door} from '../../../vuex/modules/product/door/getter.js';
   import {getDoor} from '../../../vuex/modules/product/door/action.js';
- // import imageUpload from '../../common/image-upload';
+  import imagePlate from '../../common/image-plate';
 
   export default {
     vuex: {
@@ -46,7 +46,7 @@
       }
     },
     components: {
-      //imageUpload
+      imagePlate
     },
     created(id){
       this.getItem(this.$route.params.id);

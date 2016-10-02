@@ -27,7 +27,8 @@
             <tags :values.sync="item.tags"></tags>
           </div>
           <div class="col-md-12 col-sm-12 col-xs-12">
-            <image-upload></image-upload>
+            图片：
+            <image-plate :type="1" :list.sync="item.images"></image-plate>
           </div>
           <div class="col-md-12 col-sm-12 col-xs-12">
             <form-group>
@@ -52,7 +53,7 @@
   import {input as bsInput, formGroup, spinner, vSelect} from 'vue-strap';
   import tags from '../../common/tags.vue';
   import categoryTree from '../../common/category-tree';
-  import imageUpload from '../../common/image-upload.vue';
+  import imagePlate from '../../common/image-plate.vue';
 
   export default {
     data: function () {
@@ -67,7 +68,8 @@
           category: {
             id: null,
             title: null
-          }
+          },
+          images: []
         }
       }
     },
@@ -86,16 +88,19 @@
       tags,
       spinner,
       categoryTree,
-      imageUpload
+      imagePlate
     },
     methods: {
       saveDoor(){
         const _self = this;
         let isEdit = !!this.item.id;
         this.$refs.spinner.show();
-        this.item.category_id = this.item.category && this.item.category.id || this.item.category_id || 0;
-        var defer = this._saveDoor(this.item);
+        var item = _.cloneDeep(this.item);
+        item.category_id = item.category && item.category.id || item.category_id || 0;
+        console.log(item);
+        var defer = this._saveDoor(item);
         defer.always( () => {
+          this.item.id = item.id;
           this.$refs.spinner.hide();
         }).done( () => {
           _self.$router.go({
@@ -120,6 +125,11 @@
         var tags = this.item.tags = [];
         _.each(_tags, (tag) => {
           tags.push(tag.id);
+        });
+        var _images = item.images;
+        var images = this.item.images = [];
+        _.each(_images, (image) => {
+          images.push(image);
         });
       }
     }

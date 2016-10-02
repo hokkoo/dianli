@@ -1,42 +1,51 @@
 <template>
-  <div class="file-upload">
+  <div class="image-upload">
   	<input type="file" name="file" class="file-loading" accept="image/*" multiple>
   </div>
 </template>
 
 <script type="text/babel">
-  import 'bootstrap-fileinput';
-
   export default {
-	data: function () {
+    props: {
+      type: {
+        type: Number,
+        default: 0
+      }
+    },
+    data: function () {
       return {
-        list: []
+        list: [],
+        imageMap: {}
+      }
+    },
+    methods: {
+      reset(){
+        this.$input.fileinput('clear');
+        this.$set('imageMap', {});
+        console.log(2);
       }
     },
     ready: function() {
-    	var $input = $(this.$el).find('input');
+    	var $input = $(this.$el).find('[type=file]');
+      this.$input = $input;
       $input.fileinput({
-	    uploadUrl: '/common/image/save',
+	    uploadUrl: '/common/image/save?type=' + (this.type || 0),
 	    autoReplace: true,
 	    maxFileCount: 2,
-	    allowedFileExtensions: ["jpg", "png", "gif"]
+	    allowedFileExtensions: ["jpg", "png", "gif", "png"]
 	});
-      var list = this.list;
       var _self = this;
       $input.on('filedeleted', function (e, key) {
       	console.log(key);
       });
       $input.on('fileuploaded', function (e, data, previewId, index) {
-      	list[previewId] = data.response.data;
+        console.log(1)
+      	_self.imageMap[previewId] = data.response.data;
       });
       $input.on('filesuccessremove', function (e, id) {
-      	delete list[id];
+        console.log(2)
+      	delete _self.imageMap[id];
       });
-    },
-    watch: {
-      list: function () {
-        console.log(this.list);
-      }
     }
   }
 

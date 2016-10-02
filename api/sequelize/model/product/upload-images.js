@@ -2,14 +2,15 @@ var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
 var _type = require('../../config/constType');
 
-var Images = product.define('Images', {
+var UploadImage = product.define('UploadImage', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
         autoIncrement: true
     },
     size:{
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     },
     name :{
         type : Sequelize.STRING
@@ -18,6 +19,15 @@ var Images = product.define('Images', {
         type : Sequelize.STRING
     },
     desc :{
+        type : Sequelize.STRING
+    },
+    originalname :{
+        type : Sequelize.STRING
+    },
+    destination :{
+        type : Sequelize.STRING
+    },
+    path :{
         type : Sequelize.STRING
     },
     url :{
@@ -29,49 +39,28 @@ var Images = product.define('Images', {
     // 关联id，代表图片来源于哪里
     // 特定于图片之间的复制
     refer_id :{
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: null
     },
     // 外部引用的id
     // 所有图片都单独对应于一个外部引用
     related_id :{
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: null
     },
     type: {
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     }
 }, {
-    tableName: 'Images'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
+    timestamps: true,
+    paranoid: true,
+    tableName: 'upload-images'
 });
 
-module.exports = Images;
+module.exports = UploadImage;
 
-var Bed = require('./bed');
-Bed.hasMany(Images, {
-  foreignKey: 'related_id',
-  constraints: false,
-  as: 'images',
-  scope: {
-    type: _type.bed
-  }
-});
-
-var Door = require('./door');
-Door.hasMany(Images, {
-  foreignKey: 'related_id',
-  constraints: false,
-  as: 'images',
-  scope: {
-    type: _type.door
-  }
-});
-
-var Ware = require('./ware');
-Ware.hasMany(Images, {
-  foreignKey: 'related_id',
-  constraints: false,
-  as: 'images',
-  scope: {
-    type: _type.ware
-  }
-});
-//Image.sync();
+//UploadImage.sync();
