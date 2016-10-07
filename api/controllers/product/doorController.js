@@ -12,18 +12,26 @@ module.exports = {
         console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
         var Image = sails.sequelize['product.image'];
-        Door.findAll().then(function (rtn) {
-            res.json(rtn);
+        Door.findAll({
+            include: [{
+                model: Image,
+                as: "images"
+            }]
+        }).then(function (doors) {
+            res.json({
+                successed: true,
+                data: doors
+            });
         });
 
         var Tag = sails.sequelize['product.tag'];
         var door = Door.build({id:1});
         var tag = Tag.build({id: 1});
-        console.log('##21')
-        console.log(door.setImages)
-        console.log(door.getImages)
-        console.log(door.addImage)
-        console.log(door.addImages)
+        // console.log('##21')
+        // console.log(door.setImages)
+        // console.log(door.getImages)
+        // console.log(door.addImage)
+        // console.log(door.addImages)
         /*console.log(door.setTags)
         console.log(door.getTags)
         console.log(door.addTag)
@@ -32,6 +40,10 @@ module.exports = {
         console.log(tag.getProducts)
         console.log(tag.addProduct)
         console.log(tag.addProducts)*/
+        // console.log(door.setCategorys)
+        // console.log(door.getCategorys)
+        // console.log(door.addCategory)
+        // console.log(door.addCategorys)
 
     },
     find : function(req,res,next) {
@@ -57,12 +69,16 @@ module.exports = {
                 include: [
                     // {model: Category, as: 'category'},
                     {model: Image, as: 'images'},
-                    {model: Tag, as: 'tags'}
+                    {model: Tag, as: 'tags'},
+                    {model: Category, as: 'categorys'}
                 ]
             },{
                 logging: true
-            }).then(function (rtn) {
-                res.json(rtn);
+            }).then(function (door) {
+                res.json({
+                    successed: true,
+                    data: door
+                });
             });
 /*            Door.scope('tags').findById(params.id).then(function (rtn) {
                 res.json(rtn);
@@ -74,8 +90,11 @@ module.exports = {
                     where = JSON.parse(params.where);
                 }catch(e){};
                 if(where){
-                    Door.findAll(where).then(function (rtn) {
-                        res.json(rtn);
+                    Door.findAll(where).then(function (doors) {
+                        res.json({
+                            successed: true,
+                            data: doors
+                        });
                     });
                     return;
                 }
@@ -88,6 +107,7 @@ module.exports = {
         //console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
         var Tag = sails.sequelize['product.tag'];
+        var Image = sails.sequelize['product.image'];
         var Category = sails.sequelize['product.category'];
         var params = req.allParams(), where;
         params = params.item || {};
@@ -100,6 +120,15 @@ module.exports = {
             // 保存标签信息
             if(params.tags && params.tags.length){
                 item.addTags(params.tags || []);
+            }
+            if(params.images && params.images.length){
+                console.log(444);
+                var related_id = item.id;
+                _.each(params.images, function (image) {
+                    delete image.id;
+                    image.related_id = related_id;
+                    Image.create(image);
+                });
             }
           /*  _.each(params.tags, function (tagId) {
                 Tag.findById(tagId).then(function (tag) {
@@ -151,14 +180,32 @@ module.exports = {
                             Image.create(image);
                         });
                     }
-                })
+                });
                     
                 item.setTags([]).then(() => {
                     console.log('######################')
                     if(params.tags && params.tags.length){
                         item.setTags(params.tags)
                     }
-                })
+                });
+
+                // 保存分类
+                console.log('####ct')
+                console.log(params.categorys);
+                try{
+                    item.setCategorys([]).then(() => {
+                        if(params.categorys && params.categorys.length){
+                            item.setCategorys(params.categorys).catch(function (err) {
+                                console.log(err)
+                            })
+                        }
+                    }).catch(function (err) {
+                        console.log(err)
+                    })
+                    
+                }catch(e){
+                    console.log(e)
+                }
                 res.json({
                     successed: true
                 })

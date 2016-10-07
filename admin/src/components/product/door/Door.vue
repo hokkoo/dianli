@@ -1,5 +1,5 @@
 <template>
-  <div class="list-wrapper product">
+  <div class="door-detail clearfix">
     <h1>
       {{item.name}}
       <a v-link="{ name: 'productDoorEdit', params: {id: item.id}}">编辑</a>
@@ -10,23 +10,37 @@
         {{item.desc}}
       </p>
     </div>
-    <div>
-      <p>内容</p>
-      <p>
-        {{item.content}}
-      </p>
-    </div>
-    <div class="tags">
-      <p>标签：</p>
-      <ul>
-        <li v-for="tag in tags || []" :id="option.value||option">
-          <span>{{tag.name}}</span>
+    <div class="card">
+      <p>分类：</p>
+      <ul class="clearfix">
+        <li v-for="category in item.categorys || []">
+          <span>{{category.title}}</span>
         </li>
       </ul>
     </div>
-    <div class="images">
+    <div class="card">
+      <p>标签：</p>
+      <ul class="clearfix">
+        <li v-for="tag in item.tags || []">
+          <span>{{tag.title}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="card">
       图片：
-      <image-plate></image-plate>
+      <div class="images clearfix">
+        <div class="item" v-for="image in item.images">
+          <h1>{{image.title || image.filename}}</h1>
+          <img v-bind:src="image.url"/>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div>
+      <h2>详情</h2>
+      <p>
+        {{{item.content}}}
+      </p>
     </div>
   </div>
 </template>
@@ -49,10 +63,49 @@
       imagePlate
     },
     created(id){
-      this.getItem(this.$route.params.id);
+      this.getItem(this.$route.params.id).then( () => {
+      })
     },
     ready(){
       console.log(this.$el);
     }
   }
 </script>
+<style type="text/css">
+  .door-detail {
+    padding: 0 20px;
+}
+
+.door-detail > .title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.door-detail > .title a {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.door-detail li {
+    list-style: none;
+    float: left;
+    margin-right: 20px;
+}
+
+.door-detail .images > .item {
+    float: left;
+    width: 25%;
+    box-sizing: border-box;
+    padding: 1%;
+}
+
+.door-detail .images img {
+    max-width: 100%;
+}
+
+.door-detail .images > .item h1 {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>

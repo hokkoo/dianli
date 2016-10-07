@@ -58,4 +58,7 @@
   .content{
     position: relative;
   }
+  li{
+    list-style: none;
+  }
 </style>

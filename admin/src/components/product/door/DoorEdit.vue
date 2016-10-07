@@ -1,11 +1,16 @@
 <template>
-  <div class="list-wrapper product">
+  <div class="door-edit clearfix">
     <spinner v-ref:spinner size="sm" fixed="false" text="加载中..."></spinner>
-    <h1>
-      {{item.id ? '编辑' : '创建'}}
-    </h1>
-    <div class="detail">
-      <p class="list-title">{{item.name}}</p>
+    <div class="col-xs-12">
+      <h1>
+        {{item.id ? '编辑' : '创建'}}
+        <button type="button" class="btn btn-primary" :disabled="!valid.all" @click="saveDoor">保存</button>
+      </h1>
+    </div>
+    <div class="detail clearfix">
+      <div class="col-xs-12">
+        <p class="list-title">{{item.name}}</p>
+      </div>
       <form action="." method="get" accept-charset="utf-8">
         <form-group :valid.sync="valid.all">
           <div class="col-md-6 col-sm-12 col-xs-12">
@@ -19,8 +24,9 @@
             </form-group>
           </div>
           <div class="col-md-6 col-sm-12 col-xs-12">
-            分类：{{item.category.title}}<br>
-            <category-tree :type="1" :selected-item.sync="item.category"></category-tree>
+            分类：{{selectedItems}}
+            <br>
+            <door-category :type="1" :enable-edit="false" :selected-item-map.sync="selectedItemMap"></door-category>
           </div>
           <div class="col-md-6 col-sm-12 col-xs-12">
             标签：
@@ -37,11 +43,10 @@
           </div>
           <div class="col-md-12 col-sm-12 col-xs-12">
             <form-group>
-              <bs-input label="内容" type="textarea" required :value.sync="item.content"></bs-input>
+              <v-ueditor :type="1" :content.sync="item.content" v-ref:content></v-ueditor>
             </form-group>
           </div>
         </form-group>
-        <button type="button" class="btn btn-primary" :disabled="!valid.all" @click="saveDoor">保存</button>
       </form>
     </div>
   </div>
@@ -54,12 +59,15 @@
   import tags from '../../common/tags.vue';
   import categoryTree from '../../common/category-tree';
   import imagePlate from '../../common/image-plate.vue';
+  import vUeditor from '../../common/v-ueditor.vue';
+  import doorCategory from './DoorCategory.vue';
 
   export default {
     data: function () {
       return {
         valid:{},
         item: {
+          id: '',
           name: '',
           content: '',
           title: '',
@@ -70,6 +78,12 @@
             title: null
           },
           images: []
+        },
+        selectedItemMap: {
+          materior: {},
+          style: {},
+          usage: {},
+          classification: {}
         }
       }
     },
@@ -88,7 +102,9 @@
       tags,
       spinner,
       categoryTree,
-      imagePlate
+      imagePlate,
+      vUeditor,
+      doorCategory
     },
     methods: {
       saveDoor(){
@@ -96,7 +112,12 @@
         let isEdit = !!this.item.id;
         this.$refs.spinner.show();
         var item = _.cloneDeep(this.item);
-        item.category_id = item.category && item.category.id || item.category_id || 0;
+        var categorys = item.categorys = [];
+        _.each(this.selectedItemMap, (value, key) => {
+          if(value && value.id){
+            categorys.push(value.id);
+          }
+        });
         console.log(item);
         var defer = this._saveDoor(item);
         defer.always( () => {
@@ -112,14 +133,29 @@
         });
       }
     },
-    created(id){
-      console.log(this.$route.params)
-      this.getItem(this.$route.params.id);
+    computed: {
+      selectedItems(){
+        let names = [];
+        var selectedItemMap = this.selectedItemMap
+        if(selectedItemMap.materior.id){
+          names.push(selectedItemMap.materior.title);
+        }
+        if(selectedItemMap.style.id){
+          names.push(selectedItemMap.style.title);
+        }
+        if(selectedItemMap.usage.id){
+          names.push(selectedItemMap.usage.title);
+        }
+        if(selectedItemMap.classification.id){
+          names.push(selectedItemMap.classification.title);
+        }
+        return names.join('，');
+      }
     },
-    watch: {
-      _item: function () {
-        var item = this._item;
-        console.log(Object.keys(item));
+    created(id){
+      this.getItem(this.$route.params.id).then( () => {
+        console.log(2)
+        var item = this._item || {};
         var _tags = item.tags;
         _.extend(this.item, item);
         var tags = this.item.tags = [];
@@ -131,7 +167,25 @@
         _.each(_images, (image) => {
           images.push(image);
         });
-      }
+        var names = [];
+        _.each(item.categorys, (category) => {
+          switch(category.sub_type){
+            case 1:
+              _.extend(this.selectedItemMap.materior, category);
+              break;
+            case 2:
+              _.extend(this.selectedItemMap.style, category);
+              break;
+            case 3:
+              _.extend(this.selectedItemMap.usage, category);
+              break;
+            case 4:
+              _.extend(this.selectedItemMap.classification, category);
+              break;
+          }
+        });
+        this.$refs.content.setContent(item.content);
+      })
     }
   }
 </script>

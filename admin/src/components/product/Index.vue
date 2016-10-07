@@ -1,5 +1,5 @@
 <template>
-  <section class="content">
+  <section class="product">
     <div class="row" v-if="servers">
       <div class="col-md-4" v-for="product in products">
         <div class="box box-{{product.status}}">

@@ -4,25 +4,33 @@ import server from '../../../server.js';
 
 // 获取数据列表
 export const getTags = function ({ dispatch }, type) {
+  var defer = $.Deferred();
   $.get('/product/tag/list?type=' + (type || '')).success(function (rtn) {
-    dispatch(_type.GET_PRODUCT_TAGS, rtn);
+    if(rtn.successed){
+      dispatch(_type.GET_PRODUCT_TAGS, rtn.data);
+    }
+    defer.resolve();
   });
+  return defer;
 }
 
 export const getTag = function ({ dispatch }, id) {
+  var defer = $.Deferred();
   if(id){
     $.get('/product/tag/find?id=' + id).success((rtn) => {
-      if(rtn){
-        dispatch(_type.GET_PRODUCT_TAG, rtn);
+      if(rtn.successed){
+        dispatch(_type.GET_PRODUCT_TAG, rtn.data);
+        defer.resolve();
       }
     });
   }else{
     dispatch(_type.GET_PRODUCT_TAG, {});
+    defer.resolve();
   }
+  return defer;
 }
 
 export const saveTag = function ({ dispatch }, tag) {
-  console.log(tag);
   var defer = $.Deferred();
   let param = _.extend({}, tag);
   param = {item: param};

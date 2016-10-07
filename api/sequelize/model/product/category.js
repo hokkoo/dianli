@@ -29,6 +29,10 @@ var Category = product.define('Category', {
     },
     type: {
         type : Sequelize.INTEGER
+    },
+    // 二级分类
+    sub_type: {
+        type : Sequelize.INTEGER
     }
 }, {
     createdAt: "createdAt",
@@ -39,7 +43,7 @@ var Category = product.define('Category', {
 module.exports = Category;
 
 // Category目前只有n:1关系
-var Door = require('./door');
+/*var Door = require('./door');
 Door.belongsTo(Category, {
     as: 'category',
     foreignKey: 'category_id',
@@ -52,6 +56,6 @@ Category.hasMany(Door, {
       type: _type.door
     },
     constraints: false
-});
+});*/
 
 //Category.sync();

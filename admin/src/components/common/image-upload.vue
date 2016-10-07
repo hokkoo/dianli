@@ -31,8 +31,8 @@
       $input.fileinput({
 	    uploadUrl: '/common/image/save?type=' + (this.type || 0),
 	    autoReplace: true,
-	    maxFileCount: 2,
-	    allowedFileExtensions: ["jpg", "png", "gif", "png"]
+	    maxFileCount: 10,
+	    allowedFileExtensions: ["jpg", "png", "gif", "png", "jpeg", "bmp"]
 	});
       var _self = this;
       $input.on('filedeleted', function (e, key) {

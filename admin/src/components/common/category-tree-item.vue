@@ -6,11 +6,11 @@
           {{item.title}}
       </span>
       <span v-if="isFolder" @click="toggle">[{{open ? '-' : '+'}}]</span>
-      <span v-if="!isFolder" @click="changeType">+</span>
+      <span v-if="enableEdit && !isFolder" @click="changeType">+</span>
     </div>
     <ul v-show="open" v-if="isFolder">
-      <category-tree-item v-for="child in item.children" :item="child" :type="type" :selected-item.sync="selectedItem"></category-tree-item>
-      <li>
+      <category-tree-item v-for="child in item.children" :item="child" :type="type" :enable-edit="enableEdit" :selected-item.sync="selectedItem"></category-tree-item>
+      <li v-if="enableEdit">
         <form-group :valid.sync="valid">
           <div class="row">
             <div class="col-sm-8">
@@ -35,6 +35,10 @@
   export default {
     name: 'category-tree-item',
     props: {
+      enableEdit: {
+        type: Boolean,
+        default: true
+      },
       selectedItem: {
         type: Object,
         default: () => {

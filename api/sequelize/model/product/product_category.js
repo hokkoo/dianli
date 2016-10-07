@@ -23,6 +23,42 @@ var Product_category = product.define('Product_category', {
 
 module.exports = Product_category;
 
+
+var Category = require('./category');
+
+var Door = require('./door');
+Door.belongsToMany(Category, {
+  through: {
+    model: Product_category,
+    unique: false,
+    scope: {
+      type: _type.door
+    }
+  },
+  as: 'categorys',
+  foreignKey: 'product_id',
+  constraints: false
+});
+
+Category.belongsToMany(Door, {
+  through: {
+    model: Product_category,
+    unique: false,
+    scope: {
+      type: _type.door
+    }
+  },
+  as:  'doors',
+  foreignKey: 'category_id',
+  constraints: false
+});
+
+Door.addScope('categorys', {
+  include: [
+    { model: Category, as: 'categorys'}
+  ]
+});
+
 /*var Category = require('./category');
 
 var Bed = require('./bed');

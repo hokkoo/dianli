@@ -3,10 +3,10 @@
     <header class="main-header">
       <a href="/" class="logo">
         <!-- mini logo for sidebar mini 40x50 pixels -->
-        <span class="logo-mini"><img src="/static/imgages/logo_sm.png" alt="Logo" class="img-responsive center-block"></span>
+        <span class="logo-mini"><img src="/static/images/logo_sm.png" alt="Logo" class="img-responsive center-block"></span>
         <!-- logo for regular state and mobile devices -->
         <div class="container logo-lg">
-          <div class="pull-left image"><img src="/static/imgages/logo_sm.png" alt="Logo" class="img-responsive"></div>
+          <div class="pull-left image"><img src="/static/images/logo_sm.png" alt="Logo" class="img-responsive"></div>
           <div class="pull-left info">管理</div>
         </div>
       </a>
@@ -33,7 +33,6 @@
                   <li>
                     <a href="#">
                       <h4>
-                        Support Team
                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4>
                       <!-- The message -->
@@ -102,9 +101,13 @@
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/tasks'}"><i class="fa fa-tasks"></i><span class="page">联系人</span></a></li>
 
           <li class="header">产品</li>
-          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/access'}"><i class="fa fa-book"></i><span class="page">房门</span></a></li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/doors'}"><i class="fa fa-book"></i><span class="page">房门</span></a></li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/server'}"><i class="fa fa-hdd-o"></i><span class="page">洁具</span></a></li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/repos'}"><i class="fa fa-heart"></i><span class="page">窗户</span></a></li>
+
+          <li class="header">配置项管理</li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/categorys'}"><i class="fa fa-book"></i><span class="page">类别</span></a></li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/tags'}"><i class="fa fa-book"></i><span class="page">标签</span></a></li>
 
           <li class="header">门面</li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/login'}"><i class="fa fa-circle-o text-yellow"></i> <span class="page">店面信息</span></a></li>

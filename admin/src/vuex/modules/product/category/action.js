@@ -23,6 +23,39 @@ export const getCategory = function ({ dispatch }, id) {
   }
 }
 
+export const getCategorySubTree = function ({ dispatch }, type) {
+  console.log(2)
+  var defer = new $.Deferred();
+  $.get('/product/category/list?type=' + (type || '')).success(function (rtn) {
+    if(rtn.successed){
+      // 目前只处理单树，不处理多树
+      var map= {}, maxLength = 0, maxAncestor = [], rootMap = {};
+      _.each(rtn.data, function (item) {
+        map[item.id] = item;
+      });
+      var root, parent;
+      _.each(map, function (item, id) {
+        item.parent_id = parseInt(item.parent_id, 10);
+        if(!item.parent_id){
+          rootMap[item.id] = item;
+        }else{
+          parent = map[item.parent_id];
+          if(parent){
+            (parent.children || (parent.children = [])).push(item);
+          }
+        }
+      });
+      console.log(rootMap);
+      dispatch(_type.GET_PRODUCT_CATEGORY_SUBTREE, rootMap || {}); 
+      defer.resolve();
+    }
+  });
+  return defer;
+}
+
+
+
+
 export const getCategoryTree = function ({ dispatch }, type) {
   $.get('/product/category/list?type=' + (type || '')).success(function (rtn) {
     if(rtn.successed){

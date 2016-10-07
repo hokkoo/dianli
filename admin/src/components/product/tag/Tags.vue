@@ -1,39 +1,33 @@
 <template>
-  <div class="list-wrapper product">
-    <h1>
-      {{item.name}}
-      <a v-link="{ name: 'productDoorEdit', params: {id: item.id}}">编辑</a>
-    </h1>
-    <div class="detail">
-      <p class="list-title">{{item.name}}</p>
-      <p class="list-content">{{item.content}}</p>
-    </div>
-    <div class="images">
-      图片：
-      <image-upload></image-upload>
-    </div>
+  <h3 class="title">
+    标签管理
+  </h3>
+  <div class="tags">
+    <ul>
+      <li class="item" v-for=""></li>
+    </ul>
   </div>
 </template>
 
 <script type="text/babel">
-  import {door} from '../../../vuex/modules/product/door/getter.js';
-  import {getDoor} from '../../../vuex/modules/product/door/action.js';
-  import imageUpload from '../../common/image-upload';
+  import {tags} from '../../../vuex/modules/product/tag/getter.js';
+  import {getTags} from '../../../vuex/modules/product/tag/action.js';
 
   export default {
     vuex: {
       getters: {
-        item: door
+        item: tag
       },
       actions: {
-        getItem: getDoor
+        getItem: getTags
       }
     },
     components: {
-      imageUpload
     },
     created(id){
-      this.getItem(this.$route.params.id);
+      this.getTags().then( () => {
+
+      })
     },
     ready(){
       console.log(this.$el);

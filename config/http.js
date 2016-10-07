@@ -31,7 +31,9 @@ module.exports.http = {
         console.log('########################### express #############');
         // 后台的开发代理
         // app.use('/admin', express.static('./admin'));
-        var proxyOption = {
+        app.use('/upload', express.static('./upload'));
+        app.use('/static', express.static('./static'));
+        var adminProxyOption = {
             target: 'http://localhost:8088/',
             changeOrigin: true,
             pathRewrite: {
@@ -39,9 +41,20 @@ module.exports.http = {
             },
             ws: true
         };
-        var adminProxy = proxy(proxyOption);
-        app.use('/upload', express.static('./upload'));
+        var adminProxy = proxy(adminProxyOption);
         app.use('/admin', adminProxy);
+
+
+        var mobileProxyOption = {
+            target: 'http://localhost:8810/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/mobile': '/'
+            },
+            ws: true
+        };
+        var mobileProxy = proxy(mobileProxyOption);
+        app.use('/mobile', mobileProxy);
         console.log('### proxy ####');
        /* app.use(function(req, res, next) {
             passport.initialize()(req, res, function() {

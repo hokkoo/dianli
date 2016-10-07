@@ -15,8 +15,11 @@ module.exports = {
             }
         }
         var Tag = sails.sequelize['product.tag'];
-        Tag.findAll(where).then(function (rtn) {
-            res.json(rtn);
+        Tag.findAll(where).then(function (tags) {
+            res.json({
+                successed: true,
+                data: tags
+            });
         });
 
     },
@@ -26,7 +29,10 @@ module.exports = {
         var params = req.allParams(), where;
         if(params.id){
             Door.findById(params.id).then(function (rtn) {
-                res.json(rtn);
+                res.json({
+                    successed: true,
+                    data: rtn
+                });
             });
             return
         }else{
@@ -36,7 +42,10 @@ module.exports = {
                 }catch(e){};
                 if(where){
                     Door.findAll(where).then(function (rtn) {
-                        res.json(rtn);
+                        res.json({
+                            successed: true,
+                            data: rtn
+                        });
                     });
                     return;
                 }
