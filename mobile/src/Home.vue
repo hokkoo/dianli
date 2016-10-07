@@ -138,7 +138,9 @@ body {
 }
 
 .home .doors img {
-    width: 100%;
+    width: 80%;
+    margin: 10px 10%;
+    max-height: 100%;
 }
 
 

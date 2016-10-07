@@ -69,4 +69,10 @@
 .door-detail .detail {
   padding: 20px 0;
 }
+
+
+.door-detail > .detail {
+    width: 100%;
+    overflow: hidden;
+}
 </style>
