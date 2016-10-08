@@ -91,25 +91,24 @@ export const saveCategory = function ({ dispatch }, category) {
   if(!category.new){
     $.post('/product/category/edit', param).success( (rtn) => {
       if(rtn.successed){
-        defer.resolve(rtn);
+        defer.resolve(rtn.data);
       }
     });
   }else{
     $.post('/product/category/create', param).success( (rtn) => {
       if(rtn.successed){
-        defer.resolve(rtn);
+        defer.resolve(rtn.data);
       }
     });
   }
   return defer;
 }
 
-export const saveCategorys = function ({ dispatch }, categorys, type) {
-  console.log(categorys);
+export const saveCategorys = function ({ dispatch }, categorys) {
   var defer = $.Deferred();
-   $.post('/product/category/saves', {categorys: categorys, type: type}).success( (rtn) => {
+   $.post('/product/category/creates', {categorys: categorys}).success( (rtn) => {
       if(rtn.successed){
-        console.log(rtn);
+        defer.resolve(rtn.data);
       }
     }).always(() => {
       defer.resolve();

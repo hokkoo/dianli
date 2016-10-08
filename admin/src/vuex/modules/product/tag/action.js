@@ -8,8 +8,10 @@ export const getTags = function ({ dispatch }, type) {
   $.get('/product/tag/list?type=' + (type || '')).success(function (rtn) {
     if(rtn.successed){
       dispatch(_type.GET_PRODUCT_TAGS, rtn.data);
+      defer.resolve(rtn.data);
+    }else{
+      defer.resolve([]);
     }
-    defer.resolve();
   });
   return defer;
 }
@@ -30,6 +32,33 @@ export const getTag = function ({ dispatch }, id) {
   return defer;
 }
 
+export const editTag = function ({ dispatch }, tag) {
+  var defer = $.Deferred();
+  let param = _.extend({}, tag);
+  param = {item: param};
+  $.post('/product/tag/edit', param).success( (rtn) => {
+    if(rtn.successed){
+      defer.resolve(rtn.data || true)
+    }
+  }).always(() => {
+    defer.resolve();
+  });
+  return defer;
+}
+
+export const deleteTag = function ({ dispatch }, tag) {
+  var defer = $.Deferred();
+  let param = _.extend({}, tag);
+  $.post('/product/tag/delete', {id: tag.id}).success( (rtn) => {
+    if(rtn.successed){
+      defer.resolve(true)
+    }
+  }).always(() => {
+    defer.resolve();
+  });
+  return defer;
+}
+
 export const saveTag = function ({ dispatch }, tag) {
   var defer = $.Deferred();
   let param = _.extend({}, tag);
@@ -37,7 +66,7 @@ export const saveTag = function ({ dispatch }, tag) {
   if(tag.id){
     $.post('/product/tag/edit', param).success( (rtn) => {
       if(rtn.successed){
-        console.log(rtn);
+        defer.resolve(rtn.data);
       }
     }).always(() => {
       defer.resolve();
@@ -46,6 +75,7 @@ export const saveTag = function ({ dispatch }, tag) {
     $.post('/product/tag/create', param).success( (rtn) => {
       if(rtn.successed){
         _.extend(tag, rtn.data);
+        defer.resolve(rtn.data);
       }
     }).always(() => {
       defer.resolve();
@@ -60,6 +90,7 @@ export const saveTags = function ({ dispatch }, tags, type) {
    $.post('/product/tag/saves', {tags: tags, type: type}).success( (rtn) => {
       if(rtn.successed){
         console.log(rtn);
+        defer.resolve(rtn.data || true);
       }
     }).always(() => {
       defer.resolve();

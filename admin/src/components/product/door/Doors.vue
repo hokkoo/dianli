@@ -3,7 +3,7 @@
     <button type="button" class="btn btn-primary" v-link="{ name: 'productDoorEdit'}">创建</button>
     <ul class="list">
       <li v-for="item in items" class="item">
-        <a v-link="{ name: 'productDoorDetail', params: {id: item.id}}">
+        <a v-link="{ name: 'productDoorDetail', params: {id: item.id}}" v-if="item.name">
           <p class="title">{{item.name}}</p>
           <p class="list-content">{{item.desc}}</p>
         </a>

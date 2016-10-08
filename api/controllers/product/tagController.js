@@ -14,6 +14,7 @@ module.exports = {
                 type: params.type
             }
         }
+        console.log(where);
         var Tag = sails.sequelize['product.tag'];
         Tag.findAll(where).then(function (tags) {
             res.json({
@@ -22,6 +23,30 @@ module.exports = {
             });
         });
 
+    },
+    delete : function(req,res,next) {
+        //console.log(Object.keys(sails.sequelize));
+        var Tag = sails.sequelize['product.tag'];
+        var params = req.allParams(), where;
+        if(params.id){
+            var tag = Tag.build({id: params.id});
+            tag.destroy().then(function(){
+                res.json({
+                    successed: true,
+                    data: id
+                });
+            }).catch(function (error) {
+                res.json({
+                    successed: false,
+                    message: error
+                });
+            })
+        }else{
+            res.json({
+                successed: false,
+                message: '无id'
+            });
+        }
     },
     find : function(req,res,next) {
         //console.log(Object.keys(sails.sequelize));
@@ -61,6 +86,7 @@ module.exports = {
         var matched = {}, notMatched = {};
         var tags = params.tags || [];
         var promises = [];
+        var savedTags = [];
         _.each(tags, function (tag) {
             var p = new Promise(function (resolve, reject) {
                 var id = tag.id;
@@ -72,6 +98,7 @@ module.exports = {
                     fields: ['title', 'type']
                 }).then(function (item) {
                     matched[id] = item.id;
+                    savedTags.push(item.get({plain: true}));
                     console.log('####123 :' + item.id +' : ' + id);;
                     resolve();
                 }).catch(function (error) {
@@ -91,7 +118,8 @@ module.exports = {
                 successed: true,
                 data: {
                     matched: matched,
-                    notMatched: notMatched
+                    notMatched: notMatched,
+                    tags: savedTags
                 }
             })
         }).catch(function (error) {
@@ -106,11 +134,11 @@ module.exports = {
     },
     create : function(req,res,next) {
         //console.log(Object.keys(sails.sequelize));
-        var Door = sails.sequelize['product.door'];
+        var Tag = sails.sequelize['product.tag'];
         var params = req.allParams(), where;
         params = params.item || {};
         var keys = getAvailableFields(params);
-        Door.create(params, {
+        Tag.create(params, {
             logging: true,
             fields: keys
         }).then(function (item) {
@@ -128,7 +156,7 @@ module.exports = {
     },
     edit : function(req,res,next) {
         //console.log(Object.keys(sails.sequelize));
-        var Door = sails.sequelize['product.door'];
+        var Tag = sails.sequelize['product.tag'];
         var params = req.allParams(), where;
         params = params.item || {};
         if(_.isUndefined(params.id)){
@@ -138,16 +166,13 @@ module.exports = {
             });
         }else{
             params.id = parseInt(params.id);
-            // var _Door = require('../../sequelize/model/product/door.js');
-            // Door.create({name: 'xx'}, {raw: true});
-            var item = Door.build({id: params.id}, {isNewRecord: false, raw: true});
+            var item = Tag.build({id: params.id}, {isNewRecord: false, raw: true});
             var keys = getAvailableFields(params);
-            console.log('######### dor edit')
-            console.log(item.get({plain: true}))
             item.update(params, {fields: keys}).then(function (rtn) {
                 console.log('@@@@end');
                 res.json({
-                    successed: true
+                    successed: true,
+                    data: item.get({plain: true})
                 })
             }).catch(function (error) {
                 res.json({

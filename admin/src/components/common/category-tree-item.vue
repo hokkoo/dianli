@@ -96,9 +96,9 @@
           new: true
         };
         this.item.children.push(item);
-        this.saveCategory(item).then( (rtn) => {
-          if(rtn.successed){
-            item.id = rtn.data[item.id]
+        this.saveCategory(item).then( (data) => {
+          if(data){
+            item.id = data[item.id]
             delete item.new;
           }
           // 更新一级子元素的父id

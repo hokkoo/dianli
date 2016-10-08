@@ -11,7 +11,6 @@ const mutations = {
     state.tag = data
   },
   [GET_PRODUCT_TAGS] (state, data) {
-    console.log('111');
     state.list = data;
   }
 }

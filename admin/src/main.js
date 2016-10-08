@@ -20,6 +20,9 @@ import ProductDoorsView from './components/product/door/Doors.vue';
 import ProductDoorView from './components/product/door/Door.vue';
 import productDoorEditView from './components/product/door/DoorEdit.vue';
 
+import ProductTagsView from './components/product/tag/Tags.vue';
+import ProductCategorysView from './components/product/category/Categorys.vue';
+
 
 
 // Import Install and register helper items
@@ -72,6 +75,16 @@ router.map({
             component: productDoorEditView,
             name: 'productDoorEdit',
             description: '门'
+          },
+          '/tags': {
+            component: ProductTagsView,
+            name: '标签',
+            description: '标签'
+          },
+          '/categorys': {
+            component: ProductCategorysView,
+            name: '类别',
+            description: '类别'
           }
         }
       }

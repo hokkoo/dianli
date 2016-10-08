@@ -42,6 +42,49 @@ module.exports = {
         	});
         }
     },
+    creates : function(req,res,next) {
+        var Category = sails.sequelize['product.category'];
+        var params = req.allParams(), where;
+        var categorys = params.categorys || [];
+        var notMatched = [];
+        var promises = [];
+        var saved = [];
+        _.each(categorys, function (category) {
+            var p = new Promise(function (resolve, reject) {
+                var keys = getAvailableFields(category);
+                Category.create(category, {
+                    fields: keys
+                }).then(function (item) {
+                    saved.push(item.get({plain: true}));
+                    resolve();
+                }).catch(function (error) {
+                    notMatched.push(error);
+                    console.log('#ee');
+                    console.log(error);
+                    resolve();
+                });
+            });
+            promises.push(p);
+        });
+
+        Promise.all(promises).then(function () {
+            res.json({
+                successed: true,
+                data: {
+                    notMatched: notMatched,
+                    categorys: saved
+                }
+            })
+        }).catch(function (error) {
+            res.json({
+                successed: false,
+                data: {
+                    matched: matched,
+                    notMatched: notMatched
+                }
+            })
+        });
+    },
     create : function(req,res,next) {
         var Category = sails.sequelize['product.category'];
         var params = req.allParams(), where;
@@ -52,9 +95,8 @@ module.exports = {
         Category.create(params, {
             fields: keys
         }).then(function (item) {
-          	console.log('####123');
           	  if(_id){
-          	  	item[_id] = item.id;
+              item[_id] = item.id;
           	  }
             res.json({
                 successed: true,
@@ -69,8 +111,7 @@ module.exports = {
     },
     edit : function(req,res,next) {
         //console.log(Object.keys(sails.sequelize));
-        var Door = sails.sequelize['product.door'];
-        var Tag = sails.sequelize['product.tag'];
+        var Category = sails.sequelize['product.category'];
         var params = req.allParams(), where;
         params = params.item || {};
         if(_.isUndefined(params.id)){
@@ -82,22 +123,15 @@ module.exports = {
             params.id = parseInt(params.id);
             // var _Door = require('../../sequelize/model/product/door.js');
             // Door.create({name: 'xx'}, {raw: true});
-            var item = Door.build({id: params.id}, {isNewRecord: false, raw: true});
+            var item = Category.build({id: params.id}, {isNewRecord: false, raw: true});
             delete params.detail_id;
             delete params.parent_id;
             var keys = getAvailableFields(params);
-            console.log(keys)
-            item.update(params, {fields: keys}).then(function (rtn) {
-                console.log('@@@@end');
-                item.setTags([]).then(() => {
-                    console.log('######################')
-                    if(params.tags && params.tags.length){
-                        item.setTags(params.tags);
-                    }
-                });
+            item.update(params, {fields: keys}).then(function (item) {
                 res.json({
-                    successed: true
-                })
+                    successed: true,
+                    data: item
+                });
             }).catch(function (error) {
                 res.json({
                     successed: false,
