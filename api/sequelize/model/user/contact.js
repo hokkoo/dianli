@@ -1,8 +1,8 @@
 var Sequelize = require('sequelize');
-var product = require("../../config/sequelize").product;
+var user = require("../../config/sequelize").user;
 
 // 联系人信息
-var Contact = product.define('Contact', {
+var Contact = user.define('Contact', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
@@ -15,6 +15,9 @@ var Contact = product.define('Contact', {
         type: Sequelize.STRING
     },
     IDCard: {
+        type: Sequelize.STRING
+    },
+    companyName: {
         type: Sequelize.STRING
     },
     company_id: {

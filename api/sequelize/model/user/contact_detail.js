@@ -1,8 +1,8 @@
 var Sequelize = require('sequelize');
-var product = require("../../config/sequelize").product;
+var user = require("../../config/sequelize").user;
 
 // 联系人信息
-var Contact_detail = product.define('Contact_detail', {
+var Contact_detail = user.define('Contact_detail', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
@@ -10,13 +10,13 @@ var Contact_detail = product.define('Contact_detail', {
     },
     location_home_id: {
         type: Sequelize.INTEGER
-    }
+    },
     address_home: {
         type: Sequelize.STRING
     },
     location_businese_id: {
         type: Sequelize.INTEGER
-    }
+    },
     address_businese: {
         type: Sequelize.STRING
     },

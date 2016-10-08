@@ -23,6 +23,9 @@ import productDoorEditView from './components/product/door/DoorEdit.vue';
 import ProductTagsView from './components/product/tag/Tags.vue';
 import ProductCategorysView from './components/product/category/Categorys.vue';
 
+import ContactHomeView from './components/contact/Index.vue';
+import ContactsView from './components/contact/contact/Contacts.vue';
+
 
 
 // Import Install and register helper items
@@ -51,6 +54,22 @@ router.map({
         component: HomeView,
         name: '首页',
         description: '首页'
+      },
+      '/contact': {
+        component: ProductHomeView,
+        auth: true,
+        subRoutes: {
+          '': {
+            component: ProductHomeView,
+            name: '联系人管理',
+            description: '联系人管理'
+          },
+          '/contacts': {
+            component: ContactsView,
+            name: 'contactList',
+            description: '联系人列表'
+          },
+        }
       },
       '/product': {
          component: ProductHomeView,

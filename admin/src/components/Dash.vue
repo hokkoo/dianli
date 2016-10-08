@@ -98,7 +98,7 @@
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/tables'}"><i class="fa fa-table"></i><span class="page">报表</span></a></li>
 
           <li class="header">通讯录</li>
-          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/tasks'}"><i class="fa fa-tasks"></i><span class="page">联系人</span></a></li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/contact/contacts'}"><i class="fa fa-tasks"></i><span class="page">联系人</span></a></li>
 
           <li class="header">产品</li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/doors'}"><i class="fa fa-book"></i><span class="page">房门</span></a></li>
