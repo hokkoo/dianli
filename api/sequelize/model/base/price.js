@@ -21,6 +21,10 @@ var Price = base.define('Price', {
         primaryKey: true,
         autoIncrement: true
     },
+    // 设定价格
+    value: {
+        type: Sequelize.DECIMAL
+    },
     min: {
         type: Sequelize.DECIMAL
     },
@@ -47,21 +51,15 @@ var Price = base.define('Price', {
         type : Sequelize.INTEGER
     }
 }, {
-    tableName: 'price',
-    schema:'base'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
+    timestamps: true,
+    paranoid: true,
+    tableName: 'price'
 });
 
 module.exports = Price;
-
-var Bed = require('../product/bed');
-Bed.belongsTo(Price, {
-  foreignKey: 'price_id',
-  constraints: false,
-  as: 'price',
-  scope: {
-    type: _type.bed
-  }
-});
 
 var Door = require('../product/door');
 Door.belongsTo(Price, {
@@ -73,6 +71,17 @@ Door.belongsTo(Price, {
   }
 });
 
+var Bed = require('../product/bed');
+Bed.belongsTo(Price, {
+  foreignKey: 'price_id',
+  constraints: false,
+  as: 'price',
+  scope: {
+    type: _type.bed
+  }
+});
+
+
 var Ware = require('../product/ware');
 Ware.belongsTo(Price, {
   foreignKey: 'price_id',
@@ -83,5 +92,4 @@ Ware.belongsTo(Price, {
   }
 });
 
-
-//Product.sync();
+//Price.sync();
