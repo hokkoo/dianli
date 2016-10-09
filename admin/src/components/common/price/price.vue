@@ -1,34 +1,38 @@
 <template>
   <div class="price">
     <button type="button" class="btn btn-primary" :disabled="!valid" @click="saveItem(item)">保存</button>
-    <form-group :valid.sync="valid">
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <form-group>
-          <bs-input label="价格" required :value.sync="item.value"></bs-input>
-        </form-group>
-      </div>
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <form-group>
-          <bs-input label="最低价格" required :value.sync="item.min"></bs-input>
-        </form-group>
-      </div>
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <form-group>
-          <bs-input label="最高价格" required :value.sync="item.max"></bs-input>
-        </form-group>
-      </div>
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <form-group>
-          <bs-input label="平均价格" required :value.sync="item.average"></bs-input>
-        </form-group>
-      </div>
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <form-group>
-          单位：<bs-select :value.sync="item.unit" :options="units" name="unit" search justified clear-button></bs-select>
-        </form-group>
-      </div>
-    </form-group>
-    <price-rule :price.sync="item" v-show="item.id"></price-rule>
+    <div class="detail clearfix">
+      <form-group :valid.sync="valid">
+        <div class="col-md-4 col-xs-12">
+          <form-group>
+            <bs-input label="价格" required :value.sync="item.value"></bs-input>
+          </form-group>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <form-group>
+            <bs-input label="最低价格" required :value.sync="item.min"></bs-input>
+          </form-group>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <form-group>
+            <bs-input label="最高价格" required :value.sync="item.max"></bs-input>
+          </form-group>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <form-group>
+            <bs-input label="平均价格" required :value.sync="item.average"></bs-input>
+          </form-group>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <form-group>
+            单位：<bs-select :value.sync="item.unit" :options="units" name="unit" search justified clear-button></bs-select>
+          </form-group>
+        </div>
+      </form-group>
+    </div>
+    <div class="col-xs-12">
+      <price-rule :price.sync="item" v-show="item.id"></price-rule>
+    </div>
   </div>
 </template>
 

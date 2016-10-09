@@ -1,5 +1,5 @@
 <template>
-  <div class="price-rules">
+  <div class="price-rules clearfix">
     {{_ruleTexts}}
     <div class="rule" v-for="item in ruleTexts">
       <div class="normal-state" v-show="!item.edit">
@@ -21,7 +21,7 @@
         </span>
       </div>
       <div class="edit-state" v-show="item.edit">
-        <button type="button" class="btn btn-primary" :disabled="!item.valid" @click="saveItem(item.origin)">保存</button>
+        <button type="button" class="btn btn-primary" :disabled="!item.valid" @click="saveItem(item.origin, item)">保存</button>
         <button type="button" class="btn btn-warn" @click="item.edit=false">取消</button>
         <form-group :valid.sync="item.valid">
           <bs-input label="数量" required :value.sync="item.origin.size"></bs-input>
@@ -35,12 +35,12 @@
       </div>
     </div>
     <div class="add-form">
-      <button type="button" class="btn btn-primary" :disabled="!newItem.valid" @click="createItem(newItem)">保存</button>
       <form-group :valid.sync="newItem.valid">
         <bs-input label="数量" required :value.sync="newItem.size"></bs-input>
         <bs-input label="价格" required :value.sync="newItem.price"></bs-input>
         <bs-input label="百分比" :value.sync="newItem.percent"></bs-input>
       </form-group>
+      <button type="button" class="btn btn-primary" :disabled="!newItem.valid" @click="createItem(newItem)">保存</button>
     </div>
   </div>
 </template>
@@ -103,7 +103,7 @@
       fixRuleTexts(){
         console.log('xx');
         var rules = _.sortBy(this.price.rules, (rule) => {
-          return rule.size
+          return -rule.size
         });
         var arr = this.ruleTexts, length = rules.length, text = '';
         arr.length = 0;
@@ -131,9 +131,9 @@
         return arr;
       },
       // 删除
-      saveItem(item){
+      saveItem(item, textItem){
         this.savePriceRule(item).then( () => {
-          item.edit = false;
+          textItem.edit = false;
         });
       },
       createItem(item){
@@ -162,5 +162,15 @@
   }
 </script>
 <style type="text/css">
+.price-rules > .rule {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 20px;
+    min-height: 260px;
+}
 
+.price-rules .add-form {
+    float: left;
+    width: 33.3%;
+}
 </style>

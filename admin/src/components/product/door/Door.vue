@@ -8,6 +8,9 @@
       <p>简述</p>
       <p>
         {{item.desc}}
+        <p class="price" v-if="item.price">
+          价格： {{item.price.min}} ~ {{item.price.max}}
+        </p>
       </p>
     </div>
     <div class="card">

@@ -40,15 +40,18 @@ var Price = product.define('Price', {
     // 关联id，代表价格来源于哪里
     // 特定于价格之间的复制
     refer_id :{
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     },
     // 外部引用的id
     // 所有价格都单独对应于一个外部引用
     related_id :{
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     },
     type: {
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     }
 }, {
     createdAt: 'createdAt',
