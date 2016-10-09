@@ -1,10 +1,8 @@
 var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
+var _type = require('../../config/constType');
+
 var Price_price_rule = product.define('Price_price_rule', {
-    price_price_rule_id: {
-        type: Sequelize.BIGINT(20),
-        primaryKey: true
-    },
     price_id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true
@@ -13,14 +11,52 @@ var Price_price_rule = product.define('Price_price_rule', {
          type: Sequelize.BIGINT(20),
          primaryKey: true
     },
-    //1，in_price；2，out_price；3，wholesale_price
-    type :{
-        type:Sequelize.INTEGER
+    type: {
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     }
 }, {
-    tableName: 'Price_price_rule',
-    schema:'product'
+    createdAt: "createdAt",
+    updatedAt: "updatedAt",
+    timestamps: true,
+    tableName: 'price_price_rule'
 });
 
 module.exports = Price_price_rule;
+
+
+/*var Price_rule = require('./price_rule');
+var Price = require('./price');
+Price.belongsToMany(Price_rule, {
+  through: {
+    model: Price_price_rule,
+    unique: false,
+    scope: {
+      type: _type.price
+    }
+  },
+  as: 'rules',
+  foreignKey: 'price_id',
+  constraints: false
+});
+
+Price_rule.belongsToMany(Price, {
+  through: {
+    model: Price_price_rule,
+    unique: false,
+    scope: {
+      type: _type.price
+    }
+  },
+  as:  'price',
+  foreignKey: 'category_id',
+  constraints: false
+});
+
+Door.addScope('categorys', {
+  include: [
+    { model: Category, as: 'categorys'}
+  ]
+});*/
+
 //Price_price_rule.sync();

@@ -7,6 +7,9 @@
         <button type="button" class="btn btn-primary" :disabled="!valid.all" @click="saveDoor">保存</button>
       </h1>
     </div>
+    <div class="price-wrap">
+      <price :item.sync="item.price" :units="doorPriceUnit"></price>
+    </div>
     <div class="detail clearfix">
       <div class="col-xs-12">
         <p class="list-title">{{item.name}}</p>
@@ -61,10 +64,13 @@
   import imagePlate from '../../common/image-plate.vue';
   import vUeditor from '../../common/v-ueditor.vue';
   import doorCategory from './DoorCategory.vue';
+  import {door as doorUnitData} from './unitData.json';
+  import price from '../../common/price/price.vue';
 
   export default {
     data: function () {
       return {
+        doorPriceUnit: doorUnitData,
         valid:{},
         item: {
           id: '',
@@ -76,6 +82,15 @@
           category: {
             id: null,
             title: null
+          },
+          price: {
+            id: 0,
+            value: 0,
+            min: 0,
+            max: 0,
+            average: 0,
+            unit: 0,
+            rules: []
           },
           images: []
         },
@@ -104,7 +119,8 @@
       categoryTree,
       imagePlate,
       vUeditor,
-      doorCategory
+      doorCategory,
+      price
     },
     methods: {
       saveDoor(){
@@ -155,8 +171,15 @@
     created(id){
       this.getItem(this.$route.params.id).then( () => {
         console.log(2)
+        var _self = this;
         var item = this._item || {};
         var _tags = item.tags;
+        var price = item.price || {}, priceRule;;
+        price = _.cloneDeep(price) || {};
+        priceRule = _.cloneDeep(price.rules || []);
+        delete item.price;
+        delete price.rules;
+
         _.extend(this.item, item);
         var tags = this.item.tags = [];
         _.each(_tags, (tag) => {
@@ -185,6 +208,10 @@
           }
         });
         this.$refs.content.setContent(item.content);
+        _.extend(this.item.price, price);
+        _.each(priceRule, (rule) => {
+          _self.item.price.rules.push(rule);
+        });
       })
     }
   }

@@ -33,7 +33,7 @@ module.exports = {
             tag.destroy().then(function(){
                 res.json({
                     successed: true,
-                    data: id
+                    data: params.id
                 });
             }).catch(function (error) {
                 res.json({

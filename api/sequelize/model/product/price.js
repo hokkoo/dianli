@@ -12,10 +12,10 @@
         将价格作为可复用的
 */
 var Sequelize = require('sequelize');
-var base = require("../../config/sequelize").base;
+var product = require("../../config/sequelize").product;
 var _type = require('../../config/constType');
 
-var Price = base.define('Price', {
+var Price = product.define('Price', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
@@ -61,32 +61,32 @@ var Price = base.define('Price', {
 
 module.exports = Price;
 
-var Door = require('../product/door');
+var Door = require('./door');
 Door.belongsTo(Price, {
   foreignKey: 'price_id',
   constraints: false,
   as: 'price'
 });
 
-var Bed = require('../product/bed');
-Bed.belongsTo(Price, {
-  foreignKey: 'price_id',
-  constraints: false,
-  as: 'price',
-  scope: {
-    type: _type.bed
-  }
-});
+// var Bed = require('../product/bed');
+// Bed.belongsTo(Price, {
+//   foreignKey: 'price_id',
+//   constraints: false,
+//   as: 'price',
+//   scope: {
+//     type: _type.bed
+//   }
+// });
 
 
-var Ware = require('../product/ware');
-Ware.belongsTo(Price, {
-  foreignKey: 'price_id',
-  constraints: false,
-  as: 'price',
-  scope: {
-    type: _type.ware
-  }
-});
+// var Ware = require('../product/ware');
+// Ware.belongsTo(Price, {
+//   foreignKey: 'price_id',
+//   constraints: false,
+//   as: 'price',
+//   scope: {
+//     type: _type.ware
+//   }
+// });
 
-//Price.sync();
+Price.sync();

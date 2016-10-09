@@ -52,6 +52,8 @@ module.exports = {
         var Tag = sails.sequelize['product.tag'];
         var Category = sails.sequelize['product.category'];
         var Image = sails.sequelize['product.image'];
+        var Price = sails.sequelize['product.price'];
+        var PriceRule = sails.sequelize['product.price_rule'];
         // var category = Category.build({id: 1});
         // var door = Door.build({id: 2});
         // console.log(category.getDoors);
@@ -70,7 +72,8 @@ module.exports = {
                     // {model: Category, as: 'category'},
                     {model: Image, as: 'images'},
                     {model: Tag, as: 'tags'},
-                    {model: Category, as: 'categorys'}
+                    {model: Category, as: 'categorys'},
+                    {model: Price, as: 'price', include: [{model: PriceRule, as: 'rules'}]}
                 ]
             },{
                 logging: true

@@ -57,4 +57,4 @@ Price.hasMany(Price_rule, {
   foreignKey: 'related_id',
   constraints: false
 });
-//Price_rule.sync();
+Price_rule.sync();

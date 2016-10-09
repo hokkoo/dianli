@@ -1,6 +1,7 @@
 <template>
   <div class="price">
-    <form-group :valid.sync="valid.all">
+    <button type="button" class="btn btn-primary" :disabled="!valid" @click="saveItem(item)">保存</button>
+    <form-group :valid.sync="valid">
       <div class="col-md-6 col-sm-12 col-xs-12">
         <form-group>
           <bs-input label="价格" required :value.sync="item.value"></bs-input>
@@ -27,18 +28,19 @@
         </form-group>
       </div>
     </form-group>
-    <div class="price-rules">
-      
-    </div>
+    <price-rule :price.sync="item" v-show="item.id"></price-rule>
   </div>
 </template>
 
 <script type="text/babel">
-  import {modal} from 'vue-strap';
+  import {input as bsInput, formGroup, spinner, vSelect} from 'vue-strap';
+  import priceRule from './price-rule.vue';
+  import bsSelect from '../bs-select.vue';
+  import {savePrice, createPrice} from '../../../vuex/modules/base/price/action.js';
 
   export default {
     props: {
-      unit: {
+      units: {
         type: Array,
         default: () => []
       },
@@ -50,6 +52,7 @@
         type: Object,
         default: () => {
           return {
+            id: 0,
             value: 0,
             min: 0,
             max: 0,
@@ -62,75 +65,40 @@
     },
     data: function () {
       return {
-        unit: ['']
-        modalIsShowed: false
+        unit: [],
+        modalIsShowed: false,
+        valid: false
       }
     },
     components: {
-      imageUpload,
-      modal
+      bsInput,
+      formGroup,
+      bsSelect,
+      priceRule
+    },
+    vuex: {
+      actions: {
+        savePrice: savePrice,
+        createPrice: createPrice
+      }
     },
     methods: {
-      // 删除
-      remove(item){
-        this.list.$remove(item)
-      },
-      addImages(){
-        console.log(this.$refs.uploader.imageMap);
-        _.each(this.$refs.uploader.imageMap, (image) => {
-          image.title = image.originalname;
-          image.url = '/upload/images/' + image.filename;
-          image.type = this.type;
-          console.log(2);
-          this.list.push(image);
-        });
-        this.modalIsShowed = false;
-        this.$refs.uploader.reset();
-      },
-      show(){
-        this.modalIsShowed = true;
-      },
-      hide(){
-        this.modalIsShowed = false;
+      saveItem(item){
+        if(item.id){
+          this.savePrice(item).then( (data) => {
+          });
+        }else{
+          this.createPrice(item).then( (data) => {
+            item.id = data.id;
+            if(!item.rules){
+              Vue.set(item, 'rules', []);
+            }
+          })
+        }
       }
-      
-    },
-    ready(){
-      console.log(123)
-      window.a = this;
-      console.log(this);
     }
   }
-
-  // TODO 样式如何动态引入
-  // TODO 将插件做成引入方式
 </script>
 <style type="text/css">
-  .image-plate .images > .item {
-    float: left;
-    width: 25%;
-    overflow: hidden;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-}
 
-.image-plate .images > .item h1 {
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-.image-plate .item .opr {
-    position: absolute;
-    top: 60px;
-    text-align: right;
-    right: 20px;
-}
-
-.image-plate .images > .item img{
-    width: 100%;
-}
 </style>

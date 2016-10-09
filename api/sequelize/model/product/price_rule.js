@@ -1,56 +1,66 @@
+/*
+    价格规则
+    1:
+        数量 ：价格
+
+*/
 var Sequelize = require('sequelize');
 var product = require("../../config/sequelize").product;
-/*
-*   价格规则，目前只是描述信息，并关联到具体规矩计算中间件
-*/
+var _type = require('../../config/constType');
+
 var Price_rule = product.define('Price_rule', {
-    price_rule_id: {
+    id: {
         type: Sequelize.BIGINT(20),
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
-    /**
-    *   价格类型/场景
-    *   1，按场景:
-    *       a)首次购买
-    *       b)优惠活动购买
-    *   2，计量折扣
-    *   3，用券/优惠券/现金券 计算
-    */
+    size: {
+        type: Sequelize.DECIMAL,
+        defaultValue: 0
+    },
+    // 百分比
+    percent: {
+        type: Sequelize.DECIMAL,
+        defaultValue: 0
+    },
+    price: {
+        type: Sequelize.DECIMAL,
+        defaultValue: 0
+    },
+    // 默认与price单位一致
+    unit: {
+        type: Sequelize.STRING
+    },
+    // 外部引用的id
+    // 所有价格都单独对应于一个外部引用
+    related_id :{
+        type : Sequelize.INTEGER
+    },
     type: {
-         type: Sequelize.STRING
-    },
-    title: {
-        type: Sequelize.STRING
-    },
-     //规则描述，一般是用字段表示，如:
-    //  首单立减10元
-    //  满20减1
-    //  满100个打九折
-    //  满1999打九折
-    desc: {
-        type: Sequelize.STRING
-    },
-    //对应的退款方式
-    //  能退款，但要扣除全部优惠金额
-    //  按比例扣除优惠金额
-    refund_desc :{
-        type: Sequelize.STRING
-    },
-    //退款计算方式
-    refund_calculator :{
-        type: Sequelize.STRING
-    },
-    content: {
-        type: Sequelize.STRING
-    },
-    calculator :{
-        type: Sequelize.STRING
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     }
 }, {
-    tableName: 'Price_rule',
-    schema:'product'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
+    timestamps: true,
+    paranoid: true,
+    tableName: 'price_rule'
 });
 
 module.exports = Price_rule;
 
-//Price_rule.sync();
+var Price = require('./price.js');
+Price.hasMany(Price_rule, {
+  as: 'rules',
+  foreignKey: 'related_id',
+  constraints: false
+});
+
+// Price_rule.belongsTo(Price, {
+//   as: 'rules',
+//   foreignKey: 'related_id',
+//   constraints: false
+// });
+Price_rule.sync();
