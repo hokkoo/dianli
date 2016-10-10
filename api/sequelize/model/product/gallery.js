@@ -62,6 +62,17 @@ var Gallery = product.define('Gallery', {
 
 module.exports = Gallery;
 
+
+
+var GalleryImage = require('./gallery-image.js');
+
+Gallery.hasMany(GalleryImage, {
+  as: 'images',
+  foreignKey: 'related_id',
+  constraints: false
+});
+
+
 /*Door.belongsTo(Price, {
   foreignKey: 'price_id',
   constraints: false,

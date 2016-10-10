@@ -1,8 +1,8 @@
 <template>
   <div class="gallerys col-xs-12">
-    <ul class="list">
+    <ul class="list clearfix">
       <li v-for="item in items" class="item">
-        <a v-link="{ name: 'galaryDetail', params: {id: item.id}}" v-if="item.name">
+        <a v-link="{ name: 'galaryDetail', params: {id: item.id}}" v-if="item.title">
           <h3 class="title">
             {{item.name}}
             <span class="count" v-if="item.images">{{item.images.length}}</span>
@@ -11,26 +11,33 @@
         </a>
       </li>
       <li class="add-form item">
-        <h3 class="title">新建</h3>
         <form action="">
           <form-group :valid.sync="valid">
-            <div class="col-md-6 col-sm-12 col-xs-12">
-              <form-group>
-                <bs-input label="名称" :value.sync="newItem.title"></bs-input>
-              </form-group>
+            <div class="row">
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <form-group>
+                  <bs-input label="名称" :value.sync="newItem.title"></bs-input>
+                </form-group>
+              </div>
             </div>
-            <div class="col-md-6 col-sm-12 col-xs-12">
-              <form-group>
-                <bs-input label="描述" type="textarea" required :value.sync="newItem.desc"></bs-input>
-              </form-group>
+            <div class="row">
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <form-group>
+                  <bs-input label="描述" type="textarea" required :value.sync="newItem.desc"></bs-input>
+                </form-group>
+              </div>
             </div>
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <form-group>
-                <bs-input label="内容" type="textarea" :value.sync="newItem.content"></bs-input>
-              </form-group>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <form-group>
+                  <bs-input label="内容" type="textarea" :value.sync="newItem.content"></bs-input>
+                </form-group>
+              </div>
             </div>
           </form-group>
-          <button type="button" class="btn btn-warn" :disabled="!valid"  @click="createItem(newItem)">保存</button>
+          <div class="opr">
+            <button type="button" class="btn btn-warn" :disabled="!valid"  @click="createItem(newItem)">新建</button>
+          </div>
         </form>
       </li>
     </ul>
@@ -85,7 +92,22 @@
 </script>
 
 <style>
+.gallerys .item {
+    float: left;
+    width: 20%;
+    box-sizing: border-box;
+    margin: 6px 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.gallerys .item.add-form {
+    float: none;
+    width: 100%;
+    text-align: left;
+}
+
 .gallerys{
-  
+  min-height: 600px;
 }
 </style>

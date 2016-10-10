@@ -50,17 +50,9 @@ var GalleryImage = product.define('GalleryImage', {
     deletedAt: 'deletedAt',
     timestamps: true,
     paranoid: true,
-    tableName: 'gallery-image'
+    tableName: 'gallery_image'
 });
 
 module.exports = GalleryImage;
-
-var Gallery = require('./gallery.js');
-
-Gallery.hasMany(GalleryImage, {
-  as: 'images',
-  foreignKey: 'related_id',
-  constraints: false
-});
 
 GalleryImage.sync();

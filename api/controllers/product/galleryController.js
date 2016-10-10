@@ -23,7 +23,6 @@ function findGalleryAndImage (id) {
                 as: "images"
             }]
         }).then(function (data) {
-            console.log(data);
             resolve(data);
         }).catch(function (error) {
             resolve();
@@ -34,12 +33,13 @@ function findGalleryAndImage (id) {
 module.exports = {
     list : function(req,res,next) {
         var Gallery = sails.sequelize['product.gallery'];
-        var GalleryImage = sails.sequelize['product.gallery-image'];
+        var Image = sails.sequelize['product.gallery-image'];
         var gallery = Gallery.build({id: 1});
+        console.log(Object.keys(gallery));
         console.log(gallery.getImages);
         console.log(gallery.setImages);
         var params = req.allParams(), where;
-        console.log(GalleryImage);
+        console.log(Image);
         Gallery.findAll({
             include: [{
                 model: Image,
@@ -56,7 +56,6 @@ module.exports = {
         var params = req.allParams(), where;
         if(params.id){
             findGalleryAndImage(params.id).then(function (data) {
-                console.log(data);
                 res.json({
                     successed: true,
                     data: data
@@ -157,7 +156,8 @@ module.exports = {
             var keys = getAvailableFields(params);
             item.update(params, {fields: keys}).then(function (rtn) {
                 res.json({
-                    successed: true
+                    successed: true,
+                    data: item
                 })
             });
         }

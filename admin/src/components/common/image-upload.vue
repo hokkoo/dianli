@@ -31,7 +31,7 @@
       $input.fileinput({
 	    uploadUrl: '/common/image/save?type=' + (this.type || 0),
 	    autoReplace: true,
-	    maxFileCount: 10,
+	    maxFileCount: 100,
 	    allowedFileExtensions: ["jpg", "png", "gif", "png", "jpeg", "bmp"]
 	});
       var _self = this;

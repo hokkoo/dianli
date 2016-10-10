@@ -1,10 +1,21 @@
 <template>
-  <div class="gallery-detail">
-    <div class="detail">
+  <div class="gallery-detail col-xs-12">
+    <div class="detail clearfix">
+      <h3 class="title" v-show="item.edit">
+        {{item.title}}
+        <div class="opr pull-right">
+          <button type="button" class="btn btn-primary" v-show="item.edit" @click="item.edit=false">取消</button>
+          <button type="button" class="btn btn-warn" v-show="item.edit" @click="saveItem(newItem)">保存</button>
+        </div>
+      </h3>
       <div class="normal-state" v-show="!item.edit">
         <h3 class="title">
           {{item.title}}
           <span class="count" v-if="item.images">{{item.images.length}}</span>
+          <div class="opr pull-right">
+            <button type="button" class="btn btn-primary" v-show="!item.edit" @click="item.edit=true">编辑</button>
+            <button type="button" class="btn btn-warn" v-show="!item.edit" @click="deleteItem(item)">删除</button>
+          </div>
         </h3>
         <div class="desc">
           {{item.desc}}
@@ -33,12 +44,6 @@
             </div>
           </form-group>
         </form>
-      </div>
-      <div class="opr">
-        <button type="button" class="btn btn-primary" v-show="!item.edit" @click="item.edit=true">编辑</button>
-        <button type="button" class="btn btn-warn" v-show="!item.edit" @click="deleteItem(item)">删除</button>
-        <button type="button" class="btn btn-primary" v-show="item.edit" @click="item.edit=false">取消</button>
-        <button type="button" class="btn btn-warn" v-show="item.edit" @click="saveItem(newItem)">保存</button>
       </div>
     </div>
     <div class="images">
