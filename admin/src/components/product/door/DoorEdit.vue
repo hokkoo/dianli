@@ -134,6 +134,10 @@
             categorys.push(value.id);
           }
         });
+        item.price_id = parseInt(item.price_id, 10) || null;
+        if(item.price && !item.price_id){
+          item.price_id = item.price.id;
+        }
         console.log(item);
         var defer = this._saveDoor(item);
         defer.always( () => {

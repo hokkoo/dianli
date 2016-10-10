@@ -1,9 +1,12 @@
 {
-	"door": [{
-		"label": "平米",
-		"value": 0
-	}, {
-		"label": "个",
-		"value": 1
-	}]
+    "door": [
+        {
+            "label": "平米",
+            "value": "平米"
+        },
+        {
+            "label": "个",
+            "value": "个"
+        }
+    ]
 }

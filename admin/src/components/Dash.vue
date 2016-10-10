@@ -106,6 +106,7 @@
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/repos'}"><i class="fa fa-heart"></i><span class="page">窗户</span></a></li>
 
           <li class="header">配置项管理</li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/gallerys'}"><i class="fa fa-book"></i><span class="page">图库</span></a></li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/categorys'}"><i class="fa fa-book"></i><span class="page">类别</span></a></li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/tags'}"><i class="fa fa-book"></i><span class="page">标签</span></a></li>
 

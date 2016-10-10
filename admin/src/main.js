@@ -26,6 +26,8 @@ import ProductCategorysView from './components/product/category/Categorys.vue';
 import ContactHomeView from './components/contact/Index.vue';
 import ContactsView from './components/contact/contact/Contacts.vue';
 
+import ProductGallerysView from './components/product/gallery/Gallerys.vue';
+import ProductGalleryDetailView from './components/product/gallery/Gallery.vue';
 
 
 // Import Install and register helper items
@@ -104,6 +106,16 @@ router.map({
             component: ProductCategorysView,
             name: '类别',
             description: '类别'
+          },
+          '/gallerys': {
+            component: ProductGallerysView,
+            name: '图库',
+            description: '图库'
+          },
+          '/gallery/:id': {
+            component: ProductGalleryDetailView,
+            name: 'galaryDetail',
+            description: '图库详情'
           }
         }
       }

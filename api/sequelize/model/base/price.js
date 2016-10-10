@@ -89,4 +89,4 @@ Ware.belongsTo(Price, {
   }
 });
 
-//Price.sync();
+Price.sync();

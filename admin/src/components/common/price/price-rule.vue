@@ -1,7 +1,7 @@
 <template>
   <div class="price-rules clearfix">
     {{_ruleTexts}}
-    <div class="rule" v-for="item in ruleTexts">
+    <div class="rule col-xs-12 col-sm-4" v-for="item in ruleTexts">
       <div class="normal-state" v-show="!item.edit">
         <span class="item">
           <label>
@@ -34,7 +34,7 @@
         <button type="button" class="btn btn-warn" v-show="!item.edit" @click="deleteItem(item.origin)">删除</button>
       </div>
     </div>
-    <div class="add-form">
+    <div class="add-form col-xs-12 col-sm-4">
       <form-group :valid.sync="newItem.valid">
         <bs-input label="数量" required :value.sync="newItem.size"></bs-input>
         <bs-input label="价格" required :value.sync="newItem.price"></bs-input>
@@ -163,14 +163,10 @@
 </script>
 <style type="text/css">
 .price-rules > .rule {
-    float: left;
-    width: 33.3%;
     margin-bottom: 20px;
     min-height: 260px;
 }
 
 .price-rules .add-form {
-    float: left;
-    width: 33.3%;
 }
 </style>

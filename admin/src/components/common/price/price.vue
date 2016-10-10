@@ -1,6 +1,5 @@
 <template>
   <div class="price">
-    <button type="button" class="btn btn-primary" :disabled="!valid" @click="saveItem(item)">保存</button>
     <div class="detail clearfix">
       <form-group :valid.sync="valid">
         <div class="col-md-4 col-xs-12">
@@ -27,6 +26,9 @@
           <form-group>
             单位：<bs-select :value.sync="item.unit" :options="units" name="unit" search justified clear-button></bs-select>
           </form-group>
+        </div>
+        <div class="col-md-4 col-xs-12 opr">
+          <button type="button" class="btn btn-primary" :disabled="!valid" @click="saveItem(item)">保存价格</button>
         </div>
       </form-group>
     </div>
@@ -104,5 +106,7 @@
   }
 </script>
 <style type="text/css">
-
+.price-wrap .detail > .opr .btn {
+    margin-top: 20px;
+}
 </style>

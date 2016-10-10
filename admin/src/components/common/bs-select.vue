@@ -29,7 +29,7 @@
           </li>
           <li v-if="required&&!clearButton"><a @mousedown.prevent="clear() && blur()">{{ placeholder || text.notSelected }}</a></li>
           <li v-for="option in options | filterBy searchValue" :id="option.value||option">
-            <a @mousedown.prevent="select(option.value||option)">
+            <a @mousedown.prevent="select(option.value || option)">
               <span v-html="option.label||option"></span>
               <span class="glyphicon glyphicon-ok check-mark" v-show="isSelected(option.value||option)"></span>
             </a>

@@ -50,7 +50,8 @@
     methods: {
       // 删除
       remove(item){
-        this.list.$remove(item)
+        this.list.$remove(item);
+        this.$dispatch('removeImage', item);
       },
       addImages(){
         console.log(this.$refs.uploader.imageMap);
@@ -59,6 +60,7 @@
           image.url = '/upload/images/' + image.filename;
           image.type = this.type;
           console.log(2);
+          this.$dispatch('addImage', image);
           this.list.push(image);
         });
         this.modalIsShowed = false;

@@ -43,9 +43,11 @@
         this.content = this.ue.getContent();
       },
       setContent(content){
-        this.ue.ready( () => {
-          this.ue.setContent(content);
-        })
+        if(content){
+          this.ue.ready( () => {
+            this.ue.setContent(content);
+          })
+        }
       }
     },
     watch: {
