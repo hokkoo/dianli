@@ -85,12 +85,15 @@
   import {company} from '../../../vuex/modules/company/company/getter.js';
   import {getCompany} from '../../../vuex/modules/company/company/action.js';
   import imagePlate from '../../common/image-plate';
+  import getObject from './processor.js';
 
   export default {
+    data: () => {
+      return {
+        item: getObject()
+      }
+    },
     vuex: {
-      getters: {
-        item: company
-      },
       actions: {
         getItem: getCompany
       }
@@ -100,7 +103,23 @@
     },
     created(id){
       this.getItem(this.$route.params.id).then( (data) => {
-        console.log(data);
+        var item = this.item;
+        var images = data.images, tags = data.tags, categorys = data.categorys, owner = data.owner;
+        delete data.images;
+        delete data.tags;
+        delete data.categorys;
+        delete data.owner;
+        _.extend(item, data);
+        _.extend(item.owner, owner);
+        _.each(images, (image) => {
+          item.images.push(image);
+        });
+        _.each(tags, (tag) => {
+          item.tags.push(tag);
+        });
+         _.each(categorys, (category) => {
+          item.categorys.push(category);
+        });
       });
     },
     ready(){

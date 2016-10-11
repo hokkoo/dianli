@@ -32,7 +32,7 @@ module.exports = {
         var params = req.allParams(), where;
         if(params.id){
             Company.findOne({
-                where: {id: id},
+                where: {id: params.id},
                 include: [{
                     model: Image,
                     as: "images"

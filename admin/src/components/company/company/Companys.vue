@@ -19,7 +19,7 @@
   export default {
     data: function () {
       return {
-        items: () => []
+        items: []
       }
     },
     vuex: {
@@ -28,9 +28,10 @@
       }
     },
     created(){
+      var _self = this;
       this.getCompanys().then( (data) => {
         _.each(data, (item) => {
-          this.items.push(item);
+          _self.items.push(item);
         });
       })
     }
