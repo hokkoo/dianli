@@ -8,6 +8,7 @@ var mime = require('mime');
 
 var uploadPath = path.resolve(process.cwd(), './upload/images/');
 var uploadTmpPath = path.resolve(process.cwd(), './upload/tmp/');
+var uploadCompanyPath = path.resolve(process.cwd(), './upload/company/');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,6 +32,16 @@ var tmpStorage = multer.diskStorage({
   }
 });
 
+var companyStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadCompanyPath)
+  },
+  filename: function (req, file, cb) {
+      //console.log(Object.keys(file));
+      var extension = mime.extension(file.mimetype);
+    cb(null, (file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
+  }
+});
 
 var upload = multer({ storage: storage });
 
@@ -41,6 +52,11 @@ var uploadTmp = multer({ storage: tmpStorage });
 
 var singleUploadTmp = uploadTmp.single('file');
 var multipleUploadTmp = uploadTmp.array('file', 12)
+
+var uploadCompany = multer({ storage: companyStorage });
+
+var singleUploadCompany = uploadCompany.single('file');
+var multipleUploadCompany = uploadCompany.array('file', 12)
 
 module.exports = {
     save : function(req,res,next) {
@@ -68,6 +84,30 @@ module.exports = {
             res.json({
                 successed: true,
                 data: req.file
+            });
+        });
+    },
+    saveCompanyImage : function(req,res,next) {
+        var params = req.allParams();
+        singleUploadCompany(req, res, function () {
+            var file = req.file;
+            var Image = sails.sequelize['company.company-image'];
+            Image.create({
+                name: file.filename,
+                extension: mime.extension(file.mimetype),
+                size: file.size,
+                originalname: file.originalname,
+                destination: file.destination,
+                path: file.path,
+                type: params.type || 0
+            });
+            res.json({
+                name: file.filename,
+                originalName: file.originalname,
+                size: file.size,
+                state: 'SUCCESS',
+                type: mime.extension(file.mimetype),
+                url: '/upload/tmp/' + file.filename
             });
         });
     },

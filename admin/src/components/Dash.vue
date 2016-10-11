@@ -109,6 +109,9 @@
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/gallerys'}"><i class="fa fa-book"></i><span class="page">图库</span></a></li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/categorys'}"><i class="fa fa-book"></i><span class="page">类别</span></a></li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/tags'}"><i class="fa fa-book"></i><span class="page">标签</span></a></li>
+          
+          <li class="header">公司</li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/company/companys'}"><i class="fa fa-book"></i><span class="page">列表</span></a></li>
 
           <li class="header">门面</li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/login'}"><i class="fa fa-circle-o text-yellow"></i> <span class="page">店面信息</span></a></li>

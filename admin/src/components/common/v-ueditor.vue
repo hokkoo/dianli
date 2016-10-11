@@ -11,6 +11,7 @@
   import uuid from 'uuid';
   // 借助ueditor来处理
   export default {
+    name: 'v-ueditor',
     props: {
       type: {
         type: Number,

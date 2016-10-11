@@ -5,6 +5,7 @@
 </template>
 
 <script type="text/babel">
+  import {company as companyType} from '../_config/type.json';
   export default {
     props: {
       type: {
@@ -27,9 +28,13 @@
     },
     ready: function() {
     	var $input = $(this.$el).find('[type=file]');
+      var url = '/common/image/save?type=' + (this.type || 0);
+      if(this.type == companyType.image){
+        url = '/common/image/saveCompanyImage?type=' + (this.type || 0);
+      }
       this.$input = $input;
       $input.fileinput({
-	    uploadUrl: '/common/image/save?type=' + (this.type || 0),
+	    uploadUrl: url,
 	    autoReplace: true,
 	    maxFileCount: 100,
 	    allowedFileExtensions: ["jpg", "png", "gif", "png", "jpeg", "bmp"]

@@ -7,6 +7,35 @@ var getAvailableFields = require('../util/util.js').getAvailableFields;
 var _type = require('../../sequelize/config/constType.js');
 
 module.exports = {
+    search : function(req,res,next) {
+        var params = req.allParams(), where;
+        var Contact = sails.sequelize['user.contact'];
+        if(params.q){
+            var likeQ = '%' + params.q + '%';
+            where = {
+                $or: [
+                    {
+                        name: {
+                            $like: likeQ
+                        }
+                    },
+                    {
+                        realName: {
+                            $like: likeQ
+                        }
+                    }
+                ]
+            }
+        }
+        Contact.findAll({
+            where: where
+        }).then(function (doors) {
+            res.json({
+                successed: true,
+                data: doors
+            });
+        });
+    },
     list : function(req,res,next) {
         var Contact = sails.sequelize['user.contact'];
         Contact.findAll({

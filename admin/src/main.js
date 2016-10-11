@@ -29,6 +29,10 @@ import ContactsView from './components/contact/contact/Contacts.vue';
 import ProductGallerysView from './components/product/gallery/Gallerys.vue';
 import ProductGalleryDetailView from './components/product/gallery/Gallery.vue';
 
+import CompanyHomeView from './components/company/Index.vue';
+import CompanysView from './components/company/company/Companys.vue';
+import CompanyDetailView from './components/company/company/Company.vue';
+import CompanyEditView from './components/company/company/CompanyEdit.vue';
 
 // Import Install and register helper items
 Vue.use(Router)
@@ -57,6 +61,37 @@ router.map({
         name: '首页',
         description: '首页'
       },
+      '/company': {
+        component: CompanyHomeView,
+        auth: true,
+        subRoutes: {
+          '': {
+            component: CompanyHomeView,
+            name: '联系人管理',
+            description: '联系人管理'
+          },
+          '/companys': {
+            component: CompanysView,
+            name: 'companys',
+            description: '公司列表'
+          },
+          '/company/:id': {
+            component: CompanyDetailView,
+            name: 'companyDetail',
+            description: '公司'
+          },
+           '/company/create': {
+            component: CompanyEditView,
+            name: 'companyCreate',
+            description: '公司'
+          },
+          '/company/edit/:id': {
+            component: CompanyEditView,
+            name: 'companyEdit',
+            description: '公司'
+          }
+        }
+      },
       '/contact': {
         component: ProductHomeView,
         auth: true,
@@ -70,7 +105,7 @@ router.map({
             component: ContactsView,
             name: 'contactList',
             description: '联系人列表'
-          },
+          }
         }
       },
       '/product': {

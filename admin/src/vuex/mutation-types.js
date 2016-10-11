@@ -29,6 +29,9 @@ export const LOADING = 'LOADING'
 export const GET_PRODUCT_DOOR = 'GET_PRODUCT_DOOR';
 export const GET_PRODUCT_DOORS = 'GET_PRODUCT_DOORS';
 
+export const GET_COMPANY = 'GET_COMPANY';
+export const GET_COMPANYS = 'GET_COMPANYS';
+
 export const GET_PRODUCT_TAG = 'GET_PRODUCT_TAG';
 export const DELETE_PRODUCT_TAG = 'DELETE_PRODUCT_TAG';
 export const GET_PRODUCT_TAGS = 'GET_PRODUCT_TAGS';

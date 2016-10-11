@@ -1,8 +1,8 @@
 var Sequelize = require('sequelize');
-var product = require("../../config/sequelize").product;
+var company = require("../../config/sequelize").company;
 var _type = require('../../config/constType');
 
-var Company = product.define('Company', {
+var Company = company.define('Company', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
@@ -22,6 +22,12 @@ var Company = product.define('Company', {
     code: {
         type: Sequelize.STRING
     },
+    name: {
+        type: Sequelize.STRING
+    },
+    fullname: {
+        type: Sequelize.STRING
+    },
     title: {
         type: Sequelize.STRING
     },
@@ -29,6 +35,7 @@ var Company = product.define('Company', {
         type: Sequelize.STRING
     },
     // 法人
+    // 都指向联系人
     owner_id: {
          type: Sequelize.BIGINT(20),
          defaultValue: 0
@@ -50,10 +57,6 @@ var Company = product.define('Company', {
     },
     type: {
         type : Sequelize.INTEGER
-    },
-    // 二级分类
-    sub_type: {
-        type : Sequelize.INTEGER
     }
 }, {
     createdAt: 'createdAt',
@@ -65,5 +68,14 @@ var Company = product.define('Company', {
 });
 
 module.exports = Company;
+
+var Image = require('./company-image.js');
+
+Company.hasMany(Image, {
+  as: 'images',
+  foreignKey: 'related_id',
+  constraints: false
+});
+
 
 Company.sync();
