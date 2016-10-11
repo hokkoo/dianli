@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var company = require("../../config/sequelize").company;
 var _type = require('../../config/constType');
 
-var GalleryImage = company.define('GalleryImage', {
+var CompanyImage = company.define('CompanyImage', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
@@ -50,9 +50,10 @@ var GalleryImage = company.define('GalleryImage', {
     deletedAt: 'deletedAt',
     timestamps: true,
     paranoid: true,
-    tableName: 'gallery_image'
+    tableName: 'company_image',
+    schema:'company'
 });
 
-module.exports = GalleryImage;
+module.exports = CompanyImage;
 
-GalleryImage.sync();
+CompanyImage.sync();

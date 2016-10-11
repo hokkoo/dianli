@@ -6,6 +6,7 @@
 
 <script type="text/babel">
   import {company as companyType} from '../_config/type.json';
+  
   export default {
     props: {
       type: {

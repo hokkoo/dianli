@@ -1,6 +1,6 @@
 <template>
   <div class="companys col-xs-12">
-    <a class="btn btn-primary" href="/admin/company/company/create">创建</a>
+    <a class="btn btn-primary" v-link="{name:'companyCreate'}">创建</a>
     <ul class="list">
       <li v-for="item in items" class="item">
         <a v-link="{ name: 'companyDetail', params: {id: item.id}}" v-if="item.name">

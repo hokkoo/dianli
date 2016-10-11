@@ -78,7 +78,7 @@
     },
     events: {
       addNotHitItem(value){
-        this.contact.name = value;
+        this.newContact.name = value;
         this.modalIsShowed = true;
       },
       contactEditSuccess(data){

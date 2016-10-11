@@ -24,6 +24,7 @@
   // 图片操作库，显示已有图片，并能添加图片
   import imageUpload from './image-upload.vue';
   import {modal} from 'vue-strap';
+  import {company as companyType} from '../_config/type.json';
 
   export default {
     props: {
@@ -54,10 +55,12 @@
         this.$dispatch('removeImage', item);
       },
       addImages(){
+        var isCompany = companyType.image === this.type;
+        var urlPrefix = isCompany ? '/upload/company/': '/upload/images/';
         console.log(this.$refs.uploader.imageMap);
         _.each(this.$refs.uploader.imageMap, (image) => {
           image.title = image.originalname;
-          image.url = '/upload/images/' + image.filename;
+          //image.url = urlPrefix + image.filename;
           image.type = this.type;
           console.log(2);
           this.$dispatch('addImage', image);

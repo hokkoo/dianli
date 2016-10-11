@@ -50,7 +50,8 @@ var Contact_detail = user.define('Contact_detail', {
     deletedAt: 'deletedAt',
     timestamps: true,
     paranoid: true,
-    tableName: 'contact_detail'
+    tableName: 'contact_detail',
+    schema:'user'
 });
 
 module.exports = Contact_detail;

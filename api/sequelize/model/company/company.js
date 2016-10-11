@@ -50,13 +50,15 @@ var Company = company.define('Company', {
         type: Sequelize.STRING
     },
     location_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
     },
     address: {
         type: Sequelize.STRING
     },
     type: {
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: 0
     }
 }, {
     createdAt: 'createdAt',
@@ -64,7 +66,8 @@ var Company = company.define('Company', {
     deletedAt: 'deletedAt',
     timestamps: true,
     paranoid: true,
-    tableName: 'company'
+    tableName: 'company',
+    schema:'company'
 });
 
 module.exports = Company;
@@ -75,6 +78,19 @@ Company.hasMany(Image, {
   as: 'images',
   foreignKey: 'related_id',
   constraints: false
+});
+
+var Contact = require('../user/contact.js');
+/*Company.hasOne(Contact, {
+    as: 'owner',
+    foreignKey: 'owner_id',
+    constraints: false
+});*/
+
+Company.belongsTo(Contact, {
+    as: 'owner',
+    foreignKey: 'owner_id',
+    constraints: false
 });
 
 

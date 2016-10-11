@@ -107,16 +107,25 @@
     methods: {
       save(){
         this.$refs.spinner.show();
-        this.saveItem(this.item).always( (data) => {
+        var item = _.extend({}, this.item);
+        item.owner_id = item.owner_id || 0;
+        item.type = item.type || 0;
+        var images = item.images;
+        item.images = [];
+        _.each(images, (image) => {
+          item.images.push(image.id);
+        });
+        console.log(item);
+        this.saveItem(item).always( (data) => {
           this.$refs.spinner.hide();
-        }).done( () => {
+        }).done( (data) => {
           if(!this.item.id){
             this.item.id = data.id;
           }
-          _self.$router.go({
-            name: 'productDoorDetail',
+          this.$router.go({
+            name: 'companyDetail',
             params: {
-              id: _self.item.id
+              id: this.item.id
             }
           });
         });

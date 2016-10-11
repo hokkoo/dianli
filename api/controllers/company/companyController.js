@@ -29,6 +29,7 @@ module.exports = {
     find : function(req,res,next) {
         var Company = sails.sequelize['company.company'];
         var Image = sails.sequelize['company.company-image'];
+        var Contact = sails.sequelize['user.contact'];
         var params = req.allParams(), where;
         if(params.id){
             Company.findOne({
@@ -36,6 +37,9 @@ module.exports = {
                 include: [{
                     model: Image,
                     as: "images"
+                },{
+                    model: Contact,
+                    as: "owner"
                 }]
             }).then(function (data) {
                  res.json({
@@ -83,10 +87,14 @@ module.exports = {
         var Company = sails.sequelize['company.company'];
         var params = req.allParams(), where;
         params = params.item || {};
+
         var keys = getAvailableFields(params);
         Company.create(params, {
             fields: keys
         }).then(function (item) {
+            if(params.images && params.images.length){
+                item.setImages(params.images);
+            }
             res.json({
                 successed: true,
                 data: item
@@ -113,6 +121,17 @@ module.exports = {
             var item = Company.build({id: params.id}, {isNewRecord: false, raw: true});
             var keys = getAvailableFields(params);
             item.update(params, {fields: keys}).then(function (rtn) {
+                console.log('images ... ' + params.images)
+                if(params.images && params.images.length){
+                    try{
+                        item.setImages(params.images).catch(function (e) {
+                            console.log(e)
+                        });
+                        
+                    }catch(e){
+                        console.log(e)
+                    }
+                }
                 res.json({
                     successed: true,
                     data: item

@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
   filename: function (req, file, cb) {
       //console.log(Object.keys(file));
       var extension = mime.extension(file.mimetype);
-    cb(null, (file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
+    cb(null, (file.originalname || file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
   }
 });
 
@@ -28,7 +28,7 @@ var tmpStorage = multer.diskStorage({
   filename: function (req, file, cb) {
       //console.log(Object.keys(file));
       var extension = mime.extension(file.mimetype);
-    cb(null, (file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
+    cb(null, (file.originalname || file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
   }
 });
 
@@ -39,7 +39,7 @@ var companyStorage = multer.diskStorage({
   filename: function (req, file, cb) {
       //console.log(Object.keys(file));
       var extension = mime.extension(file.mimetype);
-    cb(null, (file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
+    cb(null, (file.originalname || file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
   }
 });
 
@@ -58,6 +58,12 @@ var uploadCompany = multer({ storage: companyStorage });
 var singleUploadCompany = uploadCompany.single('file');
 var multipleUploadCompany = uploadCompany.array('file', 12)
 
+var urlPrefix = {
+    image: '/upload/images/',
+    imageCompany: '/upload/company/',
+    tmpImage: '/upload/tmp/'
+}
+
 module.exports = {
     save : function(req,res,next) {
         var params = req.allParams();
@@ -71,7 +77,8 @@ module.exports = {
                 originalname: file.originalname,
                 destination: file.destination,
                 path: file.path,
-                type: params.type || 0
+                type: params.type || 0,
+                url: urlPrefix.image + file.filename
             };
             var Image;
             if(params.gallery_id){
@@ -80,34 +87,35 @@ module.exports = {
             }else{
                 Image = sails.sequelize['product.upload-images'];
             }
-            Image.create(item);
-            res.json({
-                successed: true,
-                data: req.file
+            Image.create(item).then(function (data) {
+                res.json({
+                    successed: true,
+                    data: data
+                });
             });
         });
     },
     saveCompanyImage : function(req,res,next) {
         var params = req.allParams();
         singleUploadCompany(req, res, function () {
+            var params = req.allParams();
             var file = req.file;
-            var Image = sails.sequelize['company.company-image'];
-            Image.create({
+            var item = {
                 name: file.filename,
                 extension: mime.extension(file.mimetype),
                 size: file.size,
                 originalname: file.originalname,
                 destination: file.destination,
                 path: file.path,
-                type: params.type || 0
-            });
-            res.json({
-                name: file.filename,
-                originalName: file.originalname,
-                size: file.size,
-                state: 'SUCCESS',
-                type: mime.extension(file.mimetype),
-                url: '/upload/tmp/' + file.filename
+                type: params.type || 0,
+                url: urlPrefix.imageCompany + file.filename
+            };
+            var Image = sails.sequelize['company.company-image'];
+            Image.create(item).then(function (data) {
+                res.json({
+                    successed: true,
+                    data: data
+                });
             });
         });
     },
@@ -129,7 +137,8 @@ module.exports = {
                 originalname: file.originalname,
                 destination: file.destination,
                 path: file.path,
-                type: params.type || 0
+                type: params.type || 0,
+                url: urlPrefix.tmpImage + file.filename
             });
             res.json({
                 name: file.filename,

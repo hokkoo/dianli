@@ -35,6 +35,7 @@ export const getCompany = function ({ dispatch }, id) {
 
 export const saveCompany = function ({ dispatch }, item = {}) {
   var defer = $.Deferred();
+  console.log(item);
   if(item.id){
     return editCompany({dispatch: dispatch} , item);
   }else{
