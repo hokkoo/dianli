@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="images">
-      <image-plate :type="31" :list.sync="images"></image-plate>
+      <image-plate :type="imageType" :list.sync="images"></image-plate>
     </div>
   </div>
   <modal v-ref:modal cancel-text="取消" ok-text="确定" :callback="confirmDeleteItem" :show.sync="modalIsShowed">
@@ -64,6 +64,8 @@
   import {input as bsInput, formGroup, spinner, vSelect, modal, alert} from 'vue-strap';
   import imagePlate from '../../common/image-plate.vue';
   import vUeditor from '../../common/v-ueditor.vue';
+  import {gallery as galleryType} from '../../_config/type.json';
+  const galleryImageType = galleryType.image;
 
   export default {
     data: () => {
@@ -83,7 +85,8 @@
           title: '',
           desc: '',
           content: ''
-        }
+        },
+        imageType: galleryImageType
       }
     },
     vuex: {

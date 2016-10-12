@@ -123,14 +123,7 @@ module.exports = {
             item.update(params, {fields: keys}).then(function (rtn) {
                 console.log('images ... ' + params.images)
                 if(params.images && params.images.length){
-                    try{
-                        item.setImages(params.images).catch(function (e) {
-                            console.log(e)
-                        });
-                        
-                    }catch(e){
-                        console.log(e)
-                    }
+                    item.setImages(params.images);
                 }
                 res.json({
                     successed: true,
