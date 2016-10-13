@@ -66,6 +66,14 @@ var history = new Sequelize('history', curhost.user, curhost.pwd, {
         'bigNumberStrings': true
     }
 });
+
+var message = new Sequelize('message', curhost.user, curhost.pwd, {
+    'host': curhost.host,
+    'dialectOptions': {
+        'supportBigNumbers': true,
+        'bigNumberStrings': true
+    }
+});
 /*var mechanic = new Sequelize('mechanic', curhost.user, curhost.pwd, {
     'host': curhost.host
 });*/
@@ -90,5 +98,6 @@ module.exports = {
     trade: trade,
     base: base,
     history: history,
+    message: message,
     user: user
 }

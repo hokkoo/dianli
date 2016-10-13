@@ -131,4 +131,14 @@
 .company-detail{
 
 }
+
+.company-detail .images .item {
+    width: 25%;
+    float: left;
+    padding: 10px;
+}
+
+.company-detail .images .item img {
+    max-width: 100%;
+}
 </style>
