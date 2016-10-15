@@ -1,6 +1,6 @@
 <template>
   <group>
-    <door-category :type="1" :enable-edit="false"></door-category>
+    <search @on-search="onSearch"></search>
   </group>
   <group>
     <div class="doors">
@@ -19,7 +19,7 @@
   import {doors} from '../../../vuex/modules/product/door/getter.js';
   import {getDoors} from '../../../vuex/modules/product/door/action.js';
   import { Card, Group } from '../../vux';
-  import doorCategory from './DoorCategory.vue';
+  import search from './Search.vue';
 
   export default {
     vuex: {
@@ -30,10 +30,15 @@
         getDoors: getDoors
       }
     },
+    methods: {
+      onSearch(params){
+        console.log(params);
+      }
+    },
     components: {
       Card,
       Group,
-      doorCategory
+      search
     },
     created(){
       this.getDoors();

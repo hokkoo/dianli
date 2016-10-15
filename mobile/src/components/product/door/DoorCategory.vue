@@ -102,23 +102,11 @@
   }
 </script>
 <style type="text/css">
-li {
-  list-style: none;
-}
-
-.door-category {
-    position: relative;
-    z-index: 111;
-    height: 100px;
-    overflow: scroll;
-}
 
 .door-category > .categorys {
-    position: absolute;
     width: 100%;
     box-sizing: border-box;
     background-color: #e4efff;
-    padding: 20px;
 }
 
 </style>

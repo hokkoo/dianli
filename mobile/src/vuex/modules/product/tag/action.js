@@ -8,3 +8,14 @@ export const getHomeHots = function ({ dispatch }, type) {
     dispatch(_type.GET_PRODUCT_TAGS, rtn);
   });
 }
+
+export const getTags = function ({ dispatch }, type) {
+	return new Promise((resolve) => {
+     this.$http.get('/product/tag/list?type=' + (type || '')).then((rtn) => {
+      rtn = rtn && rtn.data || {};
+      if(rtn.successed){
+      	resolve(rtn.data);
+      }
+    });
+  })
+}
