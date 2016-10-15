@@ -8,19 +8,94 @@ var _type = require('../../sequelize/config/constType.js');
 
 module.exports = {
     list : function(req,res,next) {
-        //console.log(Object.keys(sails.sequelize));
-        console.log(Object.keys(sails.sequelize));
         var Door = sails.sequelize['product.door'];
         var Image = sails.sequelize['product.image'];
-        Door.findAll({
-            include: [{
-                model: Image,
-                as: "images"
-            }]
-        }).then(function (doors) {
-            res.json({
-                successed: true,
-                data: doors
+        var params = req.allParams(), where = {};
+        var param = params.param, availableIds = [];
+         var promises = [], p;
+        if(param){
+            if(param.keyword){
+                var likeQ = '%' + param.keyword + '%';
+                where['$or'] = [
+                    {
+                        name: {
+                            $like: likeQ
+                        }
+                    },
+                    {
+                        title: {
+                            $like: likeQ
+                        }
+                    },
+                    {
+                        desc: {
+                            $like: likeQ
+                        }
+                    },
+                    {
+                        content: {
+                            $like: likeQ
+                        }
+                    }
+                ]
+            }
+            if(param.tags && param.tags.length){
+                // TODO: through table 的 where inner join
+                p = new Promise(function (resolve, reject) {
+                    var ProductTag = sails.sequelize['product.product_tag'];
+                    ProductTag.findAll({
+                        where: {
+                            tag_id: {
+                                $in: param.tags
+                            }
+                        }
+                    }).then(function (list) {
+                        availableIds = availableIds.concat(_.map(list, function (item) {
+                            return item.product_id;
+                        }));
+                        resolve(availableIds);
+                    })
+                });
+                promises.push(p);
+            }
+            if(param.categorys && param.categorys.length){
+                p = new Promise(function (resolve, reject) {
+                    var ProductCategory = sails.sequelize['product.product_category'];
+                    ProductCategory.findAll({
+                        where: {
+                            category_id: {
+                                $in: param.categorys
+                            }
+                        }
+                    }).then(function (list) {
+                        availableIds = availableIds.concat(_.map(list, function (item) {
+                            return item.product_id;
+                        }));
+                        resolve(availableIds);
+                    })
+                });
+                promises.push(p);
+            }
+        }
+        Promise.all(promises).then(function () {
+            availableIds = _.uniq(availableIds);
+            console.log(availableIds);
+            if(availableIds){
+                where['id'] = {
+                    $in: availableIds
+                }
+            }
+            Door.findAll({
+                where: where,
+                include: [{
+                    model: Image,
+                    as: "images"
+                }]
+            }).then(function (doors) {
+                res.json({
+                    successed: true,
+                    data: doors
+                });
             });
         });
 

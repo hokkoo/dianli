@@ -31,8 +31,10 @@
       }
     },
     methods: {
-      onSearch(params){
-        console.log(params);
+      onSearch(param){
+        this.getDoors({
+          param: param
+        });
       }
     },
     components: {

@@ -3,9 +3,9 @@ import * as _type from '../../../mutation-types.js';
 import server from '../../../server.js';
 
 // 获取数据列表
-export const getDoors = function ({ dispatch }, pager) {
+export const getDoors = function ({ dispatch }, param) {
   return new Promise((resolve) => {
-    this.$http.get('/product/door/list').then((rtn) => {
+    this.$http.get('/product/door/list', param).then((rtn) => {
       rtn = rtn && rtn.data || {};
       if(rtn.successed){
         dispatch(_type.GET_PRODUCT_DOORS, rtn.data);
