@@ -9,8 +9,8 @@
       <span v-if="enableEdit && !isFolder" @click="changeType">+</span>
     </div>
     <ul v-show="open" v-if="isFolder">
-      <category-tree-item v-for="child in item.children" :item="child" :type="type" :enable-edit="enableEdit" :selected-item.sync="selectedItem"></category-tree-item>
-      <li v-if="enableEdit">
+      <category-tree-item v-for="child in item.children" :item="child" :type="type" :selected-item.sync="selectedItem"></category-tree-item>
+      <li v-if:"enableEdit">
         <form-group :valid.sync="valid">
           <div class="row">
             <div class="col-sm-8">
@@ -96,9 +96,9 @@
           new: true
         };
         this.item.children.push(item);
-        this.saveCategory(item).then( (data) => {
-          if(data){
-            item.id = data[item.id]
+        this.saveCategory(item).then( (rtn) => {
+          if(rtn.successed){
+            item.id = rtn.data[item.id]
             delete item.new;
           }
           // 更新一级子元素的父id
@@ -117,7 +117,7 @@
     },
     computed: {
       isFolder: function () {
-        return _.isArray(this.item.children);
+        return Array.isArray(this.item.children);
       }
     }
   }

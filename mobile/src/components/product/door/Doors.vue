@@ -1,6 +1,6 @@
 <template>
   <group>
-    <category-tree :type="1" :enable-edit="false"></category-tree>
+    <door-category :type="1" :enable-edit="false"></door-category>
   </group>
   <group>
     <div class="doors">
@@ -19,7 +19,7 @@
   import {doors} from '../../../vuex/modules/product/door/getter.js';
   import {getDoors} from '../../../vuex/modules/product/door/action.js';
   import { Card, Group } from '../../vux';
-  import categoryTree from '../../common/category-tree.vue';
+  import doorCategory from './DoorCategory.vue';
 
   export default {
     vuex: {
@@ -33,7 +33,7 @@
     components: {
       Card,
       Group,
-      categoryTree
+      doorCategory
     },
     created(){
       this.getDoors();

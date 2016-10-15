@@ -74,7 +74,7 @@ module.exports = Shop;
 
 var Image = require('./company-image.js');
 
-Company.hasMany(Image, {
+Shop.hasMany(Image, {
   as: 'images',
   foreignKey: 'related_id',
   constraints: false
@@ -87,11 +87,11 @@ var Contact = require('../user/contact.js');
     constraints: false
 });*/
 
-Company.belongsTo(Contact, {
+Shop.belongsTo(Contact, {
     as: 'owner',
     foreignKey: 'owner_id',
     constraints: false
 });
 
 
-Company.sync();
+Shop.sync();

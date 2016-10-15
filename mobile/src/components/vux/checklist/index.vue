@@ -1,17 +1,19 @@
 <template>
-  <div v-show="title" class="weui_cells_title">{{title}}</div>
-  <div class="weui_cells weui_cells_checkbox">
-    <label class="weui_cell weui_check_label" for="checkbox_{{uuid}}_{{index}}" v-for="(index, one) in options">
-      <div class="weui_cell_hd">
-        <input type="checkbox" class="weui_check" value="{{one | getKey}}" v-model="value" id="checkbox_{{uuid}}_{{index}}">
-        <i class="weui_icon_checked"></i>
-      </div>
-      <div class="weui_cell_bd weui_cell_primary">
-        <p>{{one | getValue}}</p>
-      </div>
-    </label>
+  <div class="checklist">
+    <div v-show="title" class="weui_cells_title">{{title}}</div>
+    <div class="weui_cells weui_cells_checkbox">
+      <label class="weui_cell weui_check_label" for="checkbox_{{uuid}}_{{index}}" v-for="(index, one) in options">
+        <div class="weui_cell_hd">
+          <input type="checkbox" class="weui_check" value="{{one | getKey}}" v-model="value" id="checkbox_{{uuid}}_{{index}}">
+          <i class="weui_icon_checked"></i>
+        </div>
+        <div class="weui_cell_bd weui_cell_primary">
+          <p>{{one | getValue}}</p>
+        </div>
+      </label>
+    </div>
+    <tip v-show="!valid && dirty"><icon type="warn" class="icon_small"></icon>{{error}}</tip>
   </div>
-  <tip v-show="!valid && dirty"><icon type="warn" class="icon_small"></icon>{{error}}</tip>
 </template>
 
 <script>
@@ -22,6 +24,7 @@ import { getValue, getKey } from './object-filter'
 import shuffle from 'array-shuffle'
 
 export default {
+  name: 'checklist',
   components: {
     Tip,
     Icon

@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Router from 'vue-router'
 var VueResource = require('vue-resource');
 

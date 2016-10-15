@@ -67,7 +67,7 @@ export default {
   computed: {
     leftOptions () {
       return {
-        showBack: this.route.path !== '/'
+        showBack: this.route.path !== '/mobile/'
       }
     },
     headerTransition () {
@@ -90,9 +90,9 @@ export default {
       return /tabbar/.test(this.route.path)
     },
     title () {
-      if (this.route.path === '/') return 'Home'
-      if (this.route.path === '/project/donate') return 'Donate'
-      if (this.route.path === '/demo') return 'Demo list'
+      if (this.route.path === '/mobile/') return '首页'
+        console.log(this.route.path)
+      if (/\/mobile\/\product/.test(this.route.path)) return '产品';
       return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
     }
   }
@@ -224,5 +224,9 @@ body {
   to {
     transform: translate3d(100%, 0, 0);
   }
+}
+
+.pull-right {
+    float: right;
 }
 </style>
