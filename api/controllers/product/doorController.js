@@ -80,7 +80,7 @@ module.exports = {
         Promise.all(promises).then(function () {
             availableIds = _.uniq(availableIds);
             console.log(availableIds);
-            if(availableIds){
+            if(availableIds && availableIds.length){
                 where['id'] = {
                     $in: availableIds
                 }
