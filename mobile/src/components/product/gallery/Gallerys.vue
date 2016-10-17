@@ -1,6 +1,6 @@
 <template>
   <div class="gallerys">
-    <list url="/product/gallery/list" :param.sync="param" :items.sync="items" height="400px" v-ref:gallerys>
+    <list url="/product/gallery/list" :param.sync="param" :items.sync="items" height="auto" v-ref:gallerys>
       <slot>
         <li class="list-item" v-for="item in items">
           <card v-link="{name: 'galaryDetail', params: {id: item.id}}">

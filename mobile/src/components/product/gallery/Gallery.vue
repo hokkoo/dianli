@@ -109,8 +109,8 @@
 .gallery-detail > .head,.gallery-detail > .detail {
     padding:  10px;
 }
-.gallery-detail .weui_dialog_alert img {
-    max-height: 100%;
+.gallery-detail .weui_dialog_alert img, .gallery-detail .weui_dialog_alert .img-box {
+    max-width: 100%;
 }
 
 .gallery-detail .weui_dialog_alert .dialog-title {
