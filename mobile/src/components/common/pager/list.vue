@@ -69,6 +69,7 @@
       },
       reset(){
         _.extend(this.pager, DEFAULT_PAGER());
+        this.items.splice(0, this.items.length);
         this.next();
       },
       scrollerRefresh(uuid){
@@ -76,9 +77,13 @@
         this.next();
       },
       refresh(){
+        this.reset();
+        this.fetch();
+      },
+      fetch(){
         var pager = this.pager;
         var isScroll = this.type === 0;
-        this.$http.get(this.url, _.extend({}, this.param, {start: pager.start * pager.take, take: pager.take})).then((rtn) => {
+        this.$http.get(this.url, _.extend({}, {param: this.param}, {start: pager.start * pager.take, take: pager.take})).then((rtn) => {
           var _self =this;
           rtn = rtn && rtn.data || {};
           if(rtn.successed){
@@ -121,11 +126,6 @@
       }
     },
     watch: {
-      param(newVal){
-        console.log(newVal);
-        this.reset();
-        this.refresh();
-      }
     }
   }
 </script>

@@ -3,7 +3,7 @@
     <search @on-search="onSearch"></search>
   </group>
   <div class="doors">
-    <list url="/product/door/list" :items.sync="listDoors" height="300px">
+    <list url="/product/door/list" :param.sync="param" :items.sync="listDoors" height="600px" v-ref:doors>
       <slot>
         <li class="list-item" v-for="item in listDoors">
           <card v-link="{name: 'productDoorDetail', params: {id: item.id}}">
@@ -17,17 +17,6 @@
       </slot>
     </list>
   </div>
-  <group>
-    <div class="doors">
-      <card v-for="item in items" v-link="{name: 'productDoorDetail', params: {id: item.id}}">
-        <img slot="header" v-bind:src="item.images && item.images[0] && item.images[0].url" v-if="item.images"/>
-        <div slot="content" class="card-padding">
-          <p style="color:#999;font-size:12px;">{{item.createdAt}}</p>
-          <p style="font-size:14px;line-height:1.2;">{{item.title}}</p>
-        </div>
-      </card>
-    </div>
-  </group>
 </template>
 
 <script type="text/babel">
@@ -40,7 +29,10 @@
   export default {
     data: () => {
       return {
-        listDoors: []
+        listDoors: [],
+        param: {
+          keyword: ''
+        }
       }
     },
     vuex: {
@@ -53,9 +45,11 @@
     },
     methods: {
       onSearch(param){
-        this.getDoors({
-          param: param
-        });
+        _.extend(this.param, param);
+        this.$refs.doors.refresh();
+        // this.getDoors({
+        //   param: param
+        // });
       }
     },
     components: {
