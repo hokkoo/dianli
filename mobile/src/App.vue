@@ -10,6 +10,9 @@
   }
 </script>
 <style>
+ul{
+  padding: 0;
+}
 li{
   list-style: none;
 }
@@ -34,5 +37,12 @@ li{
     border-color: #38bc9c;
     background-color: #38bc9c;
     color: #fff;
+}
+.list-item img {
+    width: 80%;
+    margin: 10% 10% 0;
+}
+.list-item {
+    font-size: 14px;
 }
 </style>

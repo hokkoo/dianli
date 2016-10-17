@@ -29,14 +29,14 @@
       </slot>
     </list>
     </div>
+    <dialog :show.sync="isShowDialog">
+      <p class="dialog-title">{{dialogImage.name || dialogImage.title}}</p>
+      <div class="img-box">
+        <img v-bind:src="dialogImage.url"/>
+      </div>
+      <span class="vux-close" @click="isShowDialog=false"></span>
+    </dialog>
   </div>
-  <dialog :show.sync="isShowDialog">
-    <p class="dialog-title">{{dialogImage.name || dialogImage.title}}</p>
-    <div class="img-box">
-      <img v-bind:src="dialogImage.url"/>
-    </div>
-    <span class="vux-close" @click="isShowDialog=false"></span>
-  </dialog>
 </template>
 
 <script type="text/babel">
@@ -104,5 +104,19 @@
 <style>
 .gallerys{
 
+}
+
+.gallery-detail > .head,.gallery-detail > .detail {
+    padding:  10px;
+}
+.gallery-detail .weui_dialog_alert img {
+    max-height: 100%;
+}
+
+.gallery-detail .weui_dialog_alert .dialog-title {
+    padding: 4px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>

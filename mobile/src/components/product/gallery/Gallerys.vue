@@ -6,7 +6,9 @@
           <card v-link="{name: 'galaryDetail', params: {id: item.id}}">
             <img slot="header" v-bind:src="item.images && item.images[0] && item.images[0].url" v-if="item.images"/>
             <div slot="content" class="card-padding">
-              <p>{{item.name || item.title}} <span class="count" v-if="item.images">{{item.images.length}}</span></p>
+              <p class="title">
+                {{item.name || item.title}} <badge :text="item.images.length" v-if="item.images"></badge>
+              </p>
             </div>
           </card>
         </li>
@@ -16,9 +18,11 @@
 </template>
 
 <script type="text/babel">
-  import { Card, Group } from '../../vux';
+  import Card from '../../vux/card';
+  import Group from '../../vux/group';
+  import Badge from '../../vux/badge';
   import List from '../../common/pager/list.vue';
-  
+
   export default {
     data: () => {
       return {
@@ -37,7 +41,8 @@
     components: {
       Card,
       Group,
-      List
+      List,
+      Badge
     },
     created(){
     }
@@ -63,4 +68,9 @@
 .gallerys{
   min-height: 600px;
 }
+
+.gallerys .list-item .title {
+    text-align: center;
+}
+
 </style>
