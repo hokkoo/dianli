@@ -1,11 +1,9 @@
 <template>
   <div class="list">
     <!-- 上拉刷新 -->
-    <scroller lock-x scrollbar-y use-pullup :height="height+'px'" @pullup:loading="scrollerRefresh">
+    <scroller v-ref:scroller lock-x scrollbar-y use-pullup :height="height" @pullup:loading="scrollerRefresh">
       <ul class="list">
-        <li class="list-item" v-for="item in items">
-          <slot></slot>
-        </li>
+        <slot></slot>
       </ul>
     </scroller>
   </div>
@@ -32,8 +30,8 @@
   export default {
     props: {
       height: {
-        type: Number,
-        default: 200
+        type: String,
+        default: "auto"
       },
       type: {
         type: Number,
@@ -73,7 +71,7 @@
         _.extend(this.pager, DEFAULT_PAGER());
         this.next();
       },
-      scrollerRefresh(){
+      scrollerRefresh(uuid){
         this.uuid = uuid;
         this.next();
       },
@@ -81,6 +79,7 @@
         var pager = this.pager;
         var isScroll = this.type === 0;
         this.$http.get(this.url, _.extend({}, this.param, {start: pager.start * pager.take, take: pager.take})).then((rtn) => {
+          var _self =this;
           rtn = rtn && rtn.data || {};
           if(rtn.successed){
             if(!isScroll){
@@ -99,11 +98,12 @@
             });
             this.$emit('fetch-success', this.items, rtn.data);
             if(isScroll){
-              if((pager.start + 1) * pager.take <= pager.total){
-                this.$broadcast('pullup:done', this.uuid)
-              }else{
-                this.$broadcast('pullup:reset', this.uuid)
-              }
+              setTimeout(() => {
+                _self.$broadcast('pullup:reset', _self.uuid)
+                if((pager.start + 1) * pager.take <= pager.total){
+                  _self.$broadcast('pullup:done', _self.uuid)
+                }
+              }, 1500);
             }
           }
         })
@@ -112,7 +112,10 @@
     components: {
       Scroller
     },
-    created(id){
+    created(){
+    },
+    compiled () {
+      this.uuid = this.$refs.scroller && this.$refs.scroller.uuid;
       if(!this.lazy){
         this.refresh();
       }

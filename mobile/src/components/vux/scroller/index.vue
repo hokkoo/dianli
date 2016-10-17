@@ -121,6 +121,7 @@ export default {
   },
   compiled () {
     this.uuid = Math.random().toString(36).substring(3, 8)
+    console.log(2);
   },
   computed: {
     styles () {
