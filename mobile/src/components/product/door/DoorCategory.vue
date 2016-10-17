@@ -4,14 +4,14 @@
       <div v-for="item in categorys">
         <ul>
           <li class="item">
-            <h4 class="title">
+            <h4 class="title" @click="toggle(item)">
               {{item.title}}
               <span class="pull-right opr">
                 <span @click="toggle(item)">[{{item.open ? '-' : '+'}}]</span>
               </span>
             </h4>
             <div class="sub" v-show="item.open">
-              <checklist :options="item.children" :value="selectedItem"></checklist>
+              <checklist :options="item.children" :value="selectedItem" :required="false"></checklist>
             </div>
           </li>
         </ul>
@@ -106,7 +106,9 @@
 .door-category > .categorys {
     width: 100%;
     box-sizing: border-box;
-    background-color: #e4efff;
+    background-color: #efefef;
 }
-
+.search-door .door-category .item .title {
+    padding: 0 6px;
+}
 </style>

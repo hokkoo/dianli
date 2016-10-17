@@ -106,7 +106,11 @@ export default {
   },
   methods: {
     reset (scrollPosition) {
+      console.log(scrollPosition);
       if (scrollPosition) {
+        if(scrollPosition === true){
+          this._xscroll.scrollTop(0)
+        }
         if (typeof scrollPosition.left !== 'undefined') {
           this._xscroll.scrollLeft(scrollPosition.left)
         }
@@ -225,22 +229,22 @@ export default {
     this._xscroll.render()
   },
   events: {
-    'pulldown:reset' (uuid) {
+    'pulldown:reset' (uuid, top) {
       // set pulldown status to default
       this.pulldownStatus = 'default'
       if (uuid === this.uuid) {
         this.pulldown.reset(() => {
           // repaint
-          this.reset()
+          this.reset(top)
         })
       }
     },
-    'pullup:reset' (uuid) {
+    'pullup:reset' (uuid, top) {
       // set pulldown status to default
       this.pullupStatus = 'default'
       if (uuid === this.uuid) {
         this.pullup.complete()
-        this.reset()
+        this.reset(top)
       }
     },
     'pullup:done' (uuid) {

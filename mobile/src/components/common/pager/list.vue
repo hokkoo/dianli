@@ -33,6 +33,10 @@
         type: String,
         default: "auto"
       },
+      refreshToTop: {
+        type: Boolean,
+        default: true
+      },
       type: {
         type: Number,
         default: 0 //列表类型 ：0， scroller；1， pager；
@@ -76,11 +80,11 @@
         this.uuid = uuid;
         this.next();
       },
-      refresh(){
+      refresh(refreshToTop){
         this.reset();
-        this.fetch();
+        this.fetch(refreshToTop);
       },
-      fetch(){
+      fetch(refreshToTop){
         var pager = this.pager;
         var isScroll = this.type === 0;
         this.$http.get(this.url, _.extend({}, {param: this.param}, {start: pager.start * pager.take, take: pager.take})).then((rtn) => {
@@ -104,11 +108,11 @@
             this.$emit('fetch-success', this.items, rtn.data);
             if(isScroll){
               setTimeout(() => {
-                _self.$broadcast('pullup:reset', _self.uuid)
+                _self.$broadcast('pullup:reset', _self.uuid, refreshToTop === true);
                 if((pager.start + 1) * pager.take <= pager.total){
                   _self.$broadcast('pullup:done', _self.uuid)
                 }
-              }, 1500);
+              }, 500);
             }
           }
         })

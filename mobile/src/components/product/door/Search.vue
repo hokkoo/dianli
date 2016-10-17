@@ -1,20 +1,21 @@
 <template>
   <div class="search-door">
-    <search @on-submit="search" :required="false" :auto-fixed="false" :value.sync="keyword"></search>
-    <div class="param param-category">
+    <div class="keyword">
+      <search @on-submit="search" :required="false" :auto-fixed="false" :value.sync="keyword"></search>
+      <x-button mini v-show="!hasAdvanceParam" @click="isShowAdvanceSearch=true">More</x-button>
+    </div>
+    <div class="param clearfix">
       <span class="item" v-for="item in selectedCategorysObject">
         {{item.title}}
       </span>
-    </div>
-    <div class="param param-tag">
       <span class="item" v-for="item in selectedTagsObject">
         {{item.title}}
       </span>
+      <div class="advance" v-show="hasAdvanceParam">
+        <x-button mini @click="isShowAdvanceSearch=true">更多条件</x-button>
+      </div>
     </div>
-    <div class="advance">
-      <x-button mini @click="isShowAdvanceSearch=true">更多条件</x-button>
-    </div>
-    <confirm :show.sync="isShowAdvanceSearch" title="高级查询" @on-cancel="onCancel" @on-confirm="onConfirm">
+    <confirm confirm-text="确定" cancel-text="取消" :show.sync="isShowAdvanceSearch" title="高级查询" @on-cancel="onCancel" @on-confirm="onConfirm">
       <div class="search-param">
         <div class="card category">
           <door-category :selected-item="tmp.selectedCategorys" :selected-item-object="tmp.selectedCategorysObject"></door-category>
@@ -75,7 +76,10 @@
       onConfirm(){
         var selectedTags = this.selectedTags, selectedCategorys = this.selectedCategorys;
         var selectedTagsObject = this.selectedTagsObject, selectedCategorysObject = this.selectedCategorysObject;
-        selectedTags.length = selectedCategorys.length = selectedTagsObject.length = selectedCategorysObject.length = 0;
+        selectedTags.splice(0, selectedTags.length);
+        selectedCategorys.splice(0, selectedCategorys.length);
+        selectedTagsObject.splice(0, selectedTagsObject.length);
+        selectedCategorysObject.splice(0, selectedCategorysObject.length);
         _.each(this.tmp.selectedTags, (item) => {
           selectedTags.push(item);
         });
@@ -88,29 +92,23 @@
         _.each(this.tmp.selectedCategorysObject, (item) => {
           selectedCategorysObject.push(item);
         });
-        if(!selectedTagsObject.length){
-          selectedTagsObject.splice();
-        }
-        if(!selectedCategorysObject.length){
-          selectedCategorysObject.splice();
-        }
         this.search();
       },
       onCancel(){
         var selectedTags = this.tmp.selectedTags, selectedCategorys = this.tmp.selectedCategorys;
-        selectedTags.length = selectedCategorys.length = 0;
+        selectedTags.splice(0, selectedTags.length);
+        selectedCategorys.splice(0, selectedCategorys.length);
         _.each(this.selectedTags, (item) => {
           selectedTags.push(item);
         });
         _.each(this.selectedCategorys, (item) => {
           selectedCategorys.push(item);
         });
-        if(!selectedTags.length){
-          selectedTags.splice();
-        }
-        if(!selectedCategorys.length){
-          selectedCategorys.splice();
-        }
+      }
+    },
+    computed: {
+      hasAdvanceParam(){
+        return this.selectedTags.length || this.selectedCategorys.length;
       }
     },
     components: {
@@ -153,5 +151,32 @@
 .search-door .search-param .category {
     max-height: 300px;
     overflow-y: scroll;
+}
+.search-door > .param {
+    padding: 2px 10px;
+    font-size: 12px;
+}
+
+.search-door > .param .item {
+    padding: 4px;
+    color: #666;
+    background-color: #eeeeee;
+    margin: 2px 4px;
+    float: left;
+}
+.search-door > .keyword {
+    display: flex;
+}
+
+.search-door > .keyword > button {
+    color: #666;
+}
+
+.search-door .advance button {
+    color: rgba(255,255,255,0.95);
+    vertical-align: middle;
+    font-size: 12px;
+    padding: 2px 10px;
+    background-color: #09bb07;
 }
 </style>
