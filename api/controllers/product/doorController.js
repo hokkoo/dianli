@@ -85,16 +85,19 @@ module.exports = {
                     $in: availableIds
                 }
             }
-            Door.findAll({
+            Door.findAndCount({
                 where: where,
+                limit: params.take,
+                offset: params.start,
                 include: [{
                     model: Image,
                     as: "images"
                 }]
-            }).then(function (doors) {
+            }).then(function (data) {
                 res.json({
                     successed: true,
-                    data: doors
+                    data: data.rows,
+                    total: data.count
                 });
             });
         });

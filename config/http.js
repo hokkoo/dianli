@@ -111,6 +111,7 @@ module.exports.http = {
             }
             //UA信息
             res.locals.ua = parseUA(req.headers['user-agent']);
+
             next();
         });
         //});
@@ -181,6 +182,11 @@ module.exports.http = {
 };
 //格式化查询字符串
 function f_Cp(req, res, next) {
+    // 分页格式
+    if(req.query){
+        req.query.start = parseInt(req.query.start, 10) || 0;
+        req.query.take = parseInt(req.query.take, 10) || 0;
+    }
     var search = {};
     if (req.method == 'GET') {
         search = req.query.search;

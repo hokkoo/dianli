@@ -68,7 +68,7 @@
       next(){
         if(this.pager.start < this.pager.totalPage - 1){
           this.pager.start++;
-          this.refresh();
+          this.fetch();
         }
       },
       reset(){
@@ -109,7 +109,7 @@
             if(isScroll){
               setTimeout(() => {
                 _self.$broadcast('pullup:reset', _self.uuid, refreshToTop === true);
-                if((pager.start + 1) * pager.take <= pager.total){
+                if((pager.start + 1) * pager.take >= pager.total){
                   _self.$broadcast('pullup:done', _self.uuid)
                 }
               }, 500);

@@ -3,7 +3,7 @@
     <search @on-search="onSearch"></search>
   </group>
   <div class="doors">
-    <list url="/product/door/list" :param.sync="param" :items.sync="listDoors" height="600px" v-ref:doors>
+    <list url="/product/door/list" :param.sync="param" :items.sync="listDoors" height="400px" v-ref:doors>
       <slot>
         <li class="list-item" v-for="item in listDoors">
           <card v-link="{name: 'productDoorDetail', params: {id: item.id}}">
@@ -46,7 +46,7 @@
     methods: {
       onSearch(param){
         _.extend(this.param, param);
-        this.$refs.doors.refresh();
+        this.$refs.doors.refresh(true);
         // this.getDoors({
         //   param: param
         // });

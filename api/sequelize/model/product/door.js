@@ -44,7 +44,8 @@ var Door = product.define('Door', {
     deletedAt: 'deletedAt',
     timestamps: true,
     paranoid: true,
-    tableName: 'door'
+    tableName: 'door',
+    schema:'product'
 });
 
 module.exports = Door;
