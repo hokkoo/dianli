@@ -59,7 +59,6 @@
       List
     },
     created(){
-      this.getDoors();
     }
   }
 </script>

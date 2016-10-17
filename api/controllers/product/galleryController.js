@@ -162,6 +162,28 @@ module.exports = {
             });
         }
     },
+    images : function(req,res,next) {
+        var Image = sails.sequelize['product.gallery-image'];
+        var params = req.allParams(), where = {};
+        var param = params.param || {};
+        var galeryId = parseInt(param.galeryId);
+        if(galeryId){
+            where['related_id'] = galeryId
+        }
+
+        Image.findAndCount({
+            where: where,
+            limit: params.take,
+            offset: params.start
+        }).then(function (data) {
+            res.json({
+                successed: true,
+                data: data.rows,
+                total: data.count
+            });
+        });
+        
+    },
     deleteImage : function(req,res,next) {
         var GalleryImage = sails.sequelize['product.gallery-image'];
         var params = req.allParams(), where;

@@ -15,11 +15,11 @@
           <span class="demo-icon-22 vux-demo-tabbar-icon-home" slot="icon">&#xe637;</span>
           <span slot="label">首頁</span>
         </tabbar-item>
-        <tabbar-item v-link="{path:'/mobile/product'}" :selected="isProduct" badge="9">
+        <tabbar-item v-link="{path:'/mobile/product/gallerys'}" :selected="isProduct" badge="9">
           <span class="demo-icon-22" slot="icon">&#xe633;</span>
           <span slot="label">
             <span v-if="componentName" class="vux-demo-tabbar-component">{{componentName}}</span>
-            <span v-else>产品</span>
+            <span v-else>图库</span>
           </span>
         </tabbar-item>
         <tabbar-item v-link="{path:'/mobile/messge'}" :selected="isMessage" show-dot>

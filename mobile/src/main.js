@@ -71,6 +71,9 @@ import ProductLayout from './components/product/Layout.vue';
 import DoorsView from './components/product/door/Doors.vue';
 import DoorsDetailView from './components/product/door/Door.vue';
 
+import GallerysView from './components/product/gallery/Gallerys.vue';
+import GalleryDetailView from './components/product/gallery/Gallery.vue';
+
 router.map({
   '/mobile/': {
     component: LayoutView,
@@ -98,6 +101,16 @@ router.map({
             component: DoorsDetailView,
             name: 'productDoorDetail',
             description: '门'
+          },
+          "/gallerys": {
+            component: GallerysView,
+            name: '图库',
+            description: '图库'
+          },
+          "/gallerys/:id": {
+            component: GalleryDetailView,
+            name: 'galaryDetail',
+            description: '图库'
           }
         }
       }
