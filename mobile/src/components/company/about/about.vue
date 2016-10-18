@@ -4,10 +4,10 @@
       <img slot="header" src="http://placeholder.qiniudn.com/640x300" style="width:100%;display:block;">
       <div slot="content" class="card-padding">
         <div class="title">
-          厦门嘉利乐工贸有限公司
+          {{item.title}}
         </div>
         <div class="desc">
-          专注门业十年，有防火门、防盗门、木门、卫生间门
+          {{item.desc}}
         </div>
       </div>
     </card>
@@ -16,10 +16,10 @@
       <tab-item class="vux-center">图片</tab-item>
     </tab>
     <div class="detail" v-show="index === 0">
-      大大发打发打发打发打发大
+      {{{item.content}}}
     </div>
     <div class="images" v-show="index === 1">
-      <list :lazy="true" url="/company/about/images" :param.sync="param" :items.sync="images" height="400px" v-ref:gallerys>
+      <list :lazy="true" url="/company/about/images" :param.sync="param" :items.sync="images" height="400px" v-ref:images>
       <slot>
         <li class="list-item" v-for="item in images">
           <card @click="showImageDialog(item)">
@@ -43,12 +43,12 @@
 </template>
 
 <script type="text/babel">
-  import {spinner, alert} from 'vue-strap';
   import {Tab,TabItem} from '../../vux/tab';
   import Card from '../../vux/card';
   import Dialog from '../../vux/dialog';
   import List from '../../common/pager/list.vue';
-  import {getAbno} from '../../../vuex/modules/product/gallery/action.js';
+  import {getAboutUsData} from '../../../vuex/modules/company/about/action.js';
+  import getObject from '../companyProcessor.js';
 
   export default {
     data: () => {
@@ -62,12 +62,7 @@
           url: '',
           desc: ''
         },
-        item: {
-          id: 0,
-          title: '',
-          desc: '',
-          content: ''
-        },
+        item: getObject(),
         param: {
           keyword: '',
           galeryId: 0
@@ -76,12 +71,10 @@
     },
     vuex: {
       actions: {
-        getGalleryNotImage: getGalleryNotImage
+        getAboutUsData: getAboutUsData
       }
     },
     components: {
-      spinner,
-      alert,
       Card,
       Tab,
       TabItem,
@@ -95,31 +88,14 @@
       }
     },
     created(){
-      this.getGalleryNotImage(this.$route.params.id).then( (data) => {
+      this.getAboutUsData().then( (data) => {
         _.extend(this.item, data);
-        this.param.galeryId = data.id;
-        this.$refs.gallerys.refresh();
+        this.param.companyId = data.id;
+        this.$refs.images.refresh();
       });
     }
   }
 </script>
 
 <style>
-.gallerys{
-
-}
-
-.gallery-detail > .head,.gallery-detail > .detail {
-    padding:  10px;
-}
-.gallery-detail .weui_dialog_alert img, .gallery-detail .weui_dialog_alert .img-box {
-    max-width: 100%;
-}
-
-.gallery-detail .weui_dialog_alert .dialog-title {
-    padding: 4px 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 </style>

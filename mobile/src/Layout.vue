@@ -22,9 +22,9 @@
             <span v-else>图库</span>
           </span>
         </tabbar-item>
-        <tabbar-item v-link="{path:'/mobile/messge'}" :selected="isMessage" show-dot>
+        <tabbar-item v-link="{path:'/mobile/about'}" :selected="isAboutUs" show-dot>
           <span class="demo-icon-22" slot="icon">&#xe630;</span>
-          <span slot="label">留言</span>
+          <span slot="label">联系</span>
         </tabbar-item>
       </tabbar>
     </view-box>
@@ -80,8 +80,8 @@ export default {
     isDemo () {
       return /component|demo/.test(this.route.path)
     },
-    isMessage(){
-      return /\/message/.test(this.route.path);
+    isAboutUs(){
+      return /\/about/.test(this.route.path);
     },
     isProduct(){
       return /\/product\/.*/.test(this.route.path);

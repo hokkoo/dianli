@@ -74,6 +74,12 @@ import DoorsDetailView from './components/product/door/Door.vue';
 import GallerysView from './components/product/gallery/Gallerys.vue';
 import GalleryDetailView from './components/product/gallery/Gallery.vue';
 
+
+import AboutUsHomeView from './components/company/AboutUs.vue';
+import AboutUsLayoutView from './components/company/AboutUsLayout.vue';
+import AboutUsMessageView from './components/company/about/message.vue';
+import AboutUsDetailView from './components/company/about/about.vue';
+
 router.map({
   '/mobile/': {
     component: LayoutView,
@@ -111,6 +117,26 @@ router.map({
             component: GalleryDetailView,
             name: 'galaryDetail',
             description: '图库'
+          }
+        }
+      },
+      "/about": {
+        component: AboutUsLayoutView,
+        subRoutes: {
+          '': {
+            component: AboutUsHomeView,
+            name: '关于我们',
+            description: '关于我们'
+          },
+          "/about": {
+            component: AboutUsDetailView,
+            name: '关于我们',
+            description: '关于我们'
+          },
+          "/message": {
+            component: AboutUsMessageView,
+            name: '留言',
+            description: '留言'
           }
         }
       }
