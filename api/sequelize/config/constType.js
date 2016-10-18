@@ -11,5 +11,8 @@ module.exports = {
 	},
 	company: {
 		image: 31
+	},
+	about: {
+		image: 101
 	}
 }
