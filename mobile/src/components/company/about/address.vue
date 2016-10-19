@@ -1,10 +1,6 @@
 <template>
   <div class="address">
-    <card>
-      <div slot="content" class="card-padding">
-        <location></location>
-      </div>
-    </card>
+    <location></location>
   </div>
 </template>
 
@@ -40,6 +36,6 @@
 <style>
 
 .company > .address {
-    height: 400px;
+  position: relative;
 }
 </style>

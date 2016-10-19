@@ -10,4 +10,7 @@
 </script>
 
 <style>
+.company{
+	position: relative;
+}
 </style>

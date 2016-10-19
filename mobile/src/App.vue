@@ -45,4 +45,7 @@ li{
 .list-item {
     font-size: 14px;
 }
+.weui_tab_bd{
+  position: relative;
+}
 </style>
