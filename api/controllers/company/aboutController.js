@@ -14,8 +14,14 @@ var _type = require('../../sequelize/config/constType.js');
 module.exports = {
     index : function(req,res,next) {
         var About = sails.sequelize['company.about'];
+        var Image = sails.sequelize['company.company-image'];
         var params = req.allParams(), where;
-        About.findById(1).then(function (data) {
+        About.findById(1, {
+            include: [{
+                model: Image,
+                as: "images"
+            }]
+        }).then(function (data) {
              res.json({
                 successed: true,
                 data: data

@@ -5,8 +5,8 @@
 </template>
 
 <script type="text/babel">
-  import {company as companyType} from '../_config/type.json';
-  
+  import {company as companyType, about as aboutType} from '../_config/type.json';
+
   export default {
     props: {
       type: {
@@ -30,7 +30,7 @@
     ready: function() {
     	var $input = $(this.$el).find('[type=file]');
       var url = '/common/image/save?type=' + (this.type || 0);
-      if(this.type == companyType.image){
+      if(this.type == companyType.image || this.type === aboutType.image){
         url = '/common/image/saveCompanyImage?type=' + (this.type || 0);
       }
       this.$input = $input;
