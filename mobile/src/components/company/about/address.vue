@@ -2,7 +2,7 @@
   <div class="address">
     <card>
       <div slot="content" class="card-padding">
-        123
+        <location></location>
       </div>
     </card>
   </div>
@@ -12,6 +12,7 @@
   import Card from '../../vux/card';
   import {getAboutUsData} from '../../../vuex/modules/company/about/action.js';
   import getObject from '../companyProcessor.js';
+  import Location from '../../common/map/location.vue';
 
   export default {
     data: () => {
@@ -26,10 +27,7 @@
     },
     components: {
       Card,
-      Tab,
-      TabItem,
-      List,
-      Dialog
+      Location
     },
     created(){
       this.getAboutUsData().then( (data) => {
@@ -40,4 +38,8 @@
 </script>
 
 <style>
+
+.company > .address {
+    height: 400px;
+}
 </style>

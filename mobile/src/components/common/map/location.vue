@@ -1,6 +1,6 @@
 <template>
   <div class="map-location">
-    <div id="mapPlaceholder"></div>
+    <div id="mapPlaceholder" v-el:map></div>
   </div>
 </template>
 
@@ -30,17 +30,21 @@
                     "</div></div>"
       }
     },
-    created(){
+    ready(){
+      var  _self = this;
       insertMapApi().then( () => {
-        if(BMap){
-          var map = this.map = new BMap.Map("mapPlaceholder");
-          map.centerAndZoom(new BMap.Point(this.geography_lon, this.geography_lat), this.zoom);
-          map.addControl(new BMap.ZoomControl());
-          var marker = new BMap.Marker(new BMap.Point(this.geography_lon, this.geography_lat));
-          map.addOverlay(marker);
-          var infoWindow = new BMap.InfoWindow(this.markerContent);
-          marker.openInfoWindow(infoWindow);
-        }
+        var map = new BMap.Map(_self.$els.map);
+        map.centerAndZoom(new BMap.Point(118.1685060000, 24.6737690000), 15);
+        map.addControl(new BMap.ZoomControl());
+        var marker = new BMap.Marker(new BMap.Point(118.1685060000, 24.6737690000));
+        map.addOverlay(marker);
+        var ct  = "<div class='map-markder'><h4 class='title'>厦门滨海街建材店</h4>" +
+                  "<div class='desc'><p>电话：13850052109,(0592)7115989</p>" +
+                  "<p>周边：恩祺幼儿园 约46米</p>" +
+                  "<p>参考：福建省厦门市同安区西柯镇西北方向</p>" +
+                  "</div></div>"
+        var infoWindow = new BMap.InfoWindow(ct);
+        marker.openInfoWindow(infoWindow);
       })
     }
   }

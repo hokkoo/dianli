@@ -79,6 +79,7 @@ import AboutUsHomeView from './components/company/AboutUs.vue';
 import AboutUsLayoutView from './components/company/AboutUsLayout.vue';
 import AboutUsMessageView from './components/company/about/message.vue';
 import AboutUsDetailView from './components/company/about/about.vue';
+import AboutUsAddressView from './components/company/about/address.vue';
 
 router.map({
   '/mobile/': {
@@ -137,6 +138,11 @@ router.map({
             component: AboutUsMessageView,
             name: '留言',
             description: '留言'
+          },
+          "/address": {
+            component: AboutUsAddressView,
+            name: '地址',
+            description: '地址'
           }
         }
       }
