@@ -15,5 +15,8 @@
     },
     "gallery": {
         "image": 41
+    },
+    "about": {
+        "image": 101
     }
 }

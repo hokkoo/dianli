@@ -45,11 +45,11 @@ module.exports = {
         });
     },
     delete : function(req,res,next) {
-        var Company = sails.sequelize['company.company'];
+        var About = sails.sequelize['company.about'];
         var params = req.allParams(), where;
         if(params.id){
             params.id = parseInt(params.id);
-            var item = Company.build({id: params.id}, {isNewRecord: false, raw: true});
+            var item = About.build({id: params.id}, {isNewRecord: false, raw: true});
             item.destroy().then(function(){
                 res.json({
                     successed: true,
@@ -69,12 +69,12 @@ module.exports = {
         }
     },
     create: function(req,res,next) {
-        var Company = sails.sequelize['company.company'];
+        var About = sails.sequelize['company.about'];
         var params = req.allParams(), where;
         params = params.item || {};
 
         var keys = getAvailableFields(params);
-        Company.create(params, {
+        About.create(params, {
             fields: keys
         }).then(function (item) {
             if(params.images && params.images.length){
@@ -92,7 +92,7 @@ module.exports = {
         });
     },
     edit: function(req,res,next) {
-        var Company = sails.sequelize['company.company'];
+        var About = sails.sequelize['company.about'];
         var params = req.allParams(), where;
         params = params.item || {};
         var keys = getAvailableFields(params);
@@ -103,7 +103,7 @@ module.exports = {
             });
         }else{
             params.id = parseInt(params.id);
-            var item = Company.build({id: params.id}, {isNewRecord: false, raw: true});
+            var item = About.build({id: params.id}, {isNewRecord: false, raw: true});
             var keys = getAvailableFields(params);
             item.update(params, {fields: keys}).then(function (rtn) {
                 console.log('images ... ' + params.images)

@@ -113,8 +113,11 @@
           <li class="header">公司</li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/company/companys'}"><i class="fa fa-book"></i><span class="page">列表</span></a></li>
 
-          <li class="header">门面</li>
-          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/login'}"><i class="fa fa-circle-o text-yellow"></i> <span class="page">店面信息</span></a></li>
+          <li class="header">店面</li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/about/about'}"><i class="fa fa-book"></i><span class="page">店面信息</span></a></li>
+
+          <li class="header">注册</li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/login'}"><i class="fa fa-circle-o text-yellow"></i> <span class="page">登录</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>

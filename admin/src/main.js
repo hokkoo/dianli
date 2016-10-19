@@ -34,6 +34,11 @@ import CompanysView from './components/company/company/Companys.vue';
 import CompanyDetailView from './components/company/company/Company.vue';
 import CompanyEditView from './components/company/company/CompanyEdit.vue';
 
+
+import AboutUsHomeView from './components/company/AboutLayout.vue';
+import AboutUsDetailView from './components/company/about/About.vue';
+import AboutUsEditView from './components/company/about/AboutEdit.vue';
+
 // Import Install and register helper items
 Vue.use(Router)
 Vue.filter('count', count)
@@ -60,6 +65,27 @@ router.map({
         component: HomeView,
         name: '首页',
         description: '首页'
+      },
+      '/about': {
+        component: AboutUsHomeView,
+        auth: true,
+        subRoutes: {
+          '': {
+            component: AboutUsHomeView,
+            name: '门店信息',
+            description: '门店信息管理'
+          },
+          '/about': {
+            component: AboutUsDetailView,
+            name: 'aboutDetail',
+            description: 'aboutDetail'
+          },
+          '/edit': {
+            component: AboutUsEditView,
+            name: 'aboutUsEdit',
+            description: '编辑'
+          }
+        }
       },
       '/company': {
         component: CompanyHomeView,
