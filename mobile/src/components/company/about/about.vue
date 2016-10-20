@@ -1,7 +1,7 @@
 <template>
   <div class="about">
-    <card>
-      <img slot="header" src="http://placeholder.qiniudn.com/640x300" style="width:100%;display:block;">
+    <card class="head-pic">
+      <img slot="header" v-bind:src="image.url"/>
       <div slot="content" class="card-padding">
         <div class="title">
           {{item.title}}
@@ -53,6 +53,10 @@
   export default {
     data: () => {
       return {
+        image: {
+          url: '',
+          title: ''
+        },
         index: 0,
         images: [],
         isShowDialog: false,
@@ -90,6 +94,10 @@
     created(){
       this.getAboutUsData().then( (data) => {
         _.extend(this.item, data);
+        if(data.images && data.images.length){
+          let image = data.images[0];
+          _.extend(this.image, image);
+        }
         this.param.companyId = data.id;
         this.$refs.images.refresh();
       });
@@ -98,4 +106,7 @@
 </script>
 
 <style>
+.about .head-pic img {
+    width: 100%;
+}
 </style>
