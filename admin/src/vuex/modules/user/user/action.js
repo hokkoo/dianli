@@ -10,7 +10,7 @@ export const login = function ({ dispatch }, item = {}) {
       rtn = rtn && rtn.data || {};
       if(rtn.successed){
         dispatch(_type.GET_USER_USER, rtn.data); 
-        resolve(rtn.data);
+        resolve(rtn);
       }else{
         resolve(rtn) ;
       }

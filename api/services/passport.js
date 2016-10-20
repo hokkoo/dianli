@@ -365,7 +365,7 @@ passport.disconnect = function(req, res, next) {
 		});
 	});
 };
-passport.serializeUser(function(user, next) {
+/*passport.serializeUser(function(user, next) {
 	next(null, user['operator_id']);
 });
 
@@ -373,6 +373,25 @@ passport.deserializeUser(function(id, next) {
 	sails.log.warn('in deserializeUser::::')
 	var User =  sails.models['backend/operator'];
 	User.findOne(id, next);
+});*/
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
 });
 
+// used to deserialize the user
+passport.deserializeUser(function(id, done) {
+    if (!id) {
+        return done(new Error('无效用户ID'), null);
+    }
+    var User = sails.sequelize['user.user'];
+    User.findById(id).then(function(item) {
+        done(null, item.get({
+            plain: true
+        }));
+    }).catch(function(err) {
+        done(err, null)
+    });
+});
+        
 module.exports = passport;

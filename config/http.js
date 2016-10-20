@@ -14,6 +14,7 @@ uaParser = new uaParser();
 var moment = require('moment');
 var proxy = require('http-proxy-middleware');
 var express = require('express');
+//var passport = require('passport');
 
 module.exports.http = {
    publicName : '/static',
@@ -45,24 +46,7 @@ module.exports.http = {
 
         app.use(passport.initialize());
         app.use(passport.session());
-        passport.serializeUser(function(user, done) {
-            done(null, user.id);
-        });
-
-        // used to deserialize the user
-        passport.deserializeUser(function(id, done) {
-            if (!id) {
-                return done(new Error('无效用户ID'), null);
-            }
-            var User = sails.sequelize['user.user'];
-            User.findById(id).then(function(item) {
-                done(null, item.get({
-                    plain: true
-                }));
-            }).catch(function(err) {
-                done(err, null)
-            });
-        });
+        
 
         app.use('/admin/app.js', express.static('./admin/static/app.js'));
         app.use('/admin/assets', express.static('./admin/assets'));

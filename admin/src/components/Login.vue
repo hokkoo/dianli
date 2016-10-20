@@ -64,7 +64,7 @@ module.exports = {
       this._login(this.item).then((data) => {
         this.$refs.spinner.hide();
         if(data && data.successed){
-          this.$router.go('productDoors');
+          this.$router.go({name: 'productDoors'});
         }else{
           this.error = data && data.message;
         }
