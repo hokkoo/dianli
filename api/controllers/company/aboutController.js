@@ -122,6 +122,46 @@ module.exports = {
                 })
             });
         }
+    },
+    addImage: function(req,res,next) {
+        var Image = sails.sequelize['company.company-image'];
+        var params = req.allParams(), where;
+        params = params.item || {};
+        if(_.isUndefined(params.id) || _.isUndefined(params.related_id)){
+            res.json({
+                successed: false,
+                message: 'id为空'
+            });
+        }else{
+            params.id = parseInt(params.id);
+            var item = Image.build({id: params.id}, {isNewRecord: false, raw: true});
+            item.update({related_id: params.related_id}).then(function (rtn) {
+                res.json({
+                    successed: true,
+                    data: item
+                })
+            });
+        }
+    },
+    deleteImage: function(req,res,next) {
+        var Image = sails.sequelize['company.company-image'];
+        var params = req.allParams(), where;
+        params = params.item || {};
+        if(_.isUndefined(params.id) || _.isUndefined(params.related_id)){
+            res.json({
+                successed: false,
+                message: 'id为空'
+            });
+        }else{
+            params.id = parseInt(params.id);
+            var item = Image.build({id: params.id}, {isNewRecord: false, raw: true});
+            item.update({related_id: 0}).then(function (rtn) {
+                res.json({
+                    successed: true,
+                    data: item
+                })
+            });
+        }
     }
 };
 

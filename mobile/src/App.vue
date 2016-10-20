@@ -48,4 +48,15 @@ li{
 .weui_tab_bd{
   position: relative;
 }
+
+.weui_dialog_alert .img-box, .weui_dialog_alert img {
+    max-width: 100%;
+}
+
+.weui_dialog_alert .dialog-title{
+    padding: 4px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>

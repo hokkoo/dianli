@@ -75,23 +75,37 @@
 </template>
 
 <script type="text/babel">
-  import {getAboutUsData} from '../../../vuex/modules/company/about/action.js';
+  import {getAboutUsData, addAboutUsImage, deleteAboutUsImage} from '../../../vuex/modules/company/about/action.js';
   import imagePlate from '../../common/image-plate';
   import getObject from './aboutProcessor.js';
+  import {about as aboutType} from '../../_config/type.json';
 
   export default {
     data: () => {
       return {
+        imageType: aboutType.image,
         item: getObject()
       }
     },
     vuex: {
       actions: {
-        getItem: getAboutUsData
+        getItem: getAboutUsData,
+        deleteAboutUsImage: deleteAboutUsImage,
+        addAboutUsImage: addAboutUsImage
       }
     },
     components: {
       imagePlate
+    },
+    events: {
+      addImage(image){
+        image.related_id = this.item.id;
+        this.addAboutUsImage(image);
+      },
+      removeImage(image){
+        image.related_id = this.item.id;
+        this.deleteAboutUsImage(image);
+      }
     },
     created(id){
       this.getItem().then( (data) => {

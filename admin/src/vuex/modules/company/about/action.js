@@ -25,6 +25,7 @@ export const saveAboutUs = function ({ dispatch }, item = {}) {
   }
 }
 
+
 export const editAboutUs = function ({ dispatch }, item = {}) {
   let param = _.extend({}, item);
   param = {item: param};
@@ -52,6 +53,39 @@ export const createAboutUs = function ({ dispatch }, item = {}) {
 	    }else{
 	      resolve();
 	    }
+    });
+  })
+}
+
+
+export const addAboutUsImage = function ({ dispatch }, item = {}) {
+  let param = _.extend({}, item);
+  param = {item: param};
+  console.log(this.$http)
+  return new Promise((resolve) => {
+     this.$http.post('/company/about/addImage', param).then((rtn) => {
+      rtn = rtn && rtn.data || {};
+      if(rtn.successed){
+        resolve(rtn.data);
+      }else{
+        resolve();
+      }
+    });
+  })
+}
+
+export const deleteAboutUsImage = function ({ dispatch }, item = {}) {
+  let param = _.extend({}, item);
+  param = {item: param};
+  console.log(this.$http)
+  return new Promise((resolve) => {
+     this.$http.post('/company/about/deleteImage', param).then((rtn) => {
+      rtn = rtn && rtn.data || {};
+      if(rtn.successed){
+        resolve(rtn.data);
+      }else{
+        resolve();
+      }
     });
   })
 }
