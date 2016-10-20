@@ -54,7 +54,7 @@ var router = new Router({
 
 // Routes
 router.map({
-  '/login': {
+  '/admin/login': {
     component: LoginView
   },
   '/admin/': {
@@ -66,6 +66,7 @@ router.map({
         name: '首页',
         description: '首页'
       },
+
       '/about': {
         component: AboutUsHomeView,
         auth: true,
@@ -145,7 +146,7 @@ router.map({
           },
           '/doors': {
             component: ProductDoorsView,
-            name: '门列表',
+            name: 'productDoors',
             description: '门列表'
           },
           '/door/:id': {

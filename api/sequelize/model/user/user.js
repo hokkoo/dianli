@@ -3,7 +3,7 @@ var user = require("../../config/sequelize").user;
 //进货的退款信息
 
 var User = user.define('User', {
-    user_id: {
+    id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true
     },
@@ -20,6 +20,9 @@ var User = user.define('User', {
         type :Sequelize.STRING
     },
     nickname:{
+        type :Sequelize.STRING
+    },
+    passport:{
         type :Sequelize.STRING
     },
     tel :{
@@ -57,9 +60,14 @@ var User = user.define('User', {
         type :Sequelize.STRING
     }
 }, {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
+    timestamps: true,
+    paranoid: true,
     tableName: 'User',
     schema:'user'
 });
 
 module.exports = User;
-//User.sync();
+User.sync();

@@ -15,7 +15,7 @@
  */
 
 module.exports.passport = {
-    local: {
+  /*  local: {
         strategy: require('passport-local').Strategy,
         options : {
             usernameField : 'user_name',
@@ -36,5 +36,5 @@ module.exports.passport = {
             serverBaseURL: 'http://localhost:1337',
             serviceURL: 'http://localhost:1337/auth/cas/callback'
         }
-    }
+    }*/
 };

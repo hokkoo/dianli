@@ -42,6 +42,43 @@ module.exports.http = {
             ws: true
         };
         var adminProxy = proxy(adminProxyOption);
+
+        app.use(passport.initialize());
+        app.use(passport.session());
+        passport.serializeUser(function(user, done) {
+            done(null, user.id);
+        });
+
+        // used to deserialize the user
+        passport.deserializeUser(function(id, done) {
+            if (!id) {
+                return done(new Error('无效用户ID'), null);
+            }
+            var User = sails.sequelize['user.user'];
+            User.findById(id).then(function(item) {
+                done(null, item.get({
+                    plain: true
+                }));
+            }).catch(function(err) {
+                done(err, null)
+            });
+        });
+
+        app.use('/admin/app.js', express.static('./admin/static/app.js'));
+        app.use('/admin/assets', express.static('./admin/assets'));
+        app.use('/admin/static', express.static('./admin/static'));
+        app.use('/admin', function (req, res, next) {
+            console.log(req.path);
+            if(req.path === "/admin/login" || req.path === "/login" || req.path.indexOf("app.js") != -1) {
+                return next();
+            }
+          if(req.isUnauthenticated()){
+            res.redirect('/admin/login');
+          }else{
+            next();
+          }
+        });
+        // TODO 增加 refer验证，所有refer为admin的请求都需要验证是否登录
         app.use('/admin', adminProxy);
 
 

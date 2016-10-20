@@ -1,5 +1,6 @@
 <template>
   <div class="container container-table">
+      <spinner v-ref:spinner size="md" fixed text="加载中..."></spinner>
       <div class="row vertical-10p">
         <div class="container">
           <img src="/static/img/logo.png" class="center-block logo">
@@ -8,18 +9,22 @@
             <div v-if=response class="text-red"><p>{{response  | capitalize }}</p></div>
 
             <!-- login form -->
-            <form class="ui form loginForm"  @submit.prevent="checkCreds">
+            <form class="ui form loginForm"  @submit.prevent="login">
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                <input class="form-control" name="username" placeholder="Username" type="text" v-model="username">
+                <input class="form-control" name="username" placeholder="Username" type="text" v-model="item.name">
               </div>
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input class="form-control" name="password" placeholder="Password" type="password" v-model="password">
+                <input class="form-control" name="password" placeholder="Password" type="password" v-model="item.password">
               </div>
-              <button type="submit" class="btn btn-primary btn-lg {{loading}}">Submit</button>
+              <div class="input-group">
+                <div class="alert alert-danger" v-show="error">{{error}}</div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg ">登录</button>
+              
             </form>
           </div>
         </div>
@@ -28,77 +33,42 @@
 </template>
 
 <script>
+import {login} from '../vuex/modules/user/user/action.js';
+import {user} from '../vuex/modules/user/user/getter.js';
+import {spinner} from 'vue-strap';
 module.exports = {
   name: 'Login',
-  data: function (router) {
+  data: function () {
     return {
-      section: 'Login',
-      loading: '',
-      username: '',
-      password: '',
-      response: ''
+      item: {
+        name: '',
+        password: ''
+      },
+      error: ''
     }
   },
+   vuex: {
+    getters: {
+      user: user
+    },
+    actions: {
+      _login: login
+    }
+  },
+  components: {
+    spinner
+  },
   methods: {
-    checkCreds: function () {
-      //  Change submit button
-      var self = this
-      var store = this.$store
-
-      this.toggleLoading()
-      this.resetResponse()
-      store.dispatch('TOGGLE_LOADING')
-
-      //  Login
-      this.$parent.callAPI('POST', '/login', { username: this.username, password: this.password }).then(function (response) {
-        store.dispatch('TOGGLE_LOADING')
-
-        if (response.data) {
-          var data = response.data
-
-          if (data.error) {
-            if (data.error.name) { //  Object from LDAP at this point
-              switch (data.error.name) {
-                case 'InvalidCredentialsError' : self.response = 'Username/Password incorrect. Please try again.'; break
-                default: self.response = data.error.name
-              }
-            } else {
-              self.response = data.error
-            }
-          } else {
-            //  success. Let's load up the dashboard
-            if (data.user) {
-              store.dispatch('SET_USER', data.user)
-              var token = 'Bearer ' + data.token
-              store.dispatch('SET_TOKEN', token)
-
-              // Save to local storage as well
-              if (window.localStorage) {
-                window.localStorage.setItem('user', JSON.stringify(data.user))
-                window.localStorage.setItem('token', token)
-              }
-
-              this.$router.go(data.redirect)
-            }
-          }
-        } else {
-          self.response = 'Did not receive a response. Please try again in a few minutes'
+    login(){
+      this.$refs.spinner.show();
+      this._login(this.item).then((data) => {
+        this.$refs.spinner.hide();
+        if(data && data.successed){
+          this.$router.go('productDoors');
+        }else{
+          this.error = data && data.message;
         }
-
-        self.toggleLoading()
-      }, function (response) {
-        // error
-        store.dispatch('TOGGLE_LOADING')
-        console.log('Error', response)
-        self.response = 'Server appears to be offline'
-        self.toggleLoading()
       })
-    },
-    toggleLoading: function () {
-      this.loading = (this.loading === '') ? 'loading' : ''
-    },
-    resetResponse: function () {
-      this.response = ''
     }
   }
 }

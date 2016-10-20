@@ -1,13 +1,15 @@
 var express = require('express')
 var webpack = require('webpack')
 var config = require('./webpack.dev.conf')
-var proxyMiddleware = require('http-proxy-middleware')
+var proxyMiddleware = require('http-proxy-middleware');
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || 8088
 
-var app = express()
+var app = express();
+
 var compiler = webpack(config)
+
 
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
@@ -47,15 +49,8 @@ Object.keys(proxyTable).forEach(function (context) {
   app.use(proxyMiddleware(context, options))
 })
 
-// handle fallback for HTML5 history API
-app.use(require('connect-history-api-fallback')())
 
-// serve webpack bundle output
-app.use(devMiddleware)
 
-// enable hot-reload and state-preserving
-// compilation error display
-app.use(hotMiddleware)
 
 // serve pure static assets
 app.use('/admin/app.js', express.static('./static/app.js'));
@@ -65,6 +60,35 @@ app.use('/admin/assets', express.static('./assets'))
 app.use('/admin/static', express.static('./static'))
 app.use('/static', express.static('./static'))
 app.use('/assets', express.static('./assets'))
+
+// handle fallback for HTML5 history API
+app.use(require('connect-history-api-fallback')())
+
+// serve webpack bundle output
+app.use(devMiddleware)
+
+// enable hot-reload and state-preserving
+// compilation error display
+app.use(hotMiddleware);
+
+/*var passport = require('passport');
+require('./passport')(app);
+app.use(function (req, res, next) {
+  if(req.isUnauthenticated()){
+    res.redirect('/admin/login');
+  }else{
+    next();
+  }
+});
+app.get('/admin/login', function (req, res, next) {
+  next();
+});
+app.post('/admin/login', passport.authenticate('local'), function (req, res, next) {
+  res.json({
+    successed: true,
+    data: req.user
+  })
+});*/
 
 
 module.exports = app.listen(port, function (err) {
