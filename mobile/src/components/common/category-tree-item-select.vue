@@ -10,7 +10,7 @@
     </div>
     <ul v-show="open" v-if="isFolder">
       <category-tree-item v-for="child in item.children" :item="child" :type="type" :selected-item.sync="selectedItem"></category-tree-item>
-      <li v-if:"enableEdit">
+      <li v-if="enableEdit">
         <form-group :valid.sync="valid">
           <div class="row">
             <div class="col-sm-8">
