@@ -349,9 +349,9 @@
                 })(),
             // WebUploader实例
                 uploader,
-                actionUrl = editor.getActionUrl(editor.getOpt('imageActionName')),
+                actionUrl = editor.getOpt('imageUrl'),
                 acceptExtensions = (editor.getOpt('imageAllowFiles') || []).join('').replace(/\./g, ',').replace(/^[,]/, ''),
-                imageMaxSize = editor.getOpt('imageMaxSize'),
+                imageMaxSize = 1024* 1024,
                 imageCompressBorder = editor.getOpt('imageCompressBorder');
 
             if (!WebUploader.Uploader.support()) {
@@ -858,7 +858,7 @@
 
             if(!_this.listEnd && !this.isLoadingData) {
                 this.isLoadingData = true;
-                var url = editor.getActionUrl(editor.getOpt('imageManagerActionName')),
+                var url = editor.getOpt('imageManagerActionName'),
                     isJsonp = utils.isCrossDomainUrl(url);
                 ajax.request(url, {
                     'timeout': 100000,

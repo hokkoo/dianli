@@ -30,7 +30,9 @@
         imageUrl: "/common/image/savetmp?type="+ this.type,
         themePath: '/admin/assets/lib/ueditor/themes/',
         iframeCssUrl: '/admin/assets/lib/ueditor/themes/iframe.css',
-        imageUrlPrefix: ''
+        imageUrlPrefix: '',
+        imageManagerUrlPrefix: '',
+        imageManagerActionName: "/common/image/tmpImages"
         // codeMirrorJsUrl: '/admin/assets/lib/codemirror/codemirror.js',
         // codeMirrorCssUrl : '/admin/assets/lib/codemirror/codemirror.css'
       });

@@ -1,32 +1,38 @@
 <template>
   <div class="doors col-xs-12">
     <button type="button" class="btn btn-primary" v-link="{ name: 'productDoorEdit'}">创建</button>
-    <ul class="list">
-      <li v-for="item in items" class="item">
-        <a v-link="{ name: 'productDoorDetail', params: {id: item.id}}" v-if="item.name">
-          <p class="title">{{item.name}}</p>
-          <p class="list-content">{{item.desc}}</p>
-        </a>
-      </li>
-    </ul>
+    <v-list url="/product/door/list" :param.sync="param" :items.sync="items" v-ref:list>
+      <ul class="list">
+        <li v-for="item in items" class="item">
+          <a v-link="{ name: 'productDoorDetail', params: {id: item.id}}">
+            <p class="title">{{item.name}}</p>
+            <p class="desc">{{item.desc}}</p>
+          </a>
+        </li>
+      </ul>
+    </v-list>
   </div>
 </template>
 
 <script type="text/babel">
-  import {doors} from '../../../vuex/modules/product/door/getter.js';
   import {getDoors} from '../../../vuex/modules/product/door/action.js';
+  import vList from '../../common/bootstrap/v-list.vue';
 
   export default {
+    data: () => {
+      return {
+        items: []
+      }
+    },
     vuex: {
-      getters: {
-        items: doors
-      },
       actions: {
         getList: getDoors
       }
     },
+    components: {
+      vList
+    },
     created(){
-      this.getList();
     }
   }
 </script>

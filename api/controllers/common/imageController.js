@@ -192,6 +192,23 @@ module.exports = {
             });
         });
     },
+    tmpImages: function(req,res,next) {
+        var Image = sails.sequelize['product.upload-tmp'];
+        var params = req.allParams(), where = {};
+        Image.findAndCount({
+            where: where,
+            limit: params.take || 10000,
+            offset: params.start || 0
+        }).then(function (data) {
+            res.json({
+                successed: true,
+                start: params.start || 0,
+                list: data.rows,
+                total: data.count,
+                state: 'SUCCESS'
+            });
+        });
+    },
     saves : function(req,res,next) {
         res.json([1,2,3]);
     }

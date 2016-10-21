@@ -28,7 +28,7 @@
 
         //为编辑器实例添加一个路径，这个不能被注释
         UEDITOR_HOME_URL: "/admin/assets/ueditor/"
-
+        , imageMaxSize: 20*1024*1024
         // 服务器统一请求接口路径
         , serverUrl: "/common/config/ueditor"
 

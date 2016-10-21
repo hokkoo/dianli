@@ -1,14 +1,14 @@
 <template>
   <div class="v-pager">
     <ul class="pager">
-      <li class="prev item" @click="prev">
+      <li class="prev item" @click="prev" v-show="current > 0">
         上一页
       </li>
       <li class="item" v-for="item in availablePages" @click="jump(item)" :class="{'active': current===item}"></li>
-      <li class="next item" @click="next">
+      <li class="next item" @click="next" v-show="current < total - 1">
         下一页
       </li>
-      <li class="last item" @click="goLast">
+      <li class="last item" @click="goLast" v-show="current < total - 1">
         最后一页
       </li>
     </ul>
