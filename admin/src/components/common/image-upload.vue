@@ -5,8 +5,11 @@
 </template>
 
 <script type="text/babel">
-  import {company as companyType, about as aboutType} from '../_config/type.json';
-
+  import {company as companyType, about as aboutType, message as messageType} from '../_config/type.json';
+  var messageTypeList =[];
+  _.each(messageType, (v, key) => {
+    messageTypeList.push(v);
+  });
   export default {
     props: {
       type: {
@@ -32,6 +35,8 @@
       var url = '/common/image/save?type=' + (this.type || 0);
       if(this.type == companyType.image || this.type === aboutType.image){
         url = '/common/image/saveCompanyImage?type=' + (this.type || 0);
+      }else if(messageTypeList.indexOf(this.type) != -1){
+        url = '/common/image/saveMessageImage?type=' + this.type;
       }
       this.$input = $input;
       $input.fileinput({

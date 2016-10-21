@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var message = require("../../config/sequelize").message;
-
+var _type = require('../../config/constType');
 // 联系人信息
 var Message = message.define('Message', {
     id: {
@@ -94,7 +94,10 @@ var Image = require('./message-image.js');
 Message.hasMany(Image, {
   as: 'images',
   foreignKey: 'related_id',
-  constraints: false
+  constraints: false,
+  scope: {
+    type: _type.message.message
+  }
 });
 
 

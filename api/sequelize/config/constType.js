@@ -14,5 +14,10 @@ module.exports = {
 	},
 	about: {
 		image: 101
+	},
+	message: {
+		message: 201,
+		activitry: 211,
+		news: 221
 	}
 }

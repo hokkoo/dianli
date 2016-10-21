@@ -9,6 +9,7 @@ var mime = require('mime');
 var uploadPath = path.resolve(process.cwd(), './upload/images/');
 var uploadTmpPath = path.resolve(process.cwd(), './upload/tmp/');
 var uploadCompanyPath = path.resolve(process.cwd(), './upload/company/');
+var uploadMessagePath = path.resolve(process.cwd(), './upload/message/');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -43,6 +44,17 @@ var companyStorage = multer.diskStorage({
   }
 });
 
+var messageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadMessagePath)
+  },
+  filename: function (req, file, cb) {
+      //console.log(Object.keys(file));
+      var extension = mime.extension(file.mimetype);
+    cb(null, (file.originalname || file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
+  }
+});
+
 var upload = multer({ storage: storage });
 
 var singleUpload = upload.single('file');
@@ -58,9 +70,15 @@ var uploadCompany = multer({ storage: companyStorage });
 var singleUploadCompany = uploadCompany.single('file');
 var multipleUploadCompany = uploadCompany.array('file', 12)
 
+var uploadMessage = multer({ storage: messageStorage });
+
+var singleUploadMessage = uploadMessage.single('file');
+var multipleUploadMessage = uploadMessage.array('file', 12)
+
 var urlPrefix = {
     image: '/upload/images/',
     imageCompany: '/upload/company/',
+    imageMessage: '/upload/message/',
     tmpImage: '/upload/tmp/'
 }
 
@@ -111,6 +129,30 @@ module.exports = {
                 url: urlPrefix.imageCompany + file.filename
             };
             var Image = sails.sequelize['company.company-image'];
+            Image.create(item).then(function (data) {
+                res.json({
+                    successed: true,
+                    data: data
+                });
+            });
+        });
+    },
+    saveMessageImage : function(req,res,next) {
+        var params = req.allParams();
+        singleUploadMessage(req, res, function () {
+            var params = req.allParams();
+            var file = req.file;
+            var item = {
+                name: file.filename,
+                extension: mime.extension(file.mimetype),
+                size: file.size,
+                originalname: file.originalname,
+                destination: file.destination,
+                path: file.path,
+                type: params.type || 0,
+                url: urlPrefix.imageMessage + file.filename
+            };
+            var Image = sails.sequelize['message.message-image'];
             Image.create(item).then(function (data) {
                 res.json({
                     successed: true,

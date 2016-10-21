@@ -31,7 +31,7 @@ var Activity = message.define('Activity', {
          defaultValue: 0
     },
     content: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
     },
     type: {
         type : Sequelize.INTEGER,
@@ -49,14 +49,17 @@ var Activity = message.define('Activity', {
 
 module.exports = Activity;
 
-/*var Image = require('./company-image.js');
+ Image = require('./message-image.js');
 
-Company.hasMany(Image, {
+Activity.hasMany(Image, {
   as: 'images',
   foreignKey: 'related_id',
-  constraints: false
+  constraints: false,
+  scope: {
+    type: _type.message.activity
+  }
 });
-
+/*var
 var Contact = require('../user/contact.js');
 
 Company.belongsTo(Contact, {

@@ -31,7 +31,7 @@ var News = message.define('News', {
          defaultValue: 0
     },
     content: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
     },
     type: {
         type : Sequelize.INTEGER,
@@ -49,14 +49,18 @@ var News = message.define('News', {
 
 module.exports = News;
 
-/*var Image = require('./company-image.js');
+Image = require('./message-image.js');
 
-Company.hasMany(Image, {
+News.hasMany(Image, {
   as: 'images',
   foreignKey: 'related_id',
-  constraints: false
+  constraints: false,
+  scope: {
+    type: _type.message.news
+  }
 });
 
+/*
 var Contact = require('../user/contact.js');
 
 Company.belongsTo(Contact, {

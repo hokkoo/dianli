@@ -39,6 +39,11 @@ import AboutUsHomeView from './components/company/AboutLayout.vue';
 import AboutUsDetailView from './components/company/about/About.vue';
 import AboutUsEditView from './components/company/about/AboutEdit.vue';
 
+import MessageHomeView from './components/message/Index.vue';
+import NewsDetailView from './components/message/news/News.vue';
+import NewssView from './components/message/news/Newss.vue';
+import NewsEditView from './components/message/news/NewsEdit.vue';
+
 // Import Install and register helper items
 Vue.use(Router)
 Vue.filter('count', count)
@@ -66,7 +71,32 @@ router.map({
         name: '首页',
         description: '首页'
       },
-
+      '/message': {
+        component: MessageHomeView,
+        auth: true,
+        subRoutes: {
+          '/newss': {
+            component: NewssView,
+            name: 'newss',
+            description: '新闻列表'
+          },
+          '/news/edit/:id': {
+            component: NewsEditView,
+            name: 'newsEdit',
+            description: '编辑'
+          },
+          '/news/create': {
+            component: NewsEditView,
+            name: 'newsCreate',
+            description: '创建'
+          },
+          '/news/:id': {
+            component: NewsDetailView,
+            name: 'newsDetail',
+            description: '详情'
+          }
+        }
+      },
       '/about': {
         component: AboutUsHomeView,
         auth: true,
