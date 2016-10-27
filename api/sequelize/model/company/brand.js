@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var company = require("../../config/sequelize").company;
 var _type = require('../../config/constType');
 
-var Company = company.define('Company', {
+var Brand = company.define('Brand', {
     id: {
         type: Sequelize.BIGINT(20),
         primaryKey: true,
@@ -13,12 +13,15 @@ var Company = company.define('Company', {
          type: Sequelize.BIGINT(20),
          defaultValue: 0
     },
+    company_id :{
+        type : Sequelize.INTEGER,
+        defaultValue: 0
+    },
     // 外部引用的id
     related_id :{
         type : Sequelize.INTEGER,
         defaultValue: 0
     },
-    // 公司代号
     code: {
         type: Sequelize.STRING
     },
@@ -32,18 +35,6 @@ var Company = company.define('Company', {
         type: Sequelize.STRING
     },
     desc: {
-        type: Sequelize.STRING
-    },
-    // 法人
-    // 都指向联系人
-    owner_id: {
-         type: Sequelize.BIGINT(20),
-         defaultValue: 0
-    },
-    phone: {
-        type: Sequelize.STRING
-    },
-    mobile: {
         type: Sequelize.STRING
     },
     content: {
@@ -66,30 +57,21 @@ var Company = company.define('Company', {
     deletedAt: 'deletedAt',
     timestamps: true,
     paranoid: true,
-    tableName: 'company',
+    tableName: 'brand',
     schema:'company'
 });
 
-module.exports = Company;
+module.exports = Brand;
 
 var Image = require('./company-image.js');
 
-Company.hasMany(Image, {
+Brand.hasMany(Image, {
   as: 'images',
   foreignKey: 'related_id',
   constraints: false,
   scope: {
-    type: _type.company.image
+    type: _type.brand.image
   }
 });
 
-var Contact = require('../user/contact.js');
-
-Company.belongsTo(Contact, {
-    as: 'owner',
-    foreignKey: 'owner_id',
-    constraints: false
-});
-
-
-Company.sync();
+Brand.sync();

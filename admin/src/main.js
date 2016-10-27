@@ -34,6 +34,10 @@ import CompanysView from './components/company/company/Companys.vue';
 import CompanyDetailView from './components/company/company/Company.vue';
 import CompanyEditView from './components/company/company/CompanyEdit.vue';
 
+import BrandDetailView from './components/company/brand/Brand.vue';
+import BrandsView from './components/company/brand/Brands.vue';
+import BrandEditView from './components/company/brand/BrandEdit.vue';
+
 
 import AboutUsHomeView from './components/company/AboutLayout.vue';
 import AboutUsDetailView from './components/company/about/About.vue';
@@ -170,6 +174,26 @@ router.map({
             component: CompanyEditView,
             name: 'companyEdit',
             description: '公司'
+          },
+          '/brands': {
+            component: BrandsView,
+            name: 'brands',
+            description: '品牌列表'
+          },
+          '/brand/:id': {
+            component: BrandDetailView,
+            name: 'brandDetail',
+            description: '品牌'
+          },
+           '/brand/create': {
+            component: BrandEditView,
+            name: 'brandCreate',
+            description: '品牌'
+          },
+          '/brand/edit/:id': {
+            component: BrandEditView,
+            name: 'brandEdit',
+            description: '品牌'
           }
         }
       },

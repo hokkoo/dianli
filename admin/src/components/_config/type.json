@@ -16,6 +16,9 @@
     "gallery": {
         "image": 41
     },
+    "brand": {
+        "image": 51
+    },
     "about": {
         "image": 101
     },

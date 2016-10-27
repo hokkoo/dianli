@@ -111,7 +111,8 @@
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/product/tags'}"><i class="fa fa-book"></i><span class="page">标签</span></a></li>
           
           <li class="header">公司</li>
-          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/company/companys'}"><i class="fa fa-book"></i><span class="page">列表</span></a></li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/company/companys'}"><i class="fa fa-book"></i><span class="page">公司</span></a></li>
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/company/brands'}"><i class="fa fa-book"></i><span class="page">品牌</span></a></li>
 
           <li class="header">店面</li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/about/about'}"><i class="fa fa-book"></i><span class="page">店面信息</span></a></li>

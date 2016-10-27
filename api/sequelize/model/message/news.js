@@ -56,7 +56,7 @@ News.hasMany(Image, {
   foreignKey: 'related_id',
   constraints: false,
   scope: {
-    type: _type.message.news
+    type: _type.brand.image
   }
 });
 

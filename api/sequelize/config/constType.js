@@ -10,10 +10,13 @@ module.exports = {
 		classification: 4 //分类
 	},
 	company: {
-		image: 31
+		image: 31,
 	},
 	gallery: {
 		image: 41
+	},
+	brand: {
+		image: 51
 	},
 	about: {
 		image: 101
