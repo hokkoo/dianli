@@ -10,6 +10,7 @@ var uploadPath = path.resolve(process.cwd(), './upload/images/');
 var uploadTmpPath = path.resolve(process.cwd(), './upload/tmp/');
 var uploadCompanyPath = path.resolve(process.cwd(), './upload/company/');
 var uploadMessagePath = path.resolve(process.cwd(), './upload/message/');
+var uploadGalleryPath = path.resolve(process.cwd(), './upload/gallery/');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -55,6 +56,18 @@ var messageStorage = multer.diskStorage({
   }
 });
 
+var galleryStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadGalleryPath)
+  },
+  filename: function (req, file, cb) {
+      //console.log(Object.keys(file));
+      var extension = mime.extension(file.mimetype);
+    cb(null, (file.originalname || file.filename || file.name || file.fieldname) + '-[' + uuid.v1()+ '].'+extension);
+  }
+});
+
+
 var upload = multer({ storage: storage });
 
 var singleUpload = upload.single('file');
@@ -75,11 +88,16 @@ var uploadMessage = multer({ storage: messageStorage });
 var singleUploadMessage = uploadMessage.single('file');
 var multipleUploadMessage = uploadMessage.array('file', 12)
 
+var uploadGallery = multer({ storage: galleryStorage });
+var singleUploadGallery = uploadGallery.single('file');
+var multipleUploadGallery = uploadGallery.array('file', 12)
+
 var urlPrefix = {
     image: '/upload/images/',
     imageCompany: '/upload/company/',
     imageMessage: '/upload/message/',
-    tmpImage: '/upload/tmp/'
+    tmpImage: '/upload/tmp/',
+    galleryImage: '/upload/gallery/'
 }
 
 module.exports = {
@@ -98,13 +116,7 @@ module.exports = {
                 type: params.type || 0,
                 url: urlPrefix.image + file.filename
             };
-            var Image;
-            if(params.gallery_id){
-                Image = sails.sequelize['product.gallery-image'];
-                item.related_id = params.gallery_id;
-            }else{
-                Image = sails.sequelize['product.image'];
-            }
+            var Image = sails.sequelize['product.image'];
             Image.create(item).then(function (data) {
                 res.json({
                     successed: true,
@@ -129,6 +141,30 @@ module.exports = {
                 url: urlPrefix.imageCompany + file.filename
             };
             var Image = sails.sequelize['company.company-image'];
+            Image.create(item).then(function (data) {
+                res.json({
+                    successed: true,
+                    data: data
+                });
+            });
+        });
+    },
+    saveGalleryImage : function(req,res,next) {
+        var params = req.allParams();
+        singleUploadGallery(req, res, function () {
+            var params = req.allParams();
+            var file = req.file;
+            var item = {
+                name: file.filename,
+                extension: mime.extension(file.mimetype),
+                size: file.size,
+                originalname: file.originalname,
+                destination: file.destination,
+                path: file.path,
+                type: params.type || 0,
+                url: urlPrefix.galleryImage + file.filename
+            };
+            var Image = sails.sequelize['product.gallery-image'];
             Image.create(item).then(function (data) {
                 res.json({
                     successed: true,

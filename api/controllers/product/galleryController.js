@@ -184,47 +184,46 @@ module.exports = {
         });
         
     },
-    deleteImage : function(req,res,next) {
-        var GalleryImage = sails.sequelize['product.gallery-image'];
+    addImage: function(req,res,next) {
+        var Image = sails.sequelize['product.gallery-image'];
         var params = req.allParams(), where;
-        if(params.id){
-            var item = GalleryImage.build({id: params.id});
-            item.destroy().then(function(){
-                res.json({
-                    successed: true,
-                    data: params.id
-                });
-            }).catch(function (error) {
-                res.json({
-                    successed: false,
-                    message: error
-                });
-            })
-        }else{
+        params = params.item || {};
+        params.type = _type.gallery.image;
+        if(_.isUndefined(params.id) || _.isUndefined(params.related_id)){
             res.json({
                 successed: false,
-                message: '无id'
+                message: 'id为空'
+            });
+        }else{
+            params.id = parseInt(params.id);
+            var item = Image.build({id: params.id}, {isNewRecord: false, raw: true});
+            item.update({related_id: params.related_id}).then(function (rtn) {
+                res.json({
+                    successed: true,
+                    data: item
+                })
             });
         }
     },
-    createImage: function(req,res,next) {
-        var GalleryImage = sails.sequelize['product.gallery-image'];
+    deleteImage: function(req,res,next) {
+        var Image = sails.sequelize['product.gallery-image'];
         var params = req.allParams(), where;
         params = params.item || {};
-        var keys = getAvailableFields(params);
-        GalleryImage.create(params, {
-            fields: keys
-        }).then(function (item) {
-            res.json({
-                successed: true,
-                data: item
-            })
-        }).catch(function (error) {
+        if(_.isUndefined(params.id) || _.isUndefined(params.related_id)){
             res.json({
                 successed: false,
-                message: error
-            })
-        });
+                message: 'id为空'
+            });
+        }else{
+            params.id = parseInt(params.id);
+            var item = Image.build({id: params.id}, {isNewRecord: false, raw: true});
+            item.update({related_id: 0}).then(function (rtn) {
+                res.json({
+                    successed: true,
+                    data: item
+                })
+            });
+        }
     },
     editImage: function(req,res,next) {
         var GalleryImage = sails.sequelize['product.gallery-image'];

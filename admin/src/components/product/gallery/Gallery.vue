@@ -131,7 +131,6 @@
         this.deleteImage(image);
       },
       addImage(image){
-        console.log(this);
         image.related_id = this.item.id;
         this.addImage(image).then( (item) => {
           image.id = item.id;

@@ -12,6 +12,9 @@ module.exports = {
 	company: {
 		image: 31
 	},
+	gallery: {
+		image: 41
+	},
 	about: {
 		image: 101
 	},

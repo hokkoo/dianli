@@ -142,6 +142,7 @@
             <a href="#"><i class="fa fa-home"></i>Home</a>
           </li>
           <li class="active">{{$route.name | uppercase }}</li>
+          <li><a href="javascript:history.back();" class="btn btn-default">返回</a></li>
         </ol>
       </section>
 

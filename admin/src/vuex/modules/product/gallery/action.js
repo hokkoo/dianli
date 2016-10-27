@@ -49,7 +49,7 @@ export const addImage = function ({ dispatch }, item) {
   var defer = $.Deferred();
   let param = _.extend({}, item);
   param = {item: param};
-  $.post('/product/gallery/createImage', param).success( (rtn) => {
+  $.post('/product/gallery/addImage', param).success( (rtn) => {
     if(rtn.successed){
       defer.resolve(rtn.data);
     }else{
@@ -60,8 +60,10 @@ export const addImage = function ({ dispatch }, item) {
 }
 
 export const deleteImage = function ({ dispatch }, item) {
+  let param = _.extend({}, item);
+  param = {item: param};
   var defer = $.Deferred();
-  $.post('/product/gallery/deleteImage', {id: item.id}).success( (rtn) => {
+  $.post('/product/gallery/deleteImage', param).success( (rtn) => {
     if(rtn.successed){
       defer.resolve(rtn.data);
     }else{
