@@ -18,6 +18,7 @@ module.exports = {
 	message: {
 		message: 201,
 		activitry: 211,
-		news: 221
+		news: 221,
+		wiki: 231
 	}
 }

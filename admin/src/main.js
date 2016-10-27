@@ -44,6 +44,10 @@ import NewsDetailView from './components/message/news/News.vue';
 import NewssView from './components/message/news/Newss.vue';
 import NewsEditView from './components/message/news/NewsEdit.vue';
 
+import WikiDetailView from './components/message/wiki/Wiki.vue';
+import WikisView from './components/message/wiki/Wikis.vue';
+import WikiEditView from './components/message/wiki/WikiEdit.vue';
+
 // Import Install and register helper items
 Vue.use(Router)
 Vue.filter('count', count)
@@ -93,6 +97,26 @@ router.map({
           '/news/:id': {
             component: NewsDetailView,
             name: 'newsDetail',
+            description: '详情'
+          },
+          '/wikis': {
+            component: WikisView,
+            name: 'wikis',
+            description: '百科列表'
+          },
+          '/wiki/edit/:id': {
+            component: WikiEditView,
+            name: 'wikiEdit',
+            description: '编辑'
+          },
+          '/wiki/create': {
+            component: WikiEditView,
+            name: 'wikiCreate',
+            description: '创建'
+          },
+          '/wiki/:id': {
+            component: WikiDetailView,
+            name: 'wikiDetail',
             description: '详情'
           }
         }

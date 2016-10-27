@@ -119,7 +119,7 @@
 
           <li class="header">信息管理</li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/message/newss'}"><i class="fa fa-book"></i><span class="page">新闻</span></a></li>
-
+          <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/admin/message/wikis'}"><i class="fa fa-book"></i><span class="page">百科</span></a></li>
 
           <li class="header">注册</li>
           <li class="pageLink" v-on:click="toggleMenu"><a v-link="{path: '/login'}"><i class="fa fa-circle-o text-yellow"></i> <span class="page">登录</span></a></li>
