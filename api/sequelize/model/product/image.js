@@ -53,7 +53,7 @@ var Image = product.define('Image', {
 
 module.exports = Image;
 
-var Bed = require('./bed');
+/*var Bed = require('./bed');
 Bed.hasMany(Image, {
   foreignKey: 'related_id',
   constraints: false,
@@ -61,7 +61,7 @@ Bed.hasMany(Image, {
   scope: {
     type: _type.bed
   }
-});
+});*/
 
 var Door = require('./door');
 Door.hasMany(Image, {

@@ -16,9 +16,11 @@ export const getDoor = function ({ dispatch }, id) {
   if(id){
     $.get('/product/door/find?id=' + id).success((rtn) => {
       if(rtn.successed){
-        dispatch(_type.GET_PRODUCT_DOOR, rtn.data);
+        //dispatch(_type.GET_PRODUCT_DOOR, rtn.data);
+        defer.resolve(rtn.data);
+      }else{
+        defer.resolve();
       }
-      defer.resolve(rtn.data);
     });
   }else{
     dispatch(_type.GET_PRODUCT_DOOR, {});
@@ -36,7 +38,7 @@ export const saveDoor = function ({ dispatch }, door) {
   if(door.id){
     $.post('/product/door/edit', param).success( (rtn) => {
       if(rtn.successed){
-        console.log(rtn);
+        defer.resolve(rtn.data);
       }
     }).always(() => {
       defer.resolve();
@@ -51,4 +53,34 @@ export const saveDoor = function ({ dispatch }, door) {
     });
   }
   return defer;
+}
+
+export const addImage = function ({ dispatch }, item = {}) {
+  let param = _.extend({}, item);
+  param = {item: param};
+  return new Promise((resolve) => {
+     this.$http.post('/product/door/addImage', param).then((rtn) => {
+      rtn = rtn && rtn.data || {};
+      if(rtn.successed){
+        resolve(rtn.data);
+      }else{
+        resolve();
+      }
+    });
+  })
+}
+
+export const deleteImage = function ({ dispatch }, item = {}) {
+  let param = _.extend({}, item);
+  param = {item: param};
+  return new Promise((resolve) => {
+     this.$http.post('/product/door/deleteImage', param).then((rtn) => {
+      rtn = rtn && rtn.data || {};
+      if(rtn.successed){
+        resolve(rtn.data);
+      }else{
+        resolve();
+      }
+    });
+  })
 }

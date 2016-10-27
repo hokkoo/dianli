@@ -103,7 +103,7 @@ module.exports = {
                 Image = sails.sequelize['product.gallery-image'];
                 item.related_id = params.gallery_id;
             }else{
-                Image = sails.sequelize['product.upload-images'];
+                Image = sails.sequelize['product.image'];
             }
             Image.create(item).then(function (data) {
                 res.json({

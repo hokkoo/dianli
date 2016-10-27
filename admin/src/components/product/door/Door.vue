@@ -31,12 +31,7 @@
     </div>
     <div class="card">
       图片：
-      <div class="images clearfix">
-        <div class="item" v-for="image in item.images">
-          <h1>{{image.title || image.filename}}</h1>
-          <img v-bind:src="image.url"/>
-        </div>
-      </div>
+      <image-plate :type="imageType" :list.sync="item.images"></image-plate>
     </div>
     <hr/>
     <div>
@@ -49,24 +44,44 @@
 </template>
 
 <script type="text/babel">
-  import {door} from '../../../vuex/modules/product/door/getter.js';
-  import {getDoor} from '../../../vuex/modules/product/door/action.js';
+  import {getDoor, addImage, deleteImage} from '../../../vuex/modules/product/door/action.js';
   import imagePlate from '../../common/image-plate';
+  import {door as doorType} from '../../_config/type.json';
+  import getObject from './doorProcessor.js';
+  import {extend} from '../../../utils/utils.js';
 
   export default {
-    vuex: {
-      getters: {
-        item: door
+    data: () => {
+      return {
+        imageType: doorType,
+        item: getObject()
+      }
+    },
+    events: {
+      addImage(image){
+        image.related_id = this.item.id;
+        this.addImage(image);
       },
+      removeImage(image){
+        image.related_id = this.item.id;
+        this.deleteImage(image);
+      }
+    },
+    vuex: {
       actions: {
-        getItem: getDoor
+        getItem: getDoor,
+        addImage: addImage,
+        deleteImage: deleteImage
       }
     },
     components: {
       imagePlate
     },
     created(id){
-      this.getItem(this.$route.params.id).then( () => {
+      this.getItem(this.$route.params.id).then( (data) => {
+        if(data){
+          extend(this.item, data);
+        }
       })
     },
     ready(){

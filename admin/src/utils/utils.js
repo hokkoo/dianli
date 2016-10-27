@@ -94,3 +94,33 @@ export function translations (lang) {
   }
   return window.VueStrapLang ? window.VueStrapLang(lang) : text
 }
+
+// merge 保存信息，并且正常保存子对象信息
+function _extend(target, src){
+  _.each(target, (value, key) => {
+    if(_.has(src, key)){
+      if(_.isArray(value)){
+        value.splice(0, value.length);
+        let srcValue = src[key];
+        if(!_.isArray(srcValue)){
+          value.push(srcValue);
+        }else{
+          _.each(srcValue, (v) => {
+            value.push(v);
+          })
+        }
+      }else if(_.isObject(value)){
+        _extend(value, src[key]);
+      }else{
+        target[key] = src[key];
+      }
+    }
+  });
+}
+export function extend(target){
+  var srcs = _.slice(arguments, 1);
+  _.each(srcs, (src) => {
+    _extend(target, src);
+  });
+  return target;
+}

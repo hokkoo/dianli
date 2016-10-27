@@ -200,16 +200,10 @@ module.exports = {
             console.log('####123');
             // 保存标签信息
             if(params.tags && params.tags.length){
-                item.addTags(params.tags || []);
+                item.setTags(params.tags || []);
             }
             if(params.images && params.images.length){
-                console.log(444);
-                var related_id = item.id;
-                _.each(params.images, function (image) {
-                    delete image.id;
-                    image.related_id = related_id;
-                    Image.create(image);
-                });
+                item.setImages(params.images);
             }
           /*  _.each(params.tags, function (tagId) {
                 Tag.findById(tagId).then(function (tag) {
@@ -251,24 +245,12 @@ module.exports = {
             console.log(keys)
             item.update(params, {fields: keys}).then(function (rtn) {
                 console.log('@@@@end');
-                item.setImages([]).then( () => {
-                    if(params.images && params.images.length){
-                        console.log(444);
-                        var related_id = item.id;
-                        _.each(params.images, function (image) {
-                            delete image.id;
-                            image.related_id = related_id;
-                            Image.create(image);
-                        });
-                    }
-                });
-                    
-                item.setTags([]).then(() => {
-                    console.log('######################')
-                    if(params.tags && params.tags.length){
-                        item.setTags(params.tags)
-                    }
-                });
+                if(params.images && params.images.length){
+                    item.setImages(params.images);
+                }
+                if(params.tags && params.tags.length){
+                    item.setTags(params.tags)
+                }
 
                 // 保存分类
                 console.log('####ct')
@@ -288,7 +270,8 @@ module.exports = {
                     console.log(e)
                 }
                 res.json({
-                    successed: true
+                    successed: true,
+                    data: item
                 })
             }).catch(function (error) {
                 res.json({
@@ -296,6 +279,47 @@ module.exports = {
                     message: error
                 })
             })
+        }
+    },
+    addImage: function(req,res,next) {
+        var Image = sails.sequelize['product.image'];
+        var params = req.allParams(), where;
+        params = params.item || {};
+        params.type = _type.door;
+        if(_.isUndefined(params.id) || _.isUndefined(params.related_id)){
+            res.json({
+                successed: false,
+                message: 'id为空'
+            });
+        }else{
+            params.id = parseInt(params.id);
+            var item = Image.build({id: params.id}, {isNewRecord: false, raw: true});
+            item.update({related_id: params.related_id}).then(function (rtn) {
+                res.json({
+                    successed: true,
+                    data: item
+                })
+            });
+        }
+    },
+    deleteImage: function(req,res,next) {
+        var Image = sails.sequelize['product.image'];
+        var params = req.allParams(), where;
+        params = params.item || {};
+        if(_.isUndefined(params.id) || _.isUndefined(params.related_id)){
+            res.json({
+                successed: false,
+                message: 'id为空'
+            });
+        }else{
+            params.id = parseInt(params.id);
+            var item = Image.build({id: params.id}, {isNewRecord: false, raw: true});
+            item.update({related_id: 0}).then(function (rtn) {
+                res.json({
+                    successed: true,
+                    data: item
+                })
+            });
         }
     }
 };
